@@ -1,0 +1,9 @@
+# OS X
+.DS_Store
+
+# node modules
+node_modules
+package-lock.json
+
+# WebStorm
+.idea
