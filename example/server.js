@@ -19,7 +19,7 @@
   server.listen(config.server.port, config.server.host, function() {
     var address;
     address = server.address();
-    return console.log(`Server listening at http://${address.address}:${address.port}`);
+    return console.log(`Server listening at http://${address.address}:${address.port}/re-router`);
   });
 
 }).call(this);

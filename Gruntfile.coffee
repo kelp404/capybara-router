@@ -7,8 +7,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ->
     grunt.task.run [
-      'coffee:node'
+      'coffee'
       'parallel:develop'
+    ]
+  grunt.registerTask 'build', ->
+    grunt.task.run [
+      'coffee'
+
     ]
 
   grunt.config.init
@@ -22,10 +27,31 @@ module.exports = (grunt) ->
         ]
         dest: 'example'
         ext: '.js'
-
+      router:
+        expand: true
+        flatten: no
+        cwd: 'src'
+        src: [
+          path.join '**', '*.coffee'
+        ]
+        dest: '.'
+        ext: '.js'
+    watch:
+      router:
+        files: [
+          path.join 'src', '**', '*.coffee'
+        ]
+        tasks: ['coffee:router']
+        options:
+          spawn: no
     parallel:
       develop:
         tasks: [
+          {
+            grunt: yes
+            stream: yes
+            args: ['watch']
+          }
           {
             # run web server
             stream: true

@@ -1,3 +1,4 @@
+require 'es6-promise/auto'
 React = require 'react'
 ReactDOM = require 'react-dom'
 
