@@ -7,17 +7,16 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ->
     grunt.task.run [
-      'coffee'
+      'cjsx'
       'parallel:develop'
     ]
   grunt.registerTask 'build', ->
     grunt.task.run [
-      'coffee'
-
+      'cjsx'
     ]
 
   grunt.config.init
-    coffee:
+    cjsx:
       node:
         expand: true
         flatten: no
@@ -41,7 +40,7 @@ module.exports = (grunt) ->
         files: [
           path.join 'src', '**', '*.coffee'
         ]
-        tasks: ['coffee:router']
+        tasks: ['cjsx:router']
         options:
           spawn: no
     parallel:

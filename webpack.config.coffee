@@ -14,6 +14,8 @@ module.exports = ->
       'Access-Control-Max-Age': '3000'
       'Access-Control-Allow-Headers': 'Content-Type, Authorization'
       'Access-Control-Allow-Methods': 'GET'
+  resolve:
+    extensions: ['.js', '.coffee']
   output:
     path: path.join __dirname, 'example'
     publicPath: '/'
