@@ -4,7 +4,8 @@ core =
   routes: []
   views: []
   currentRoute: null
-  promise: null
+  promise: null  # fetch resolve data promise
+  lastResolveData: null
 
   generateRoute: (args = {}, routes) ->
     ###
@@ -73,28 +74,21 @@ core =
     core.historyListener = core.history.listen (location, action) ->
       # todo: fetch data then update router view
       console.log action, location
+      route = core.findRoute location
 
     # fetch resolve data
-    core.currentRoute = core.getCurrentRoute()
-    resolveTable = core.mergeResolve core.currentRoute
-    keys = []
-    tasks = []
-    for key, value of resolveTable
-      keys.push key
-      tasks.push value()
-
-    core.promise = Promise.all(tasks).then (result) ->
-      props = {}
-      for index in [0...result.length] by 1
-        props[keys[index]] = result[index]
-      routeChaining = core.currentRoute.parents.slice()
-      routeChaining.push core.currentRoute
+    core.currentRoute = currentRoute = core.getCurrentRoute()
+    core.promise = core.fetchResolveData(currentRoute, '', core.lastResolveData).then (resolveData) ->
+      core.lastResolveData = resolveData
+      props = core.flattenResolveData resolveData
+      routeChaining = currentRoute.parents.slice()
+      routeChaining.push currentRoute
       for view, index in core.views
         view.routerView.dispatch
           route: routeChaining[index]
-          porps: props
+          props: props
       Promise.all [
-        core.currentRoute
+        currentRoute
         props
       ]
 
@@ -121,9 +115,32 @@ core =
         props
       ]
 
+  reload: ->
+    ###
+    Reload root router view.
+    ###
+    route = core.currentRoute
+    core.promise = core.fetchResolveData(route, '', null).then (resolveData) ->
+      core.lastResolveData = resolveData
+      props = core.flattenResolveData resolveData
+      routeChaining = route.parents.slice()
+      routeChaining.push route
+      core.views.splice 1
+      for view, index in core.views
+        view.routerView.dispatch
+          route: routeChaining[index]
+          props: props
+      Promise.all [
+        route
+        props
+      ]
+
   go: (args = {}) ->
     if args.href
-      core.history.push args.href
+      if "#{core.history.location.pathname}#{core.history.location.search}" is args.href
+        core.reload()
+      else
+        core.history.push args.href
 
   getCurrentRoute: ->
     ###
@@ -131,6 +148,51 @@ core =
     @returns {Route}
     ###
     core.findRoute core.history.location
+
+  fetchResolveData: (route, reloadFrom = '', lastResolveData = {}) ->
+    ###
+    @param route {Route}
+    @param reloadFrom {string} Reload data from this route name.
+    @param lastResolveData {object}
+      "route-name":
+        "resolve-key": response
+    @returns {promise<object>}
+      "route-name":
+        "resolve-key": response
+    ###
+    routeChaining = core.currentRoute.parents.slice()
+    routeChaining.push core.currentRoute
+    taskKeys = []
+    tasks = []
+    for route in routeChaining
+      if not reloadFrom or route.name.indexOf(reloadFrom) is 0
+        # fetch from the server
+        for key, value of route.resolve
+          taskKeys.push JSON.stringify(routeName: route.name, key: key)
+          tasks.push value()
+      else
+        # use cache data
+        for key, value of route.resolve
+          taskKeys.push JSON.stringify(routeName: route.name, key: key)
+          if route.name of lastResolveData and key of lastResolveData[route.name]
+            tasks.push lastResolveData[route.name][key]
+          else
+            tasks.push value()
+    Promise.all(tasks).then (responses) ->
+      result = {}
+      for taskKey, index in taskKeys
+        taskInfo = JSON.parse taskKey
+        result[taskInfo.routeName] ?= {}
+        result[taskInfo.routeName][taskInfo.key] = responses[index]
+      result
+
+  flattenResolveData: (resolveData) ->
+    result =
+      key: Math.random().toString(36).substr(2)
+    for routeName of resolveData
+      for key, value of resolveData
+        result[key] = value
+    result
 
   findRouteByName: (name, routes) ->
     ###

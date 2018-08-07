@@ -5,6 +5,8 @@
 
   exports.setup = core.setup;
 
+  exports.reload = core.reload;
+
   exports.go = core.go;
 
   exports.Link = require('./lib/components/link');
