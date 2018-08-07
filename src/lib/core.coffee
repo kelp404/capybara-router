@@ -67,6 +67,7 @@ core =
       routes.push core.generateRoute(route, routes)
     core.history = args.history
     core.routes = routes
+    core.views = []
 
     core.historyListener?()
     core.historyListener = core.history.listen (location, action) ->
@@ -119,6 +120,10 @@ core =
         targetRoute
         props
       ]
+
+  go: (args = {}) ->
+    if args.href
+      core.history.push args.href
 
   getCurrentRoute: ->
     ###
