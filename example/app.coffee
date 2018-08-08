@@ -17,7 +17,7 @@ reRouter.setup
   routes: [
     {
       name: 'web'
-      uri: '/re-router'
+      uri: '/capybara-router'
       component: Base
     }
     {
@@ -32,7 +32,7 @@ reRouter.setup
         users: ->
           axios
             method: 'get'
-            url: '/re-router/example/data/users.json'
+            url: '/capybara-router/example/data/users.json'
           .then (response) ->
             response.data
       component: Users
@@ -44,7 +44,7 @@ reRouter.setup
         user: (params) ->
           axios
             method: 'get'
-            url: "/re-router/example/data/users/#{params.userId}.json"
+            url: "/capybara-router/example/data/users/#{params.userId}.json"
           .then (response) ->
             response.data
       component: User
@@ -56,7 +56,7 @@ reRouter.setup
         error: ->
           axios
             method: 'get'
-            url: '/re-router/not-exist-resource'
+            url: '/capybara-router/not-exist-resource'
     }
     {
       name: 'not-found'

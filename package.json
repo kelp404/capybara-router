@@ -1,5 +1,5 @@
 {
-  "name": "re~router",
+  "name": "capybara-router",
   "version": "0.0.0",
   "description": "Unfancy react router.",
   "main": "index.js",
@@ -11,14 +11,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kelp404/re-router.git"
+    "url": "git+https://github.com/kelp404/capybara-router.git"
   },
+  "keywords": [
+    "react",
+    "router"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kelp404/re-router/issues"
+    "url": "https://github.com/kelp404/capybara-router/issues"
   },
-  "homepage": "https://github.com/kelp404/re-router#readme",
+  "homepage": "https://github.com/kelp404/capybara-router#readme",
   "dependencies": {
     "es6-promise": "4.2.4",
     "history": "4.7.2",

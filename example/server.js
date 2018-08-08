@@ -13,12 +13,12 @@
 
   server = http.createServer(app);
 
-  app.use('/re-router', express["static"](path.join(__dirname, '..')));
+  app.use('/capybara-router', express["static"](path.join(__dirname, '..')));
 
   server.listen(config.server.port, config.server.host, function() {
     var address;
     address = server.address();
-    return console.log("Server listening at http://" + address.address + ":" + address.port + "/re-router");
+    return console.log("Server listening at http://" + address.address + ":" + address.port + "/capybara-router");
   });
 
 }).call(this);

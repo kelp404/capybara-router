@@ -1,2 +1,2 @@
-# re~router
+# capybara-router
 Unfancy react router
