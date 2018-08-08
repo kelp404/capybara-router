@@ -18,7 +18,7 @@ module.exports = class Base extends React.Component
   render: ->
     classTable =
       homeLink: classNames active: @state.currentRouteName is 'web.home'
-      usersLink: classNames active: @state.currentRouteName is 'web.users'
+      usersLink: classNames active: @state.currentRouteName in ['web.users', 'web.user']
 
     <div>
       <nav className="navbar navbar-default">
@@ -39,6 +39,7 @@ module.exports = class Base extends React.Component
               <li className={classTable.homeLink}><Link href="/re-router/">Home</Link></li>
               <li className={classTable.usersLink}><Link href="/re-router/users">Users</Link></li>
               <li><Link href="/re-router/404">404</Link></li>
+              <li><Link href="/re-router/error">Error</Link></li>
             </ul>
           </div>
         </div>

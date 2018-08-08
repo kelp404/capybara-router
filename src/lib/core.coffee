@@ -5,8 +5,10 @@ core =
   historyListener: null
   history: null
   routes: []
+  errorComponent: null
   views: []
   currentRoute: null
+  isSkipNextHistoryChange: no
   promise: null  # fetch resolve data promise [history.action, previousRoute, previousParams, nextRoute, nextParams, props]
   lastParams: null
   lastResolveData: null
@@ -71,11 +73,18 @@ core =
     args
 
   setup: (args = {}) ->
+    ###
+    @param args {object}
+      history {history}
+      routes {list<route>}
+      errorComponent {React.Component}
+    ###
     routes = []
     for route in args.routes
       routes.push core.generateRoute(route, routes)
     core.history = args.history
     core.routes = routes
+    core.errorComponent = args.errorComponent
     core.views = []
 
     core.historyListener?()
@@ -84,7 +93,11 @@ core =
     # fetch resolve data
     core.currentRoute = currentRoute = core.getCurrentRoute()
     params = core.parseRouteParams core.history.location, currentRoute
-    core.promise = core.fetchResolveData(currentRoute, '', core.lastResolveData).then (resolveData) ->
+    core.broadcastStartEvent
+      nextRoute: currentRoute
+      nextParams: params
+
+    core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -105,12 +118,25 @@ core =
         params
         props
       ]
+    .catch (error) ->
+      if core.errorComponent
+        core.views[0].name = null
+        core.views[0].routerView.dispatch
+          route:
+            component: core.errorComponent
+          props:
+            error: error
+      core.broadcastErrorEvent error
 
   onHistoryChange: (location, action) ->
     ###
     @param location {history.location}
     @param action {string|null} PUSH, REPLACE, POP, RELOAD, INITIAL
     ###
+    if core.isSkipNextHistoryChange
+      core.isSkipNextHistoryChange = no
+      return
+
     previousRoute = core.currentRoute
     previousParams = core.lastParams
     nextRoute = core.findRoute location
@@ -121,7 +147,20 @@ core =
     for route, index in nextRouteChaining when route.name isnt core.views[index].name
       changeViewIndex = index
       break
-    core.promise = core.fetchResolveData(nextRoute, core.views[changeViewIndex].name, core.lastResolveData).then (resolveData) ->
+    isCancel = no
+    core.broadcastStartEvent
+      cancel: -> isCancel = yes
+      action: action
+      previousRoute: previousRoute
+      previousParams: previousParams
+      nextRoute: nextRoute
+      nextParams: params
+    if isCancel
+      core.isSkipNextHistoryChange = yes
+      history.back()
+      return
+
+    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex].name, core.lastResolveData).then (resolveData) ->
       core.currentRoute = nextRoute
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
@@ -146,6 +185,16 @@ core =
         params
         props
       ]
+    .catch (error) ->
+      if core.errorComponent
+        core.views.splice 1
+        core.views[0].name = null
+        core.views[0].routerView.dispatch
+          route:
+            component: core.errorComponent
+          props:
+            error: error
+      core.broadcastErrorEvent error
 
   registerRouterView: (routerView) ->
     ###
@@ -180,6 +229,16 @@ core =
         nextParams
         props
       ]
+    .catch (error) ->
+      if core.errorComponent
+        core.views.splice 1
+        core.views[0].name = null
+        core.views[0].routerView.dispatch
+          route:
+            component: core.errorComponent
+          props:
+            error: error
+      core.broadcastErrorEvent error
 
   reload: ->
     ###
@@ -187,7 +246,17 @@ core =
     ###
     route = core.currentRoute
     params = core.parseRouteParams core.history.location, route
-    core.promise = core.fetchResolveData(route, '', null).then (resolveData) ->
+    isCancel = no
+    core.broadcastStartEvent
+      cancel: -> isCancel = yes
+      action: 'RELOAD'
+      previousRoute: route
+      previousParams: params
+      nextRoute: route
+      nextParams: params
+    return if isCancel
+
+    core.promise = core.fetchResolveData(route, params, '', null).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -206,6 +275,16 @@ core =
         params
         props
       ]
+    .catch (error) ->
+      if core.errorComponent
+        core.views.splice 1
+        core.views[0].name = null
+        core.views[0].routerView.dispatch
+          route:
+            component: core.errorComponent
+          props:
+            error: error
+      core.broadcastErrorEvent error
 
   go: (args = {}) ->
     if args.href
@@ -214,6 +293,28 @@ core =
       else
         core.history.push args.href
 
+  broadcastStartEvent: (args = {}) ->
+    ###
+    @params args {object}
+      action {string}  PUSH, REPLACE, POP, RELOAD, INITIAL
+      cancel {function}  Eval this function to rollback history.
+      previousRoute {Route}
+      previousParams {object|null}
+      nextRoute {Route}
+      nextParams {object|null}
+    ###
+    if args.action?
+      fromState =
+        name: args.previousRoute.name
+        params: args.previousParams ? {}
+    else
+      args.action = 'INITIAL'
+      fromState = null
+    toState =
+      name: args.nextRoute.name
+      params: args.nextParams ? {}
+    for handler in core.eventHandlers.changeStart
+      handler.func args.action, toState, fromState, args.cancel
   broadcastSuccessEvent: (args = {}) ->
     ###
     @params args {object}
@@ -235,6 +336,12 @@ core =
       params: args.nextParams ? {}
     for handler in core.eventHandlers.changeSuccess
       handler.func args.action, toState, fromState
+  broadcastErrorEvent: (error) ->
+    ###
+    @params error {Error}
+    ###
+    for handler in core.eventHandlers.changeError
+      handler.func error
 
   listen: (event, func) ->
     table =
@@ -260,9 +367,10 @@ core =
     ###
     core.findRoute core.history.location
 
-  fetchResolveData: (route, reloadFrom = '', lastResolveData = {}) ->
+  fetchResolveData: (route, params, reloadFrom = '', lastResolveData = {}) ->
     ###
     @param route {Route}
+    @param params {object}
     @param reloadFrom {string} Reload data from this route name.
     @param lastResolveData {object}
       "route-name":
@@ -280,7 +388,7 @@ core =
         # fetch from the server
         for key, value of route.resolve
           taskKeys.push JSON.stringify(routeName: route.name, key: key)
-          tasks.push value()
+          tasks.push value(params)
       else
         # use cache data
         for key, value of route.resolve
@@ -288,7 +396,7 @@ core =
           if route.name of lastResolveData and key of lastResolveData[route.name]
             tasks.push lastResolveData[route.name][key]
           else
-            tasks.push value()
+            tasks.push value(params)
     Promise.all(tasks).then (responses) ->
       result = {}
       for taskKey, index in taskKeys

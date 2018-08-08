@@ -5,8 +5,10 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 reRouter = require '../'
 Base = require './pages/base'
+ErrorPage = require './pages/error-page'
 Home = require './pages/home'
 NotFound = require './pages/not-found'
+User = require './pages/user'
 Users = require './pages/users'
 
 
@@ -36,11 +38,33 @@ reRouter.setup
       component: Users
     }
     {
+      name: 'web.user'
+      uri: '/users/{userId:[\\w-]{20}}'
+      resolve:
+        user: (params) ->
+          axios
+            method: 'get'
+            url: "/re-router/example/data/users/#{params.userId}.json"
+          .then (response) ->
+            response.data
+      component: User
+    }
+    {
+      name: 'web.test-error'
+      uri: '/error'
+      resolve:
+        error: ->
+          axios
+            method: 'get'
+            url: '/re-router/not-exist-resource'
+    }
+    {
       name: 'not-found'
       uri: '.*'
       component: NotFound
     }
   ]
+  errorComponent: ErrorPage
 
 ReactDOM.render do ->
   <reRouter.RouterView>
