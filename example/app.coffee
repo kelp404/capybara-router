@@ -1,6 +1,7 @@
 require 'es6-promise/auto'
 axios = require 'axios'
 history = require 'history'
+nprogress = require 'nprogress'
 React = require 'react'
 ReactDOM = require 'react-dom'
 reRouter = require '../'
@@ -11,6 +12,13 @@ NotFound = require './pages/not-found'
 User = require './pages/user'
 Users = require './pages/users'
 
+
+nprogress.configure
+  showSpinner: no
+
+reRouter.listen 'ChangeStart', -> nprogress.start()
+reRouter.listen 'ChangeSuccess', -> nprogress.done()
+reRouter.listen 'ChangeError', -> nprogress.done()
 
 reRouter.setup
   history: history.createBrowserHistory()
