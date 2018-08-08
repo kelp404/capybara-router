@@ -287,11 +287,26 @@ core =
       core.broadcastErrorEvent error
 
   go: (args = {}) ->
+    ###
+    @param args {object}
+      1. use href:
+        href {string}
+      2. use route name with params:
+        name {string}
+        params {object}
+    ###
     if args.href
       if "#{core.history.location.pathname}#{core.history.location.search}" is args.href
         core.reload()
       else
         core.history.push args.href
+    else
+      route = core.findRouteByName args.name, core.routes
+      href = core.generateHref route, args.params
+      if "#{core.history.location.pathname}#{core.history.location.search}" is href
+        core.reload()
+      else
+        core.history.push href
 
   broadcastStartEvent: (args = {}) ->
     ###
@@ -344,6 +359,14 @@ core =
       handler.func error
 
   listen: (event, func) ->
+    ###
+    @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
+    @param func {function}
+      ChangeStart: (action, toState, fromState, cancel) ->
+      ChangeSuccess: (action, toState, fromState) ->
+      ChangeError: (error) ->
+    @returns {function}  Eval this function to stop listen.
+    ###
     table =
       ChangeStart: core.eventHandlers.changeStart
       ChangeSuccess: core.eventHandlers.changeSuccess
@@ -432,6 +455,24 @@ core =
     for route in core.routes when route.matchReg.test(location.pathname)
       return route
     null
+
+  generateHref: (route, params = {}) ->
+    ###
+    @param route {Route}
+    @param params {object}
+    @returns {string}
+    ###
+    href = route.hrefTemplate
+    query = {}
+    for key, value of params
+      if href.indexOf("{#{key}}") >= 0
+        href = href.replace "{#{key}}", value
+      else
+        query[key] = value
+    if Object.keys(query).length
+      "#{href}?#{queryString.stringify(query)}"
+    else
+      href
 
   parseRouteParams: (location, route) ->
     ###

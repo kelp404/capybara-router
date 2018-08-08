@@ -70,7 +70,11 @@ reload = ->
 go = (args = {}) ->
   ###
   @param args {object}
-    href {string}
+    1. use href:
+      href {string}
+    2. use route name with params:
+      name {string}
+      params {object}
   ###
 ```
 
