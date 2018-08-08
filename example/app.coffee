@@ -4,7 +4,7 @@ history = require 'history'
 nprogress = require 'nprogress'
 React = require 'react'
 ReactDOM = require 'react-dom'
-reRouter = require '../'
+capybaraRouter = require '../'
 Base = require './pages/base'
 ErrorPage = require './pages/error-page'
 Home = require './pages/home'
@@ -16,11 +16,11 @@ Users = require './pages/users'
 nprogress.configure
   showSpinner: no
 
-reRouter.listen 'ChangeStart', -> nprogress.start()
-reRouter.listen 'ChangeSuccess', -> nprogress.done()
-reRouter.listen 'ChangeError', -> nprogress.done()
+capybaraRouter.listen 'ChangeStart', -> nprogress.start()
+capybaraRouter.listen 'ChangeSuccess', -> nprogress.done()
+capybaraRouter.listen 'ChangeError', -> nprogress.done()
 
-reRouter.setup
+capybaraRouter.setup
   history: history.createBrowserHistory()
   routes: [
     {
@@ -75,9 +75,9 @@ reRouter.setup
   errorComponent: ErrorPage
 
 ReactDOM.render do ->
-  <reRouter.RouterView>
+  <capybaraRouter.RouterView>
     <p className="text-center text-muted h3" style={padding: '20px 0'}>
       <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
     </p>
-  </reRouter.RouterView>
+  </capybaraRouter.RouterView>
 , document.getElementById 'root'
