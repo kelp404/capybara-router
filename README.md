@@ -1,5 +1,5 @@
 # capybara-router
-![capybara](_capybara.jpg)
+<img src="_capybara.jpg" height="400px"/>
 
 ## Installation
 ```bash
