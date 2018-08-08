@@ -1,9 +1,25 @@
+classNames = require 'classnames'
 React = require 'react'
-{RouterView, Link} = require '../../'
+{RouterView, Link, listen} = require '../../'
 
 
 module.exports = class Base extends React.Component
+  constructor: (props) ->
+    super props
+    @state =
+      currentRouteName: ''
+    @listens = [
+      listen 'ChangeSuccess', (action, toState, fromState) =>
+        @setState
+          currentRouteName: toState.name
+    ]
+  componentWillUnmount: ->
+    x() for x in @listens
   render: ->
+    classTable =
+      homeLink: classNames active: @state.currentRouteName is 'web.home'
+      usersLink: classNames active: @state.currentRouteName is 'web.users'
+
     <div>
       <nav className="navbar navbar-default">
         <div className="container">
@@ -20,8 +36,9 @@ module.exports = class Base extends React.Component
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className="active"><Link href="/re-router/">Home</Link></li>
-              <li><Link href="/re-router/users">Users</Link></li>
+              <li className={classTable.homeLink}><Link href="/re-router/">Home</Link></li>
+              <li className={classTable.usersLink}><Link href="/re-router/users">Users</Link></li>
+              <li><Link href="/re-router/404">404</Link></li>
             </ul>
           </div>
         </div>

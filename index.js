@@ -9,6 +9,8 @@
 
   exports.go = core.go;
 
+  exports.listen = core.listen;
+
   exports.Link = require('./lib/components/link');
 
   exports.RouterView = require('./lib/components/router-view');
