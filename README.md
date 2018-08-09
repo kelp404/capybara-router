@@ -17,12 +17,19 @@ npm install capybara-router --save
 ## Example
 [/example](/example)
 ```js
+const React = require('react');
+const ReactDOM = require('react-dom');
 const router = require('capybara-router');
 const history = require('history');
 const axios = require('axios');
-const Home = require('./pages/home');
 const ErrorPage = require('./pages/error-page');
 
+
+class Home extends React.Component {
+  render() {
+    return <h2>Home</h2>;
+  }
+}
 
 router.setup({
   history: history.createBrowserHistory(),
@@ -30,6 +37,9 @@ router.setup({
     {
       name: 'web',
       uri: '/',
+      onEnter: (props) => {
+        document.title = 'Home';
+      },
       resolve: {
         data: (params) => {
           axios({
@@ -45,6 +55,18 @@ router.setup({
   ],
   errorComponent: ErrorPage
 });
+
+const element = (
+  <router.RouterView>
+    <p className="text-center text-muted h3" style={padding: '20px 0'}>
+      <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
+    </p>
+  </router.RouterView>
+);
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
 ```
 
 
@@ -92,4 +114,24 @@ listen = (event, func) ->
     ChangeError: (error) ->
   @returns {function}  Eval this function to stop listen.
   ###
+```
+
+
+## Components
+### RouterView
+The router will replace the loading view with the page component.
+```coffee
+render: ->
+  <RouterView>
+    <p className="text-center text-muted h3" style={padding: '20px 0'}>
+      <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
+    </p>
+  </RouterView>
+```
+
+### Link
+Render a SPA link element.
+```coffee
+render: ->
+  <Link href={"/users/#{user.id}"}>{user.id}</Link>
 ```
