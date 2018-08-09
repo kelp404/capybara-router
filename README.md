@@ -1,5 +1,5 @@
 # capybara-router
-This is a react router without flux, redux.  
+This is a react router without flux or redux.  
 We just want a simple way to build a Single Page Application.
 
 <img src="_capybara.jpg" height="400px"/>
