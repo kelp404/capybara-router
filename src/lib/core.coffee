@@ -103,6 +103,7 @@ core =
       props.params = params
       routeChaining = currentRoute.parents.slice()
       routeChaining.push currentRoute
+      routeChaining[0].onEnter? props
       core.views[0].routerView.dispatch
         route: routeChaining[0]
         props: props
@@ -165,6 +166,7 @@ core =
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
+      nextRouteChaining[changeViewIndex].onEnter? props
       core.views.splice changeViewIndex + 1
       core.views[changeViewIndex].name = nextRouteChaining[changeViewIndex].name
       core.views[changeViewIndex].routerView.dispatch
@@ -211,6 +213,7 @@ core =
     core.promise.then ([action, previousRoute, previousParams, targetRoute, nextParams, props]) ->
       routeChaining = targetRoute.parents.slice()
       routeChaining.push targetRoute
+      routeChaining[viewsIndex].onEnter? props
       routerView.dispatch
         route: routeChaining[viewsIndex]
         props: props
@@ -264,6 +267,7 @@ core =
       routeChaining.push route
       core.views.splice 1
       for view, index in core.views
+        routeChaining[index].onEnter? props
         view.routerView.dispatch
           route: routeChaining[index]
           props: props

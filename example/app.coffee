@@ -31,11 +31,15 @@ capybaraRouter.setup
     {
       name: 'web.home'
       uri: '/'
+      onEnter: ->
+        document.title = 'Home - capybara-router'
       component: Home
     }
     {
       name: 'web.users'
       uri: '/users'
+      onEnter: ->
+        document.title = 'Users - capybara-router'
       resolve:
         users: ->
           axios
@@ -48,6 +52,8 @@ capybaraRouter.setup
     {
       name: 'web.user'
       uri: '/users/{userId:[\\w-]{20}}'
+      onEnter: (props) ->
+        document.title = "#{props.user.name} - Users - capybara-router"
       resolve:
         user: (params) ->
           axios
