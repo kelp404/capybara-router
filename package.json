@@ -1,6 +1,6 @@
 {
   "name": "capybara-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Unfancy react router.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "react",
     "router"
   ],
-  "author": "",
+  "author": "Kelp <kelp@phate.org>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kelp404/capybara-router/issues"
