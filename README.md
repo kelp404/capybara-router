@@ -78,6 +78,15 @@ setup = (args = {}) ->
   @param args {object}
     history {history}
     routes {list<route>}
+      [
+        name {string}
+        uri {string}
+        isAbstract {bool}
+        onEnter {function}
+        resolve {object}
+          "resourceName": {Promise<response.data>}
+        component {React.Component}
+      ]
     errorComponent {React.Component}
   ###
 ```
