@@ -1,4 +1,5 @@
 # capybara-router
+[![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)  
 This is a react router without flux and redux.  
 We just want a simple way to build a Single Page Application.
 
