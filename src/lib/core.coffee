@@ -9,6 +9,7 @@ core =
   views: []
   currentRoute: null
   isSkipNextHistoryChange: no
+  isReloadNextHistoryChange: no
   promise: null  # fetch resolve data promise [history.action, previousRoute, previousParams, nextRoute, nextParams, props]
   lastParams: null
   lastResolveData: null
@@ -143,6 +144,9 @@ core =
     @param location {history.location}
     @param action {string|null} PUSH, REPLACE, POP, RELOAD, INITIAL
     ###
+    isReloadNextHistoryChange = core.isReloadNextHistoryChange
+    if isReloadNextHistoryChange
+      core.isReloadNextHistoryChange = no
     if core.isSkipNextHistoryChange
       core.isSkipNextHistoryChange = no
       return
@@ -154,9 +158,10 @@ core =
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
     changeViewIndex = 0
-    for route, index in nextRouteChaining when route.name isnt core.views[index].name
-      changeViewIndex = index
-      break
+    if not isReloadNextHistoryChange
+      for route, index in nextRouteChaining when route.name isnt core.views[index].name
+        changeViewIndex = index
+        break
     isCancel = no
     core.broadcastStartEvent
       cancel: -> isCancel = yes
@@ -305,11 +310,14 @@ core =
       1. use href:
         href {string}
         replace {bool}
+        reload {bool}
       2. use route name with params:
         name {string}
         params {object}
         replace {bool}
+        reload {bool}
     ###
+    core.isReloadNextHistoryChange = yes if args.reload
     if args.href
       if "#{core.history.location.pathname}#{core.history.location.search}" is args.href
         core.reload()

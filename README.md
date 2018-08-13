@@ -108,10 +108,12 @@ go = (args = {}) ->
     1. use href:
       href {string}
       replace {bool}
+      reload {bool}
     2. use route name with params:
       name {string}
       params {object}
       replace {bool}
+      reload {bool}
   ###
 ```
 
