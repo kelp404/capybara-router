@@ -304,13 +304,17 @@ core =
     @param args {object}
       1. use href:
         href {string}
+        replace {bool}
       2. use route name with params:
         name {string}
         params {object}
+        replace {bool}
     ###
     if args.href
       if "#{core.history.location.pathname}#{core.history.location.search}" is args.href
         core.reload()
+      else if args.replace
+        core.history.replace args.href
       else
         core.history.push args.href
     else
@@ -318,6 +322,8 @@ core =
       href = core.generateHref route, args.params
       if "#{core.history.location.pathname}#{core.history.location.search}" is href
         core.reload()
+      else if args.replace
+        core.history.replace href
       else
         core.history.push href
 

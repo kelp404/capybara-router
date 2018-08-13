@@ -107,9 +107,11 @@ go = (args = {}) ->
   @param args {object}
     1. use href:
       href {string}
+      replace {bool}
     2. use route name with params:
       name {string}
       params {object}
+      replace {bool}
   ###
 ```
 
