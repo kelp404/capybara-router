@@ -1,4 +1,5 @@
 # capybara-router
+[![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)  
 This is a react router without flux and redux.  
 We just want a simple way to build a Single Page Application.
 
@@ -106,9 +107,13 @@ go = (args = {}) ->
   @param args {object}
     1. use href:
       href {string}
+      replace {bool}
+      reload {bool}
     2. use route name with params:
       name {string}
       params {object}
+      replace {bool}
+      reload {bool}
   ###
 ```
 

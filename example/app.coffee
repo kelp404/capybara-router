@@ -1,4 +1,4 @@
-require 'es6-promise/auto'
+require 'babel-polyfill'
 axios = require 'axios'
 history = require 'history'
 nprogress = require 'nprogress'
