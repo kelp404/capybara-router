@@ -172,7 +172,6 @@ core =
       nextParams: params
     if isCancel
       core.isSkipNextHistoryChange = yes
-      history.back()
       return
 
     core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex].name, core.lastResolveData).then (resolveData) ->
