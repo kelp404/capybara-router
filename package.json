@@ -1,6 +1,6 @@
 {
   "name": "capybara-router",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Unfancy react router.",
   "main": "index.js",
   "scripts": {
