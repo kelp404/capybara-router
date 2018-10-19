@@ -26,9 +26,9 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "history": "4.7.2",
-    "query-string": "5.1.1",
-    "react": "16.4.2",
-    "react-dom": "16.4.2"
+    "query-string": "6.2.0",
+    "react": "16.5.2",
+    "react-dom": "16.5.2"
   },
   "devDependencies": {
     "axios": "0.18.0",
@@ -38,7 +38,7 @@
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
     "config": "2.0.1",
-    "express": "4.16.3",
+    "express": "4.16.4",
     "grunt": "1.0.3",
     "grunt-coffee-react": "5.0.2",
     "grunt-contrib-watch": "1.1.0",
@@ -48,8 +48,8 @@
     "nprogress": "0.2.0",
     "prop-types": "15.6.2",
     "time-grunt": "1.4.0",
-    "webpack": "4.16.4",
-    "webpack-cli": "3.1.0",
-    "webpack-dev-server": "3.1.5"
+    "webpack": "4.21.0",
+    "webpack-cli": "3.1.2",
+    "webpack-dev-server": "3.1.9"
   }
 }
