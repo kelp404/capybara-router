@@ -52,10 +52,8 @@ core =
 
     uriPattern = args.uri
     hrefTemplate = args.uri
-    uriParamPatterns = args.uri.match /\{[\w]+:(?:(?!\/).)+/g
     # args.uri: '/projects/{projectId:[\w-]{20}}'
-    # uriParamPatterns: ['{projectId:[\w-]{20}}']
-    for uriParamPattern in uriParamPatterns ? []
+    for uriParamPattern in args.uri.match(/\{[\w]+:(?:(?!(\/|\?\w+)).)+/g) ? []
       # uriParamPattern: '{projectId:[\w-]{20}}'
       match = uriParamPattern.match /^\{([\w]+):((?:(?!\/).)*)\}$/
       # match: ['{projectId:[w-]{20}}', 'projectId', '[w-]{20}', ...]
