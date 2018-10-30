@@ -27,8 +27,8 @@
     "babel-polyfill": "6.26.0",
     "history": "4.7.2",
     "query-string": "6.2.0",
-    "react": "16.5.2",
-    "react-dom": "16.5.2"
+    "react": "16.6.0",
+    "react-dom": "16.6.0"
   },
   "devDependencies": {
     "axios": "0.18.0",
@@ -48,8 +48,8 @@
     "nprogress": "0.2.0",
     "prop-types": "15.6.2",
     "time-grunt": "1.4.0",
-    "webpack": "4.21.0",
+    "webpack": "4.23.1",
     "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.1.9"
+    "webpack-dev-server": "3.1.10"
   }
 }
