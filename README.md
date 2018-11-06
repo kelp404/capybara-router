@@ -71,6 +71,15 @@ ReactDOM.render(
 ```
 
 
+## Commands
++ `npm start`  
+  Run the debug server on localhost.
++ `npm run build`  
+  Build the source code, test scripts and the example app.
++ `npm test`  
+  Build test scripts and run tests.
+
+
 ## API
 ### setup()
 ```coffee
