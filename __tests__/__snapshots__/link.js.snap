@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link component render 1`] = `
+<a
+  href="https://github.com"
+  onClick={[Function]}
+>
+  GitHub
+</a>
+`;
