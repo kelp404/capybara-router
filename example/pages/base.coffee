@@ -20,7 +20,7 @@ module.exports = class Base extends React.Component
       homeLink: classNames active: @state.currentRouteName is 'web.home'
       usersLink: classNames active: @state.currentRouteName in ['web.users', 'web.user']
 
-    <div>
+    <React.Fragment>
       <nav className="navbar navbar-default">
         <div className="container">
           <div className="navbar-header">
@@ -52,4 +52,4 @@ module.exports = class Base extends React.Component
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>

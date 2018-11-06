@@ -10,14 +10,15 @@ module.exports = (grunt) ->
       'cjsx'
       'parallel:develop'
     ]
-  grunt.registerTask 'build', ->
-    grunt.task.run [
-      'cjsx'
-    ]
+  grunt.registerTask 'build', [
+    'cjsx:exampleServer'
+    'cjsx:router'
+  ]
+  grunt.registerTask 'buildTest', ['cjsx:test']
 
   grunt.config.init
     cjsx:
-      node:
+      exampleServer:
         expand: true
         flatten: no
         cwd: 'example'
@@ -34,6 +35,15 @@ module.exports = (grunt) ->
           path.join '**', '*.coffee'
         ]
         dest: '.'
+        ext: '.js'
+      test:
+        expand: true
+        flatten: no
+        cwd: '__tests__'
+        src: [
+          '**/*.coffee'
+        ]
+        dest: '__tests__'
         ext: '.js'
     watch:
       router:

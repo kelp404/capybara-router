@@ -1,6 +1,9 @@
 # OS X
 .DS_Store
 
+# tests
+__tests__/**/*.js
+
 # node modules
 node_modules
 package-lock.json
