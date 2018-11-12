@@ -1,6 +1,6 @@
 React = require 'react'
 renderer = require 'react-test-renderer'
-router = require '../'
+router = require '../../'
 
 
 test 'Link component render', ->
