@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RouterView component render with a child component. 1`] = `
+<div
+  class="head"
+>
+  child
+</div>
+`;
+
+exports[`RouterView component render. 1`] = `
+<div>
+  Loading
+</div>
+`;
