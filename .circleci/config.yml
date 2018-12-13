@@ -32,10 +32,10 @@ jobs:
   node11:
     working_directory: ~/capybara-router
     docker:
-    - image: node:11.1.0
+      - image: node:11.1.0
     steps:
-    - checkout
-    - run: npm install -g grunt-cli
-    - run: npm install
-    - run: npm run build
-    - run: npm test
+      - checkout
+      - run: npm install -g grunt-cli
+      - run: npm install
+      - run: npm run build
+      - run: npm test
