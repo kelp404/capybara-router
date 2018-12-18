@@ -31,15 +31,15 @@ module.exports = class Base extends React.Component
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link className="navbar-brand" href="/capybara-router/">capybara-router</Link>
+            <Link className="navbar-brand" to="/capybara-router/">capybara-router</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className={classTable.homeLink}><Link href="/capybara-router/">Home</Link></li>
-              <li className={classTable.usersLink}><Link href="/capybara-router/users">Users</Link></li>
-              <li><Link href="/capybara-router/404">404</Link></li>
-              <li><Link href="/capybara-router/error">Error</Link></li>
+              <li className={classTable.homeLink}><Link to="/capybara-router/">Home</Link></li>
+              <li className={classTable.usersLink}><Link to="/capybara-router/users">Users</Link></li>
+              <li><Link to="/capybara-router/404">404</Link></li>
+              <li><Link to="/capybara-router/error">Error</Link></li>
             </ul>
           </div>
         </div>

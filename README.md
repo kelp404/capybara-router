@@ -113,18 +113,17 @@ reload = ->
 
 ### go()
 ```coffee
-go = (args = {}) ->
+go = (target, options = {}) ->
   ###
-  @param args {object}
-    1. use href:
-      href {string}
-      replace {bool}
-      reload {bool}
-    2. use route name with params:
+  @param target {string|object}
+    1. {string}:
+      The target is the URI.
+    2. {object}:
       name {string}
       params {object}
-      replace {bool}
-      reload {bool}
+  @param options {object}
+    replace {bool}
+    reload {bool}
   ###
 ```
 
@@ -158,5 +157,5 @@ render: ->
 Render a SPA link element.
 ```coffee
 render: ->
-  <Link href={"/users/#{user.id}"}>{user.id}</Link>
+  <Link to={"/users/#{user.id}"}>{user.id}</Link>
 ```
