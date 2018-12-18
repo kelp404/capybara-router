@@ -47,7 +47,7 @@ router.setup({
         data: (params) => {
           axios({
             method: 'get',
-            url: "/data/#{params.id}.json"
+            url: `/data/${params.id}.json`
           }).then((response) => {
             return response.data;
           });
