@@ -301,33 +301,32 @@ core =
             error: error
       core.broadcastErrorEvent error
 
-  go: (args = {}) ->
+  go: (target, options = {}) ->
     ###
-    @param args {object}
-      1. use href:
-        href {string}
-        replace {bool}
-        reload {bool}
-      2. use route name with params:
+    @param target {string|object}
+      1. {string}:
+        The target is the URI.
+      2. {object}:
         name {string}
         params {object}
-        replace {bool}
-        reload {bool}
+    @param options {object}
+      replace {bool}
+      reload {bool}
     ###
-    core.isReloadNextHistoryChange = yes if args.reload
-    if args.href
-      if "#{core.history.location.pathname}#{core.history.location.search}" is args.href
+    core.isReloadNextHistoryChange = yes if options.reload
+    if typeof(target) is 'string'
+      if "#{core.history.location.pathname}#{core.history.location.search}" is target
         core.reload()
-      else if args.replace
-        core.history.replace args.href
+      else if options.replace
+        core.history.replace target
       else
-        core.history.push args.href
+        core.history.push target
     else
-      route = core.findRouteByName args.name, core.routes
-      href = core.generateHref route, args.params
+      route = core.findRouteByName target.name, core.routes
+      href = core.generateHref route, target.params
       if "#{core.history.location.pathname}#{core.history.location.search}" is href
         core.reload()
-      else if args.replace
+      else if options.replace
         core.history.replace href
       else
         core.history.push href

@@ -21,7 +21,7 @@ module.exports = class Users extends React.Component
           @props.users.items.map (user) ->
             <tr key={user.id}>
               <td>
-                <Link href={"/capybara-router/users/#{user.id}"}>{user.id}</Link>
+                <Link to={"/capybara-router/users/#{user.id}"}>{user.id}</Link>
               </td>
               <td>{user.name}</td>
               <td>{user.email}</td>
