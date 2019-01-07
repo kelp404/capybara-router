@@ -87,15 +87,15 @@ ReactDOM.render(
 ```coffee
 setup = (args = {}) ->
   ###
-  @param args {object}
+  @param args {Object}
     history {history}
-    routes {list<route>}
+    routes {Array<routeConfig>}
       [
         name {string}
         uri {string}
         isAbstract {bool}
         onEnter {function}
-        resolve {object}
+        resolve {Object}
           "resourceName": {Promise<response.data>}
         component {React.Component}
       ]
@@ -115,13 +115,13 @@ reload = ->
 ```coffee
 go = (target, options = {}) ->
   ###
-  @param target {string|object}
+  @param target {string|Object}
     1. {string}:
       The target is the URI.
-    2. {object}:
+    2. {Object}:
       name {string}
-      params {object}
-  @param options {object}
+      params {Object}
+  @param options {Object}
     replace {bool}
     reload {bool}
   ###
