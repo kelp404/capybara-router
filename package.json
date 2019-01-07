@@ -28,8 +28,8 @@
     "history": "4.7.2",
     "prop-types": "15.6.2",
     "query-string": "6.2.0",
-    "react": "16.6.3",
-    "react-dom": "16.6.3"
+    "react": "16.7.0",
+    "react-dom": "16.7.0"
   },
   "devDependencies": {
     "axios": "0.18.0",
@@ -48,10 +48,10 @@
     "load-grunt-tasks": "4.0.0",
     "npm-check-updates": "2.15.0",
     "nprogress": "0.2.0",
-    "react-test-renderer": "16.6.3",
+    "react-test-renderer": "16.7.0",
     "time-grunt": "2.0.0",
-    "webpack": "4.27.1",
+    "webpack": "4.28.3",
     "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.1.10"
+    "webpack-dev-server": "3.1.14"
   }
 }

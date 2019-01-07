@@ -1,16 +1,39 @@
 queryString = require 'query-string'
+Route = require './route'
 
 
 core =
-  historyListener: null
+  ###
+  The browser history.
+  ###
   history: null
+  historyListener: null
+
+  ###
+  The router rules.
+  {Array<Route>}
+  ###
   routes: []
+
+  ###
+  The react component for the error page.
+  ###
   errorComponent: null
+
+  ###
+  The display views. The first is the root view.
+  ###
   views: []
+
   currentRoute: null
   isSkipNextHistoryChange: no
   isReloadNextHistoryChange: no
-  promise: null  # fetch resolve data promise [history.action, previousRoute, previousParams, nextRoute, nextParams, props]
+
+  ###
+  Fetch resolve data promise.
+  {Promise<[history.action, previousRoute, previousParams, nextRoute, nextParams, props]>}
+  ###
+  promise: null
   lastParams: null
   lastResolveData: null
   eventHandlers:
@@ -20,68 +43,35 @@ core =
 
   generateRoute: (args = {}, routes) ->
     ###
-    @param args {object}
+    @param args {Object}
       isAbstract {bool}
       name {string}
       uri {string}
       onEnter {function}
-      resolve {object}
+      resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
+    @param routes {Array<Route>}
     @returns {Route}
-      uriParamKeys {list<string>}  ex: ['projectId', '?index']  (with parents)
-      matchPattern {string}  ex: '/projects/([\w-]{20})'  (with parents)
-      matchReg {RegExp} The regexp for .match()  ex: /^\/projects\/([\w-]{20})$/  (with parents)
-      hrefTemplate {string} The template for generating href.  ex: '/projects/{projectId}'  (with parents)
-      parents {list<route>}
     ###
-    args.resolve ?= {}
     if args.name.indexOf('.') > 0
       # there are parents of this route
       parentRoute = core.findRouteByName args.name.substr(0, args.name.lastIndexOf('.')), routes
-      args.uriParamKeys = parentRoute.uriParamKeys.slice()
-      args.matchPattern = parentRoute.matchPattern
-      args.hrefTemplate = parentRoute.hrefTemplate
-      args.parents = parentRoute.parents.slice()
-      args.parents.push parentRoute
+      new Route(args, parentRoute)
     else
-      args.uriParamKeys = []
-      args.matchPattern = ''
-      args.hrefTemplate = ''
-      args.parents = []
-
-    uriPattern = args.uri
-    hrefTemplate = args.uri
-    # args.uri: '/projects/{projectId:[\w-]{20}}'
-    for uriParamPattern in args.uri.match(/\{[\w]+:(?:(?!(\/|\?\w+)).)+/g) ? []
-      # uriParamPattern: '{projectId:[\w-]{20}}'
-      match = uriParamPattern.match /^\{([\w]+):((?:(?!\/).)*)\}$/
-      # match: ['{projectId:[w-]{20}}', 'projectId', '[w-]{20}', ...]
-      args.uriParamKeys.push match[1]
-      uriPattern = uriPattern.replace uriParamPattern, "(#{match[2]})"
-      # uriPattern: '/projects/([w-]{20})'
-      hrefTemplate = hrefTemplate.replace uriParamPattern, "{#{match[1]}}"
-      # hrefTemplate: '/projects/{projectId}'
-    for uriQueryString in args.uri.match(/\?[\w-]+/g) ? []
-      uriPattern = uriPattern.replace uriQueryString, ''
-      hrefTemplate = hrefTemplate.replace uriQueryString, ''
-      args.uriParamKeys.push uriQueryString
-    args.matchPattern += uriPattern
-    args.matchReg = new RegExp("^#{args.matchPattern}$")
-    args.hrefTemplate += hrefTemplate
-    args
+      new Route(args)
 
   setup: (args = {}) ->
     ###
-    @param args {object}
+    @param args {Object}
       history {history}
-      routes {list<route>}
+      routes {Array<routeConfig>}
         [
           name {string}
           uri {string}
           isAbstract {bool}
           onEnter {function}
-          resolve {object}
+          resolve {Object}
             "resourceName": {Promise<response.data>}
           component {React.Component}
         ]
@@ -303,13 +293,13 @@ core =
 
   go: (target, options = {}) ->
     ###
-    @param target {string|object}
+    @param target {string|Object}
       1. {string}:
         The target is the URI.
-      2. {object}:
+      2. {Object}:
         name {string}
-        params {object}
-    @param options {object}
+        params {Object}
+    @param options {Object}
       replace {bool}
       reload {bool}
     ###
@@ -323,23 +313,23 @@ core =
         core.history.push target
     else
       route = core.findRouteByName target.name, core.routes
-      href = core.generateHref route, target.params
-      if "#{core.history.location.pathname}#{core.history.location.search}" is href
+      uri = core.generateUri route, target.params
+      if "#{core.history.location.pathname}#{core.history.location.search}" is uri
         core.reload()
       else if options.replace
-        core.history.replace href
+        core.history.replace uri
       else
-        core.history.push href
+        core.history.push uri
 
   broadcastStartEvent: (args = {}) ->
     ###
-    @params args {object}
+    @params args {Object}
       action {string}  PUSH, REPLACE, POP, RELOAD, INITIAL
       cancel {function}  Eval this function to rollback history.
       previousRoute {Route}
-      previousParams {object|null}
+      previousParams {Object|null}
       nextRoute {Route}
-      nextParams {object|null}
+      nextParams {Object|null}
     ###
     if args.action?
       fromState =
@@ -355,12 +345,12 @@ core =
       handler.func args.action, toState, fromState, args.cancel
   broadcastSuccessEvent: (args = {}) ->
     ###
-    @params args {object}
+    @params args {Object}
       action {string}  PUSH, REPLACE, POP, RELOAD, INITIAL
       previousRoute {Route}
-      previousParams {object|null}
+      previousParams {Object|null}
       nextRoute {Route}
-      nextParams {object|null}
+      nextParams {Object|null}
     ###
     if args.action?
       fromState =
@@ -416,12 +406,12 @@ core =
   fetchResolveData: (route, params, reloadFrom = '', lastResolveData = {}) ->
     ###
     @param route {Route}
-    @param params {object}
+    @param params {Object} Params of the uri.
     @param reloadFrom {string} Reload data from this route name.
-    @param lastResolveData {object}
+    @param lastResolveData {Object}
       "route-name":
         "resolve-key": response
-    @returns {promise<object>}
+    @returns {Promise<Object>}
       "route-name":
         "resolve-key": response
     ###
@@ -462,7 +452,7 @@ core =
   findRouteByName: (name, routes) ->
     ###
     @param name {string}
-    @param routes {list<Route>}
+    @param routes {Array<Route>}
     @returns {Route|null}
     ###
     for route in routes when name is route.name
@@ -480,28 +470,31 @@ core =
       return route
     null
 
-  generateHref: (route, params = {}) ->
+  generateUri: (route, params = {}) ->
     ###
     @param route {Route}
-    @param params {object}
+    @param params {Object}
     @returns {string}
     ###
-    href = route.hrefTemplate
+    uri = route.uriTemplate
     query = {}
     for key, value of params
-      if href.indexOf("{#{key}}") >= 0
-        href = href.replace "{#{key}}", value
+      if uri.indexOf("{#{key}}") >= 0
+        uri = uri.replace "{#{key}}", value
       else
         query[key] = value
     if Object.keys(query).length
-      "#{href}?#{queryString.stringify(query)}"
+      "#{uri}?#{queryString.stringify(query)}"
     else
-      href
+      uri
 
   parseRouteParams: (location, route) ->
     ###
+    Parse params from the uri (path and query string).
     @param location {history.location}
     @param route {Route}
+    @returns {Object}
+      "paramKey": {string}
     ###
     result = {}
     match = location.pathname.match new RegExp("^#{route.matchPattern}")
@@ -509,16 +502,18 @@ core =
     uriParamsIndex = 0
     for paramKey in route.uriParamKeys
       if paramKey.indexOf('?') is 0
+        # From query string.
         paramKey = paramKey.substr 1
         result[paramKey] = parsedSearch[paramKey]
       else
+        # In uri path.
         result[paramKey] = match[++uriParamsIndex]
     result
 
   mergeResolve: (route) ->
     ###
     @param route {Route}
-    @returns {object}
+    @returns {Object}
     ###
     result = {}
     for key, value of route.resolve
