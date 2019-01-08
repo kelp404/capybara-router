@@ -27,7 +27,7 @@ module.exports = class Route
     ###
     @name = args.name
     @uri = args.uri
-    @isAbstract = args.isAbstract
+    @isAbstract = args.isAbstract ? false
     @onEnter = args.onEnter
     @resolve = args.resolve ? {}
     @component = args.component
