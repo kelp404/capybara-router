@@ -417,28 +417,31 @@ core =
     ###
     routeChaining = route.parents.slice()
     routeChaining.push route
-    taskKeys = []
+    taskInformation = []
     tasks = []
     for route in routeChaining
       if not reloadFrom or route.name.indexOf(reloadFrom) is 0
         # fetch from the server
         for key, value of route.resolve
-          taskKeys.push JSON.stringify(routeName: route.name, key: key)
+          taskInformation.push
+            routeName: route.name
+            key: key
           tasks.push value(params)
       else
         # use cache data
         for key, value of route.resolve
-          taskKeys.push JSON.stringify(routeName: route.name, key: key)
+          taskInformation.push
+            routeName: route.name
+            key: key
           if route.name of lastResolveData and key of lastResolveData[route.name]
             tasks.push lastResolveData[route.name][key]
           else
             tasks.push value(params)
     Promise.all(tasks).then (responses) ->
       result = {}
-      for taskKey, index in taskKeys
-        taskInfo = JSON.parse taskKey
-        result[taskInfo.routeName] ?= {}
-        result[taskInfo.routeName][taskInfo.key] = responses[index]
+      for information, index in taskInformation
+        result[information.routeName] ?= {}
+        result[information.routeName][information.key] = responses[index]
       result
 
   flattenResolveData: (resolveData) ->
@@ -508,19 +511,6 @@ core =
       else
         # In uri path.
         result[paramKey] = match[++uriParamsIndex]
-    result
-
-  mergeResolve: (route) ->
-    ###
-    @param route {Route}
-    @returns {Object}
-    ###
-    result = {}
-    for key, value of route.resolve
-      result[key] = value
-    route.parents.map (parent) ->
-      for key, value of parent.resolve
-        result[key] = value
     result
 
 module.exports = core

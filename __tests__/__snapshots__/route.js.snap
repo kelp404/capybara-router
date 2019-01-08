@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Initial Route without parent. 1`] = `
+Route {
+  "component": [Function],
+  "isAbstract": false,
+  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
+  "name": "web",
+  "onEnter": undefined,
+  "parents": Array [],
+  "resolve": Object {
+    "projects": [Function],
+    "user": [Function],
+  },
+  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index",
+  "uriParamKeys": Array [
+    "userId",
+    "?index",
+  ],
+  "uriTemplate": "/users/{userId}/projects",
+}
+`;

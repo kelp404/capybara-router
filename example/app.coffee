@@ -70,7 +70,7 @@ capybaraRouter.setup
         error: ->
           axios
             method: 'get'
-            url: '/capybara-router/not-exist-resource'
+            url: 'https://github.com/404'
     }
     {
       name: 'not-found'
