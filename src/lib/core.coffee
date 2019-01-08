@@ -513,17 +513,4 @@ core =
         result[paramKey] = match[++uriParamsIndex]
     result
 
-  mergeResolve: (route) ->
-    ###
-    @param route {Route}
-    @returns {Object}
-    ###
-    result = {}
-    for key, value of route.resolve
-      result[key] = value
-    route.parents.map (parent) ->
-      for key, value of parent.resolve
-        result[key] = value
-    result
-
 module.exports = core
