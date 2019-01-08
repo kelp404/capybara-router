@@ -92,9 +92,13 @@ core =
     # fetch resolve data
     core.currentRoute = currentRoute = core.getCurrentRoute()
     params = utils.parseRouteParams core.history.location, currentRoute
+    isCancel = no
     core.broadcastStartEvent
+      cancel: -> isCancel = yes
       nextRoute: currentRoute
       nextParams: params
+    if isCancel
+      return
 
     core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData).then (resolveData) ->
       core.lastResolveData = resolveData
@@ -147,7 +151,7 @@ core =
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
     changeViewIndex = 0
-    if not isReloadNextHistoryChange
+    if core.promise and not isReloadNextHistoryChange
       for route, index in nextRouteChaining when route.name isnt core.views[index].name
         changeViewIndex = index
         break
@@ -208,11 +212,14 @@ core =
     routeChaining = core.currentRoute.parents.slice()
     routeChaining.push core.currentRoute
     viewsIndex = core.views.length
+    if viewsIndex >= routeChaining.length
+      # The template use <RouterView> but not register in the routes.
+      return
     core.views.push
       name: routeChaining[viewsIndex].name
       routerView: routerView
 
-    core.promise.then ([action, previousRoute, previousParams, targetRoute, nextParams, props]) ->
+    core.promise?.then ([action, previousRoute, previousParams, targetRoute, nextParams, props]) ->
       routeChaining = targetRoute.parents.slice()
       routeChaining.push targetRoute
       routeChaining[viewsIndex].onEnter? props
