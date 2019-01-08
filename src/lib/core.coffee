@@ -1,4 +1,5 @@
 queryString = require 'query-string'
+utils = require './utils'
 Route = require './route'
 
 
@@ -90,7 +91,7 @@ core =
 
     # fetch resolve data
     core.currentRoute = currentRoute = core.getCurrentRoute()
-    params = core.parseRouteParams core.history.location, currentRoute
+    params = utils.parseRouteParams core.history.location, currentRoute
     core.broadcastStartEvent
       nextRoute: currentRoute
       nextParams: params
@@ -142,7 +143,7 @@ core =
     previousRoute = core.currentRoute
     previousParams = core.lastParams
     nextRoute = core.findRoute location
-    params = core.parseRouteParams location, nextRoute
+    params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
     changeViewIndex = 0
@@ -249,7 +250,7 @@ core =
     Reload root router view.
     ###
     route = core.currentRoute
-    params = core.parseRouteParams core.history.location, route
+    params = utils.parseRouteParams core.history.location, route
     isCancel = no
     core.broadcastStartEvent
       cancel: -> isCancel = yes
@@ -490,27 +491,5 @@ core =
       "#{uri}?#{queryString.stringify(query)}"
     else
       uri
-
-  parseRouteParams: (location, route) ->
-    ###
-    Parse params from the uri (path and query string).
-    @param location {history.location}
-    @param route {Route}
-    @returns {Object}
-      "paramKey": {string}
-    ###
-    result = {}
-    match = location.pathname.match new RegExp("^#{route.matchPattern}")
-    parsedSearch = queryString.parse location.search
-    uriParamsIndex = 0
-    for paramKey in route.uriParamKeys
-      if paramKey.indexOf('?') is 0
-        # From query string.
-        paramKey = paramKey.substr 1
-        result[paramKey] = parsedSearch[paramKey]
-      else
-        # In uri path.
-        result[paramKey] = match[++uriParamsIndex]
-    result
 
 module.exports = core
