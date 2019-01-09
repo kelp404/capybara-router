@@ -492,21 +492,21 @@ core =
     Find the route in routes by the route name.
     @param name {string}
     @param routes {Array<Route>}
-    @returns {Route|null}
+    @returns {Route}
     ###
     for route in routes when name is route.name
       return route
-    null
+    throw new Error("Not found the route called #{name}.")
 
   findRoute: (location) ->
     ###
     Find the route in core.routes by the location.
     @param location {location}
-    @returns {Route|null}
+    @returns {Route}
     ###
     for route in core.routes when route.matchReg.test(location.pathname)
       continue if route.isAbstract
       return route
-    null
+    throw new Error("Please define the not found page {uri: '.*'}.")
 
 module.exports = core
