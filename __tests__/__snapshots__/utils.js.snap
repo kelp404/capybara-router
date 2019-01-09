@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generate the URI of the route with params 1`] = `"/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc"`;
+
+exports[`Parse params from the location. 1`] = `
+Object {
+  "index": "0",
+  "sort": "asc",
+  "userId": "AWgrmJp1SjjuUM2bzZXM",
+}
+`;

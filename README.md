@@ -87,6 +87,8 @@ ReactDOM.render(
 ```coffee
 setup = (args = {}) ->
   ###
+  Setup the router.
+  Note: Don't use 'key', 'params' as the key of the resolve.
   @param args {Object}
     history {history}
     routes {Array<routeConfig>}

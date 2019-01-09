@@ -7,7 +7,6 @@ module.exports = class RouterView extends React.Component
     @state =
       component: null
       props: null
-  componentWillMount: ->
     core.registerRouterView @
   dispatch: (args = {}) ->
     @setState

@@ -1,4 +1,4 @@
-queryString = require 'query-string'
+utils = require './utils'
 Route = require './route'
 
 
@@ -54,6 +54,9 @@ core =
     @param routes {Array<Route>}
     @returns {Route}
     ###
+    reservedWords = ['key', 'params']
+    for key in Object.keys(args.resolve ? {}) when key in reservedWords
+      throw new Error("Don't use #{reservedWords.join(', ')} as the key of the resolve.")
     if args.name.indexOf('.') > 0
       # there are parents of this route
       parentRoute = core.findRouteByName args.name.substr(0, args.name.lastIndexOf('.')), routes
@@ -63,6 +66,8 @@ core =
 
   setup: (args = {}) ->
     ###
+    Setup the router.
+    Note: Don't use 'key', 'params' as the key of the resolve.
     @param args {Object}
       history {history}
       routes {Array<routeConfig>}
@@ -90,12 +95,16 @@ core =
 
     # fetch resolve data
     core.currentRoute = currentRoute = core.getCurrentRoute()
-    params = core.parseRouteParams core.history.location, currentRoute
+    params = utils.parseRouteParams core.history.location, currentRoute
+    isCancel = no
     core.broadcastStartEvent
+      cancel: -> isCancel = yes
       nextRoute: currentRoute
       nextParams: params
+    if isCancel
+      return
 
-    core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData).then (resolveData) ->
+    core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData, core.history).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -118,6 +127,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views[0].name = null
         core.views[0].routerView.dispatch
@@ -142,11 +152,11 @@ core =
     previousRoute = core.currentRoute
     previousParams = core.lastParams
     nextRoute = core.findRoute location
-    params = core.parseRouteParams location, nextRoute
+    params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
     changeViewIndex = 0
-    if not isReloadNextHistoryChange
+    if core.promise and not isReloadNextHistoryChange
       for route, index in nextRouteChaining when route.name isnt core.views[index].name
         changeViewIndex = index
         break
@@ -162,7 +172,7 @@ core =
       core.isSkipNextHistoryChange = yes
       return
 
-    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex].name, core.lastResolveData).then (resolveData) ->
+    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex]?.name, core.lastResolveData, core.history).then (resolveData) ->
       core.currentRoute = nextRoute
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
@@ -189,6 +199,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views.splice 1
         core.views[0].name = null
@@ -207,11 +218,14 @@ core =
     routeChaining = core.currentRoute.parents.slice()
     routeChaining.push core.currentRoute
     viewsIndex = core.views.length
+    if viewsIndex >= routeChaining.length
+      # The template use <RouterView> but not register in the routes.
+      return
     core.views.push
       name: routeChaining[viewsIndex].name
       routerView: routerView
 
-    core.promise.then ([action, previousRoute, previousParams, targetRoute, nextParams, props]) ->
+    core.promise?.then ([action, previousRoute, previousParams, targetRoute, nextParams, props]) ->
       routeChaining = targetRoute.parents.slice()
       routeChaining.push targetRoute
       routeChaining[viewsIndex].onEnter? props
@@ -249,7 +263,7 @@ core =
     Reload root router view.
     ###
     route = core.currentRoute
-    params = core.parseRouteParams core.history.location, route
+    params = utils.parseRouteParams core.history.location, route
     isCancel = no
     core.broadcastStartEvent
       cancel: -> isCancel = yes
@@ -260,7 +274,7 @@ core =
       nextParams: params
     return if isCancel
 
-    core.promise = core.fetchResolveData(route, params, '', null).then (resolveData) ->
+    core.promise = core.fetchResolveData(route, params, '', {}, core.history).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -281,6 +295,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views.splice 1
         core.views[0].name = null
@@ -313,7 +328,7 @@ core =
         core.history.push target
     else
       route = core.findRouteByName target.name, core.routes
-      uri = core.generateUri route, target.params
+      uri = utils.generateUri route, target.params
       if "#{core.history.location.pathname}#{core.history.location.search}" is uri
         core.reload()
       else if options.replace
@@ -373,6 +388,7 @@ core =
 
   listen: (event, func) ->
     ###
+    Listen the change event.
     @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
     @param func {function}
       ChangeStart: (action, toState, fromState, cancel) ->
@@ -403,18 +419,22 @@ core =
     ###
     core.findRoute core.history.location
 
-  fetchResolveData: (route, params, reloadFrom = '', lastResolveData = {}) ->
+  fetchResolveData: (route, params, reloadFrom = '', lastResolveData, history) ->
     ###
+    Fetch data of the route.
+    Note: When the user go to the other route before the promise was done, the old one will throw null.
     @param route {Route}
     @param params {Object} Params of the uri.
     @param reloadFrom {string} Reload data from this route name.
     @param lastResolveData {Object}
       "route-name":
         "resolve-key": response
+    @param history {history}
     @returns {Promise<Object>}
       "route-name":
         "resolve-key": response
     ###
+    uri = "#{history.location.pathname}#{history.location.search}"
     routeChaining = route.parents.slice()
     routeChaining.push route
     taskInformation = []
@@ -438,13 +458,28 @@ core =
           else
             tasks.push value(params)
     Promise.all(tasks).then (responses) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
       result = {}
       for information, index in taskInformation
         result[information.routeName] ?= {}
         result[information.routeName][information.key] = responses[index]
       result
+    .catch (error) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
+      throw error
 
   flattenResolveData: (resolveData) ->
+    ###
+    Flatten resolve data and append a random key for the react component.
+    @params resolveData {Object}
+    @returns {Object}
+      "key": {string}
+      "resolveResourceName": {Object}
+    ###
     result =
       key: Math.random().toString(36).substr(2)
     for routeName of resolveData
@@ -454,63 +489,24 @@ core =
 
   findRouteByName: (name, routes) ->
     ###
+    Find the route in routes by the route name.
     @param name {string}
     @param routes {Array<Route>}
-    @returns {Route|null}
+    @returns {Route}
     ###
     for route in routes when name is route.name
       return route
-    null
+    throw new Error("Not found the route called #{name}.")
 
   findRoute: (location) ->
     ###
-    Find the route with location in core.routes.
+    Find the route in core.routes by the location.
     @param location {location}
-    @returns {Route|null}
+    @returns {Route}
     ###
     for route in core.routes when route.matchReg.test(location.pathname)
       continue if route.isAbstract
       return route
-    null
-
-  generateUri: (route, params = {}) ->
-    ###
-    @param route {Route}
-    @param params {Object}
-    @returns {string}
-    ###
-    uri = route.uriTemplate
-    query = {}
-    for key, value of params
-      if uri.indexOf("{#{key}}") >= 0
-        uri = uri.replace "{#{key}}", value
-      else
-        query[key] = value
-    if Object.keys(query).length
-      "#{uri}?#{queryString.stringify(query)}"
-    else
-      uri
-
-  parseRouteParams: (location, route) ->
-    ###
-    Parse params from the uri (path and query string).
-    @param location {history.location}
-    @param route {Route}
-    @returns {Object}
-      "paramKey": {string}
-    ###
-    result = {}
-    match = location.pathname.match new RegExp("^#{route.matchPattern}")
-    parsedSearch = queryString.parse location.search
-    uriParamsIndex = 0
-    for paramKey in route.uriParamKeys
-      if paramKey.indexOf('?') is 0
-        # From query string.
-        paramKey = paramKey.substr 1
-        result[paramKey] = parsedSearch[paramKey]
-      else
-        # In uri path.
-        result[paramKey] = match[++uriParamsIndex]
-    result
+    throw new Error("Please define the not found page {uri: '.*'}.")
 
 module.exports = core
