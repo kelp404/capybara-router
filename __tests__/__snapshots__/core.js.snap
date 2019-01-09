@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Find the route by the location. 1`] = `
+Route {
+  "component": undefined,
+  "isAbstract": false,
+  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
+  "name": "web",
+  "onEnter": undefined,
+  "parents": Array [],
+  "resolve": Object {},
+  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
+  "uriParamKeys": Array [
+    "userId",
+    "?index",
+    "?sort",
+  ],
+  "uriTemplate": "/users/{userId}/projects",
+}
+`;
