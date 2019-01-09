@@ -489,7 +489,7 @@ core =
 
   findRouteByName: (name, routes) ->
     ###
-    Find the route in core.routes by the route name.
+    Find the route in routes by the route name.
     @param name {string}
     @param routes {Array<Route>}
     @returns {Route|null}

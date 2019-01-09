@@ -2,6 +2,17 @@ history = require 'history'
 core = require '../lib/core'
 
 
+test 'Find the route by the name.', ->
+  core.setup
+    history: history.createMemoryHistory
+      initialEntries: ['/']
+    routes: [
+      name: 'web'
+      uri: '/'
+    ]
+  route = core.findRouteByName 'web', core.routes
+  expect(route).toMatchSnapshot()
+
 test 'Find the route by the location.', ->
   core.setup
     history: history.createMemoryHistory

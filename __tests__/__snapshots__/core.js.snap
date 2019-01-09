@@ -19,3 +19,19 @@ Route {
   "uriTemplate": "/users/{userId}/projects",
 }
 `;
+
+exports[`Find the route by the name. 1`] = `
+Route {
+  "component": undefined,
+  "isAbstract": false,
+  "matchPattern": "/",
+  "matchReg": /\\^\\\\/\\$/,
+  "name": "web",
+  "onEnter": undefined,
+  "parents": Array [],
+  "resolve": Object {},
+  "uri": "/",
+  "uriParamKeys": Array [],
+  "uriTemplate": "/",
+}
+`;
