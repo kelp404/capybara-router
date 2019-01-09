@@ -54,6 +54,9 @@ core =
     @param routes {Array<Route>}
     @returns {Route}
     ###
+    reservedWords = ['key', 'params']
+    for key in Object.keys(args.resolve ? {}) when key in reservedWords
+      throw new Error("Don't use #{reservedWords.join(', ')} as the key of the resolve.")
     if args.name.indexOf('.') > 0
       # there are parents of this route
       parentRoute = core.findRouteByName args.name.substr(0, args.name.lastIndexOf('.')), routes
@@ -63,6 +66,8 @@ core =
 
   setup: (args = {}) ->
     ###
+    Setup the router.
+    Note: Don't use 'key', 'params' as the key of the resolve.
     @param args {Object}
       history {history}
       routes {Array<routeConfig>}
@@ -383,6 +388,7 @@ core =
 
   listen: (event, func) ->
     ###
+    Listen the change event.
     @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
     @param func {function}
       ChangeStart: (action, toState, fromState, cancel) ->
@@ -467,6 +473,13 @@ core =
       throw error
 
   flattenResolveData: (resolveData) ->
+    ###
+    Flatten resolve data and append a random key for the react component.
+    @params resolveData {Object}
+    @returns {Object}
+      "key": {string}
+      "resolveResourceName": {Object}
+    ###
     result =
       key: Math.random().toString(36).substr(2)
     for routeName of resolveData
@@ -476,6 +489,7 @@ core =
 
   findRouteByName: (name, routes) ->
     ###
+    Find the route in core.routes by the route name.
     @param name {string}
     @param routes {Array<Route>}
     @returns {Route|null}
@@ -486,7 +500,7 @@ core =
 
   findRoute: (location) ->
     ###
-    Find the route with location in core.routes.
+    Find the route in core.routes by the location.
     @param location {location}
     @returns {Route|null}
     ###
