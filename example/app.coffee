@@ -20,9 +20,8 @@ capybaraRouter.listen 'ChangeStart', (action, toState, fromState, cancel) ->
   nprogress.start()
   if toState.name is 'web'
     cancel()
-    setTimeout ->
-      capybaraRouter.go name: 'web.home',
-        replace: yes
+    capybaraRouter.go name: 'web.home',
+      replace: yes
 capybaraRouter.listen 'ChangeSuccess', -> nprogress.done()
 capybaraRouter.listen 'ChangeError', -> nprogress.done()
 

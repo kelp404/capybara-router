@@ -167,7 +167,7 @@ core =
       core.isSkipNextHistoryChange = yes
       return
 
-    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex].name, core.lastResolveData).then (resolveData) ->
+    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex]?.name, core.lastResolveData).then (resolveData) ->
       core.currentRoute = nextRoute
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
