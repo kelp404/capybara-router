@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parse params from the location. 1`] = `
+Object {
+  "index": "0",
+  "sort": "asc",
+  "userId": "AWgrmJp1SjjuUM2bzZXM",
+}
+`;

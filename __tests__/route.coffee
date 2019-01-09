@@ -2,10 +2,6 @@ React = require 'react'
 Route = require '../lib/route'
 
 
-class FakeComponent extends React.Component
-  render: ->
-    <div></div>
-
 test 'Initial Route without parent.', ->
   route = new Route
     name: 'web'
@@ -21,5 +17,5 @@ test 'Initial Route without parent.', ->
             title: 'Project'
           }
         ]
-    component: FakeComponent
+    component: -> <div></div>
   expect(route).toMatchSnapshot()
