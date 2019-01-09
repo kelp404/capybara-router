@@ -100,7 +100,7 @@ core =
     if isCancel
       return
 
-    core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData).then (resolveData) ->
+    core.promise = core.fetchResolveData(currentRoute, params, '', core.lastResolveData, core.history).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -123,6 +123,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views[0].name = null
         core.views[0].routerView.dispatch
@@ -167,7 +168,7 @@ core =
       core.isSkipNextHistoryChange = yes
       return
 
-    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex]?.name, core.lastResolveData).then (resolveData) ->
+    core.promise = core.fetchResolveData(nextRoute, params, core.views[changeViewIndex]?.name, core.lastResolveData, core.history).then (resolveData) ->
       core.currentRoute = nextRoute
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
@@ -194,6 +195,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views.splice 1
         core.views[0].name = null
@@ -268,7 +270,7 @@ core =
       nextParams: params
     return if isCancel
 
-    core.promise = core.fetchResolveData(route, params, '', null).then (resolveData) ->
+    core.promise = core.fetchResolveData(route, params, '', {}, core.history).then (resolveData) ->
       core.lastResolveData = resolveData
       props = core.flattenResolveData resolveData
       props.params = params
@@ -289,6 +291,7 @@ core =
         props
       ]
     .catch (error) ->
+      return if not error
       if core.errorComponent
         core.views.splice 1
         core.views[0].name = null
@@ -411,18 +414,22 @@ core =
     ###
     core.findRoute core.history.location
 
-  fetchResolveData: (route, params, reloadFrom = '', lastResolveData = {}) ->
+  fetchResolveData: (route, params, reloadFrom = '', lastResolveData, history) ->
     ###
+    Fetch data of the route.
+    Note: When the user go to the other route before the promise was done, the old one will throw null.
     @param route {Route}
     @param params {Object} Params of the uri.
     @param reloadFrom {string} Reload data from this route name.
     @param lastResolveData {Object}
       "route-name":
         "resolve-key": response
+    @param history {history}
     @returns {Promise<Object>}
       "route-name":
         "resolve-key": response
     ###
+    uri = "#{history.location.pathname}#{history.location.search}"
     routeChaining = route.parents.slice()
     routeChaining.push route
     taskInformation = []
@@ -446,11 +453,19 @@ core =
           else
             tasks.push value(params)
     Promise.all(tasks).then (responses) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
       result = {}
       for information, index in taskInformation
         result[information.routeName] ?= {}
         result[information.routeName][information.key] = responses[index]
       result
+    .catch (error) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
+      throw error
 
   flattenResolveData: (resolveData) ->
     result =
