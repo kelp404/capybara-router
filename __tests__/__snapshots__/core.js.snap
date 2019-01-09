@@ -35,3 +35,19 @@ Route {
   "uriTemplate": "/",
 }
 `;
+
+exports[`Get the current route. 1`] = `
+Route {
+  "component": undefined,
+  "isAbstract": false,
+  "matchPattern": "/",
+  "matchReg": /\\^\\\\/\\$/,
+  "name": "web",
+  "onEnter": undefined,
+  "parents": Array [],
+  "resolve": Object {},
+  "uri": "/",
+  "uriParamKeys": Array [],
+  "uriTemplate": "/",
+}
+`;
