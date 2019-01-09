@@ -1,4 +1,3 @@
-queryString = require 'query-string'
 utils = require './utils'
 Route = require './route'
 
@@ -324,7 +323,7 @@ core =
         core.history.push target
     else
       route = core.findRouteByName target.name, core.routes
-      uri = core.generateUri route, target.params
+      uri = utils.generateUri route, target.params
       if "#{core.history.location.pathname}#{core.history.location.search}" is uri
         core.reload()
       else if options.replace
@@ -495,23 +494,5 @@ core =
       continue if route.isAbstract
       return route
     null
-
-  generateUri: (route, params = {}) ->
-    ###
-    @param route {Route}
-    @param params {Object}
-    @returns {string}
-    ###
-    uri = route.uriTemplate
-    query = {}
-    for key, value of params
-      if uri.indexOf("{#{key}}") >= 0
-        uri = uri.replace "{#{key}}", value
-      else
-        query[key] = value
-    if Object.keys(query).length
-      "#{uri}?#{queryString.stringify(query)}"
-    else
-      uri
 
 module.exports = core
