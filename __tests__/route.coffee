@@ -12,10 +12,8 @@ test 'Initial Route without parent.', ->
         name: 'User'
       projects: ->
         [
-          {
-            id: 'AWgrmJp1SjjuUM2bzZXM'
-            title: 'Project'
-          }
+          id: 'AWgrmJp1SjjuUM2bzZXM'
+          title: 'Project'
         ]
     component: -> <div></div>
   expect(route).toMatchSnapshot()

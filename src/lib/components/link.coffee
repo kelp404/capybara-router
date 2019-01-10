@@ -1,6 +1,7 @@
 React = require 'react'
 PropTypes = require 'prop-types'
 core = require '../core'
+utils = require '../utils'
 
 
 module.exports = class Link extends React.Component
@@ -18,8 +19,8 @@ module.exports = class Link extends React.Component
       props[key] = value
     delete props.to
     if typeof(@props.to) is 'object'
-      route = core.findRouteByName @props.to.name, core.routes
-      props.href = core.generateHref route, @props.to.params
+      route = utils.findRouteByNameInRoutes @props.to.name, core.routes
+      props.href = utils.generateUri route, @props.to.params
     else
       props.href = @props.to
     <a onClick={@onClick} {...props}/>

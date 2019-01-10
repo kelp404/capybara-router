@@ -20,19 +20,25 @@ Route {
 }
 `;
 
-exports[`Find the route by the name. 1`] = `
+exports[`Generate a route without the parent. 1`] = `
 Route {
-  "component": undefined,
+  "component": [Function],
   "isAbstract": false,
-  "matchPattern": "/",
-  "matchReg": /\\^\\\\/\\$/,
+  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
   "name": "web",
-  "onEnter": undefined,
+  "onEnter": [Function],
   "parents": Array [],
-  "resolve": Object {},
-  "uri": "/",
-  "uriParamKeys": Array [],
-  "uriTemplate": "/",
+  "resolve": Object {
+    "id": [Function],
+  },
+  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
+  "uriParamKeys": Array [
+    "userId",
+    "?index",
+    "?sort",
+  ],
+  "uriTemplate": "/users/{userId}/projects",
 }
 `;
 

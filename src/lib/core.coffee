@@ -59,7 +59,7 @@ core =
       throw new Error("Don't use #{reservedWords.join(', ')} as the key of the resolve.")
     if args.name.indexOf('.') > 0
       # there are parents of this route
-      parentRoute = core.findRouteByName args.name.substr(0, args.name.lastIndexOf('.')), routes
+      parentRoute = utils.findRouteByNameInRoutes args.name.substr(0, args.name.lastIndexOf('.')), routes
       new Route(args, parentRoute)
     else
       new Route(args)
@@ -327,7 +327,7 @@ core =
       else
         core.history.push target
     else
-      route = core.findRouteByName target.name, core.routes
+      route = utils.findRouteByNameInRoutes target.name, core.routes
       uri = utils.generateUri route, target.params
       if "#{core.history.location.pathname}#{core.history.location.search}" is uri
         core.reload()
@@ -486,17 +486,6 @@ core =
       for key, value of resolveData[routeName]
         result[key] = value
     result
-
-  findRouteByName: (name, routes) ->
-    ###
-    Find the route in routes by the route name.
-    @param name {string}
-    @param routes {Array<Route>}
-    @returns {Route}
-    ###
-    for route in routes when name is route.name
-      return route
-    throw new Error("Not found the route called #{name}.")
 
   findRoute: (location) ->
     ###

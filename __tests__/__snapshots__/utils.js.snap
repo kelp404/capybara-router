@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Find the route by the name. 1`] = `
+Route {
+  "component": undefined,
+  "isAbstract": false,
+  "matchPattern": "/",
+  "matchReg": /\\^\\\\/\\$/,
+  "name": "web",
+  "onEnter": undefined,
+  "parents": Array [],
+  "resolve": Object {},
+  "uri": "/",
+  "uriParamKeys": Array [],
+  "uriTemplate": "/",
+}
+`;
+
 exports[`Generate the URI of the route with params 1`] = `"/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc"`;
 
 exports[`Parse params from the location. 1`] = `
