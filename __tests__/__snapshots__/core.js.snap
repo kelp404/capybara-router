@@ -36,6 +36,28 @@ Route {
 }
 `;
 
+exports[`Generate a route without the parent. 1`] = `
+Route {
+  "component": [Function],
+  "isAbstract": false,
+  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
+  "name": "web",
+  "onEnter": [Function],
+  "parents": Array [],
+  "resolve": Object {
+    "id": [Function],
+  },
+  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
+  "uriParamKeys": Array [
+    "userId",
+    "?index",
+    "?sort",
+  ],
+  "uriTemplate": "/users/{userId}/projects",
+}
+`;
+
 exports[`Get the current route. 1`] = `
 Route {
   "component": undefined,
