@@ -14,12 +14,29 @@ generateFakeRoute = ->
         name: 'User'
       projects: ->
         [
-          {
-            id: 'AWgrmJp1SjjuUM2bzZXM'
-            title: 'Project'
-          }
+          id: 'AWgrmJp1SjjuUM2bzZXM'
+          title: 'Project'
         ]
     component: -> <div></div>
+
+test 'Find the route by the name.', ->
+  routes = [
+    new Route
+      name: 'web'
+      uri: '/'
+  ]
+  route = utils.findRouteByNameInRoutes 'web', routes
+  expect(route).toMatchSnapshot()
+
+test 'Get an error on finding the route by the name.', ->
+  routes = [
+    new Route
+      name: 'web'
+      uri: '/'
+  ]
+  func = ->
+    utils.findRouteByNameInRoutes 'not-found', routes
+  expect(func).toThrow Error
 
 test 'Generate the URI of the route with params', ->
   fakeRoute = generateFakeRoute()

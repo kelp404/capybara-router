@@ -2,6 +2,17 @@ queryString = require 'query-string'
 
 
 module.exports =
+  findRouteByNameInRoutes: (name, routes) ->
+    ###
+    Find the route by the route name in routes.
+    @param name {string}
+    @param routes {Array<Route>}
+    @returns {Route}
+    ###
+    for route in routes when name is route.name
+      return route
+    throw new Error("Not found the route called #{name}.")
+
   generateUri: (route, params = {}) ->
     ###
     Generate the URI of the route with params.

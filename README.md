@@ -161,3 +161,7 @@ Render a SPA link element.
 render: ->
   <Link to={"/users/#{user.id}"}>{user.id}</Link>
 ```
+```coffee
+render: ->
+  <Link to={name: 'route-name', params: {paramKey: 'value'}}></Link>
+```

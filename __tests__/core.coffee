@@ -40,29 +40,6 @@ test 'Get the current route.', ->
   route = core.getCurrentRoute()
   expect(route).toMatchSnapshot()
 
-test 'Find the route by the name.', ->
-  core.setup
-    history: history.createMemoryHistory
-      initialEntries: ['/']
-    routes: [
-      name: 'web'
-      uri: '/'
-    ]
-  route = core.findRouteByName 'web', core.routes
-  expect(route).toMatchSnapshot()
-
-test 'Get an error on finding the route by the name.', ->
-  core.setup
-    history: history.createMemoryHistory
-      initialEntries: ['/']
-    routes: [
-      name: 'web'
-      uri: '/'
-    ]
-  func = ->
-    core.findRouteByName 'not-found', core.routes
-  expect(func).toThrow Error
-
 test 'Find the route by the location.', ->
   core.setup
     history: history.createMemoryHistory
