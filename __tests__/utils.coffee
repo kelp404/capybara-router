@@ -19,6 +19,33 @@ generateFakeRoute = ->
         ]
     component: -> <div></div>
 
+test 'Generate a route without the parent.', ->
+  route = utils.generateRoute
+    name: 'web'
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
+    resolve:
+      id: -> 'id'
+    onEnter: ->
+    component: ->
+  expect(route).toMatchSnapshot()
+
+test 'Get an error on generating a route with a resolve key called "key".', ->
+  func = ->
+    utils.generateRoute
+      name: 'web'
+      uri: '/'
+      resolve:
+        key: -> null
+  expect(func).toThrow Error
+test 'Get an error on generating a route with a resolve key called "params".', ->
+  func = ->
+    utils.generateRoute
+      name: 'web'
+      uri: '/'
+      resolve:
+        params: -> null
+  expect(func).toThrow Error
+
 test 'Find the route by the name.', ->
   routes = [
     new Route

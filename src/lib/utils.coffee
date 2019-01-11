@@ -1,7 +1,32 @@
 queryString = require 'query-string'
+Route = require './route'
 
 
-module.exports =
+module.exports = utils =
+  generateRoute: (args = {}, routes) ->
+    ###
+    Generate a route with exist routes.
+    @param args {Object}
+      isAbstract {bool}
+      name {string}
+      uri {string}
+      onEnter {function}
+      resolve {Object}
+        "resourceName": {Promise<response.data>}
+      component {React.Component}
+    @param routes {Array<Route>}
+    @returns {Route}
+    ###
+    reservedWords = ['key', 'params']
+    for key in Object.keys(args.resolve ? {}) when key in reservedWords
+      throw new Error("Don't use #{reservedWords.join(', ')} as the key of the resolve.")
+    if args.name.indexOf('.') > 0
+      # there are parents of this route
+      parentRoute = utils.findRouteByNameInRoutes args.name.substr(0, args.name.lastIndexOf('.')), routes
+      new Route(args, parentRoute)
+    else
+      new Route(args)
+
   findRouteByNameInRoutes: (name, routes) ->
     ###
     Find the route by the route name in routes.
