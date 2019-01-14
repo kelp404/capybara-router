@@ -284,6 +284,9 @@ core =
 
   go: (target, options = {}) ->
     ###
+    Push a state to the history.
+    Replace a state of the history.
+    Reload the current page.
     @param target {string|Object}
       1. {string}:
         The target is the URI.
