@@ -3,6 +3,7 @@
 
 # tests
 __tests__/**/*.js
+coverage/
 
 # node modules
 node_modules

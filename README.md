@@ -1,5 +1,6 @@
 # capybara-router
 [![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)
+[![Coverage Status](https://coveralls.io/repos/github/kelp404/capybara-router/badge.svg)](https://coveralls.io/github/kelp404/capybara-router)
 [![CircleCI](https://circleci.com/gh/kelp404/capybara-router.svg?style=svg)](https://circleci.com/gh/kelp404/capybara-router)
   
 This is a react router without flux and redux.  
