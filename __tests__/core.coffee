@@ -177,3 +177,15 @@ test 'Reload the page.', ->
   core.reload().then (result) ->
     core.flattenResolveData = _flattenResolveData
     expect(result).toMatchSnapshot()
+
+test 'Get an error when reload the page.', ->
+  _flattenResolveData = core.flattenResolveData
+  fakeFlattenResolveData = jest.fn -> throw new Error()
+  onChangeError = jest.fn ->
+  unsubscribe = core.listen 'ChangeError', onChangeError
+  core.flattenResolveData = fakeFlattenResolveData
+  core.reload().catch ->
+    unsubscribe()
+    core.flattenResolveData = _flattenResolveData
+    expect(fakeFlattenResolveData).toBeCalled()
+    expect(onChangeError).toBeCalled()
