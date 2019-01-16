@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Broadcast a start event. 1`] = `
+Object {
+  "name": "web",
+  "params": Object {
+    "id": "new",
+  },
+}
+`;
+
+exports[`Broadcast a start event. 2`] = `
+Object {
+  "name": "web",
+  "params": Object {
+    "id": "old",
+  },
+}
+`;
+
+exports[`Broadcast a success event. 1`] = `
+Object {
+  "name": "web",
+  "params": Object {
+    "id": "new",
+  },
+}
+`;
+
+exports[`Broadcast a success event. 2`] = `
+Object {
+  "name": "web",
+  "params": Object {
+    "id": "old",
+  },
+}
+`;
+
 exports[`Find the route by the location. 1`] = `
 Route {
   "component": undefined,
@@ -30,4 +66,42 @@ Route {
   "uriParamKeys": Array [],
   "uriTemplate": "/",
 }
+`;
+
+exports[`Reload the page. 1`] = `
+Array [
+  "RELOAD",
+  Route {
+    "component": undefined,
+    "isAbstract": false,
+    "matchPattern": "/",
+    "matchReg": /\\^\\\\/\\$/,
+    "name": "home",
+    "onEnter": undefined,
+    "parents": Array [],
+    "resolve": Object {},
+    "uri": "/",
+    "uriParamKeys": Array [],
+    "uriTemplate": "/",
+  },
+  Object {},
+  Route {
+    "component": undefined,
+    "isAbstract": false,
+    "matchPattern": "/",
+    "matchReg": /\\^\\\\/\\$/,
+    "name": "home",
+    "onEnter": undefined,
+    "parents": Array [],
+    "resolve": Object {},
+    "uri": "/",
+    "uriParamKeys": Array [],
+    "uriTemplate": "/",
+  },
+  Object {},
+  Object {
+    "key": "random",
+    "params": Object {},
+  },
+]
 `;
