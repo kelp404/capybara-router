@@ -325,13 +325,13 @@ core =
       nextRoute {Route}
       nextParams {Object|null}
     ###
-    if args.action?
+    args.action ?= 'INITIAL'
+    if args.action is 'INITIAL'
+      fromState = null
+    else
       fromState =
         name: args.previousRoute.name
         params: args.previousParams ? {}
-    else
-      args.action = 'INITIAL'
-      fromState = null
     toState =
       name: args.nextRoute.name
       params: args.nextParams ? {}
@@ -346,13 +346,13 @@ core =
       nextRoute {Route}
       nextParams {Object|null}
     ###
-    if args.action?
+    args.action ?= 'INITIAL'
+    if args.action is 'INITIAL'
+      fromState = null
+    else
       fromState =
         name: args.previousRoute.name
         params: args.previousParams ? {}
-    else
-      args.action = 'INITIAL'
-      fromState = null
     toState =
       name: args.nextRoute.name
       params: args.nextParams ? {}
