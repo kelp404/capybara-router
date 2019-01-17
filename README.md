@@ -128,7 +128,7 @@ constructor: (args = {}) ->
 
 ### start()
 ```coffee
-start = ->
+router.start = ->
   ###
   Start dispatch routes.
   ###
@@ -136,7 +136,7 @@ start = ->
 
 ### reload()
 ```coffee
-reload = ->
+router.reload = ->
   ###
   Reload root router view.
   ###
@@ -144,7 +144,7 @@ reload = ->
 
 ### go()
 ```coffee
-go = (target, options = {}) ->
+router.go = (target, options = {}) ->
   ###
   Push/Replace a state to the history.
   If the new URI and the old one are same, it will reload the current page.
@@ -162,7 +162,7 @@ go = (target, options = {}) ->
 
 ### listen()
 ```coffee
-listen = (event, func) ->
+router.listen = (event, func) ->
   ###
   @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
   @param func {function}

@@ -1,9 +1,9 @@
 axios = require 'axios'
 history = require 'history'
-capybaraRouter = require '../'
+{Router} = require '../'
 
 
-module.exports = new capybaraRouter.Router
+module.exports = new Router
   history: history.createBrowserHistory()
   routes: [
     {
