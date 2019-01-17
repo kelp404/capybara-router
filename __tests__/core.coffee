@@ -1,6 +1,7 @@
 history = require 'history'
 core = require '../lib/core'
 Route = require '../lib/route'
+historyActions = require '../lib/constants/history-actions'
 
 
 setupRouter = ->
@@ -161,7 +162,7 @@ test 'Broadcast an error event.', ->
 
 test 'Reload the page and cancel it.', ->
   onChangeStart = jest.fn (action, toState, fromState, cancel) ->
-    expect(action).toBe 'RELOAD'
+    expect(action).toBe historyActions.RELOAD
     cancel()
   unsubscribe = core.listen 'ChangeStart', onChangeStart
   core.reload()

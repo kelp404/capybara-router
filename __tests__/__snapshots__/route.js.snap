@@ -1,6 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Initial Route without parent. 1`] = `
+exports[`Initial Route with a parent. 1`] = `
+Route {
+  "component": undefined,
+  "isAbstract": false,
+  "matchPattern": "/dashboard",
+  "matchReg": /\\^\\\\/dashboard\\$/,
+  "name": "web.dashboard",
+  "onEnter": undefined,
+  "parents": Array [
+    Route {
+      "component": undefined,
+      "isAbstract": false,
+      "matchPattern": "/",
+      "matchReg": /\\^\\\\/\\$/,
+      "name": "web",
+      "onEnter": undefined,
+      "parents": Array [],
+      "resolve": Object {},
+      "uri": "/",
+      "uriParamKeys": Array [],
+      "uriTemplate": "/",
+    },
+  ],
+  "resolve": Object {},
+  "uri": "dashboard",
+  "uriParamKeys": Array [],
+  "uriTemplate": "/dashboard",
+}
+`;
+
+exports[`Initial Route without a parent. 1`] = `
 Route {
   "component": [Function],
   "isAbstract": false,
