@@ -9,11 +9,12 @@ generateFakeRoute = ->
     name: 'web'
     uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
     resolve:
-      user: (params) ->
-        id: params.userId
-        name: 'User'
-      projects: ->
-        [
+      user: (params) -> new Promise (resolve) ->
+        resolve
+          id: params.userId
+          name: 'User'
+      projects: -> new Promise (resolve) ->
+        resolve [
           id: 'AWgrmJp1SjjuUM2bzZXM'
           title: 'Project'
         ]
@@ -79,3 +80,19 @@ test 'Parse params from the location.', ->
     initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
   params = utils.parseRouteParams fakeHistory.location, fakeRoute
   expect(params).toMatchSnapshot()
+
+test 'Fetch resolve data.', ->
+  fakeRoute = generateFakeRoute()
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  utils.fetchResolveData(fakeRoute, params, '', {}, fakeHistory).then (result) ->
+    expect(result).toMatchSnapshot()
+
+test 'Flatten resolve data.', ->
+  result = utils.flattenResolveData
+    web:
+      user:
+        id: 'id'
+        name: 'name'
+  expect(result).toMatchSnapshot()

@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Fetch resolve data. 1`] = `
+Object {
+  "web": Object {
+    "projects": Array [
+      Object {
+        "id": "AWgrmJp1SjjuUM2bzZXM",
+        "title": "Project",
+      },
+    ],
+    "user": Object {
+      "id": "AWgrmJp1SjjuUM2bzZXM",
+      "name": "User",
+    },
+  },
+}
+`;
+
 exports[`Find the route by the name. 1`] = `
 Route {
   "component": undefined,
@@ -13,6 +30,15 @@ Route {
   "uri": "/",
   "uriParamKeys": Array [],
   "uriTemplate": "/",
+}
+`;
+
+exports[`Flatten resolve data. 1`] = `
+Object {
+  "user": Object {
+    "id": "id",
+    "name": "name",
+  },
 }
 `;
 
