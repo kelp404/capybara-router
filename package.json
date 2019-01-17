@@ -1,13 +1,14 @@
 {
   "name": "capybara-router",
-  "version": "0.2.0",
-  "description": "Unfancy react router.",
+  "version": "0.2.1",
+  "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
   "scripts": {
     "start": "grunt",
     "build": "grunt build && ./node_modules/webpack/bin/webpack.js --mode=production",
     "ncu": "./node_modules/npm-check-updates/bin/ncu",
-    "test": "grunt buildTest && ./node_modules/jest/bin/jest.js"
+    "test": "grunt buildTest && ./node_modules/jest/bin/jest.js --coverage",
+    "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
     "config": "3.0.1",
+    "coveralls": "3.0.2",
     "express": "4.16.4",
     "grunt": "1.0.3",
     "grunt-coffee-react": "5.0.2",

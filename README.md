@@ -1,5 +1,6 @@
 # capybara-router
 [![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)
+[![Coverage Status](https://coveralls.io/repos/github/kelp404/capybara-router/badge.svg)](https://coveralls.io/github/kelp404/capybara-router)
 [![CircleCI](https://circleci.com/gh/kelp404/capybara-router.svg?style=svg)](https://circleci.com/gh/kelp404/capybara-router)
   
 This is a react router without flux and redux.  
@@ -22,19 +23,19 @@ npm install capybara-router --save
 ```js
 const React = require('react');
 const ReactDOM = require('react-dom');
-const router = require('capybara-router');
+const {Router, RouterView} = require('capybara-router');
 const history = require('history');
 const axios = require('axios');
-const ErrorPage = require('./pages/error-page');
 
 
-class Home extends React.Component {
-  render() {
-    return <h2>Home</h2>;
-  }
-}
+const ErrorPage = props => {
+  return <h2 className="text-center">{`${this.props.error}`}</h2>;
+};
+const Home = props => {
+  return <h2>Home</h2>;
+};
 
-router.setup({
+const router = new Router({
   history: history.createBrowserHistory(),
   routes: [
     {
@@ -58,13 +59,14 @@ router.setup({
   ],
   errorComponent: ErrorPage
 });
+router.start();
 
 const element = (
-  <router.RouterView>
+  <RouterView>
     <p className="text-center text-muted h3" style={padding: '20px 0'}>
       <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
     </p>
-  </router.RouterView>
+  </RouterView>
 );
 ReactDOM.render(
   element,
@@ -82,10 +84,10 @@ ReactDOM.render(
   Build test scripts and run tests.
 
 
-## API
-### setup()
+## Router
+### constructor
 ```coffee
-setup = (args = {}) ->
+constructor: (args = {}) ->
   ###
   Setup the router.
   Note: Don't use 'key', 'params' as the key of the resolve.
@@ -102,12 +104,39 @@ setup = (args = {}) ->
         component {React.Component}
       ]
     errorComponent {React.Component}
+  @properties
+    history {history}
+    historyUnsubscription {function}
+    routes {Array<Route>}
+    errorComponent: {React.Component|null}
+    views {Array<Object>}
+      name: {string}
+      routerView: {RouterView}
+    eventHandlers {Object}
+      changeStart: {Array<{id: {string}, func: function(action, toState, fromState, cancel)}>}
+      changeSuccess: {Array<{id: {string}, func: function(action, toState, fromState)}>}
+      changeError: {Array<{id: {string}, func: function(error)}>}
+    currentRoute {Route}
+    currentParams {Object}
+    currentResolveData {Object}
+
+    isSkipNextHistoryChange {bool}
+    isReloadNextHistoryChange {bool}
+    promise {Promise<['router-promise', history.action, previousRoute, previousParams, nextRoute, nextParams, props]>}
+  ###
+```
+
+### start()
+```coffee
+router.start = ->
+  ###
+  Start dispatch routes.
   ###
 ```
 
 ### reload()
 ```coffee
-reload = ->
+router.reload = ->
   ###
   Reload root router view.
   ###
@@ -115,8 +144,10 @@ reload = ->
 
 ### go()
 ```coffee
-go = (target, options = {}) ->
+router.go = (target, options = {}) ->
   ###
+  Push/Replace a state to the history.
+  If the new URI and the old one are same, it will reload the current page.
   @param target {string|Object}
     1. {string}:
       The target is the URI.
@@ -131,7 +162,7 @@ go = (target, options = {}) ->
 
 ### listen()
 ```coffee
-listen = (event, func) ->
+router.listen = (event, func) ->
   ###
   @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
   @param func {function}

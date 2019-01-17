@@ -1,13 +1,19 @@
+history = require 'history'
 React = require 'react'
 renderer = require 'react-test-renderer'
-{RouterView} = require '../../'
-core = require '../../lib/core'
+{Router, RouterView} = require '../../'
 
 
-jest.mock '../../lib/core'
-
+router = null
 beforeEach ->
-  core.registerRouterView.mockClear()
+  router = new Router
+    history: history.createMemoryHistory
+      initialEntries: ['/']
+    routes: [
+      name: 'home'
+      uri: '/'
+    ]
+  router.start()
 
 test 'RouterView component render.', ->
   component = renderer.create do ->
@@ -20,7 +26,8 @@ test 'RouterView component render with a child component.', ->
     render: ->
       <div class={@props.className}>child</div>
   routerView = null
-  core.registerRouterView = jest.fn (view) -> routerView = view
+  router.registerRouterView = jest.fn (view) ->
+    routerView = view
   component = renderer.create do ->
     <RouterView>Loading</RouterView>
   routerView.dispatch
@@ -31,7 +38,8 @@ test 'RouterView component render with a child component.', ->
   tree = component.toJSON()
   expect(tree).toMatchSnapshot()
 
-test 'RouterView component will call core.registerRouterView() on the mount event.', ->
+test 'RouterView component will call router.registerRouterView() on the mount event.', ->
+  router.registerRouterView = jest.fn ->
   renderer.create do ->
     <RouterView>Loading</RouterView>
-  expect(core.registerRouterView).toBeCalled()
+  expect(router.registerRouterView).toBeCalled()
