@@ -1,11 +1,12 @@
 history = require 'history'
-core = require '../lib/core'
+Router = require '../lib/router'
 Route = require '../lib/route'
 historyActions = require '../lib/constants/history-actions'
 
 
-setupRouter = ->
-  core.setup
+router = null
+beforeEach ->
+  router = new Router
     history: history.createMemoryHistory
       initialEntries: ['/']
     routes: [
@@ -23,92 +24,81 @@ setupRouter = ->
       }
     ]
 
-beforeEach ->
-  setupRouter()
-  core.history?.push?.mockClear?()
-  core.history?.replace?.mockClear?()
-
 test 'Go to a page with the URI.', ->
-  core.history.push = jest.fn -> null
-  core.go '/login'
-  expect(core.history.push).toBeCalledWith '/login'
+  router.history.push = jest.fn ->
+  router.go '/login'
+  expect(router.history.push).toBeCalledWith '/login'
 
 test 'Replace a page with the URI.', ->
-  core.history.replace = jest.fn -> null
-  core.go '/login', replace: yes
-  expect(core.history.replace).toBeCalledWith '/login'
+  router.history.replace = jest.fn ->
+  router.go '/login', replace: yes
+  expect(router.history.replace).toBeCalledWith '/login'
 
 test 'Reload a page with the URI.', ->
-  _reload = core.reload
-  fakeReload = jest.fn -> null
-  core.reload = fakeReload
-  core.go '/'
-  core.reload = _reload
-  expect(fakeReload).toBeCalled()
+  router.reload = jest.fn ->
+  router.go '/'
+  expect(router.reload).toBeCalled()
 
 test 'Go to a page with a route name.', ->
-  core.history.push = jest.fn -> null
-  core.go
+  router.history.push = jest.fn ->
+  router.go
     name: 'projects'
     params:
       userId: 'AWgrmJp1SjjuUM2bzZXM'
       index: 0
-  expect(core.history.push).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
+  expect(router.history.push).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
 
 test 'Replace a page with a route name.', ->
-  core.history.replace = jest.fn -> null
-  core.go name: 'projects', params: userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0,
+  router.history.replace = jest.fn ->
+  router.go name: 'projects', params: userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0,
     replace: yes
-  expect(core.history.replace).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
+  expect(router.history.replace).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
 
 test 'Reload a page with a route name.', ->
-  _reload = core.reload
-  fakeReload = jest.fn -> null
-  core.reload = fakeReload
-  core.go name: 'home'
-  core.reload = _reload
-  expect(fakeReload).toBeCalled()
+  router.reload = jest.fn ->
+  router.go name: 'home'
+  expect(router.reload).toBeCalled()
 
 test 'Get the current route.', ->
-  route = core.getCurrentRoute()
+  route = router.getCurrentRoute()
   expect(route).toMatchSnapshot()
 
 test 'Find the route by the location.', ->
-  route = core.findRoute core.history.location
+  route = router.findRoute router.history.location
   expect(route).toMatchSnapshot()
 
 test 'Get an error on finding the route by the location.', ->
   func = ->
     fakeHistory = history.createMemoryHistory
       initialEntries: ['/not-found']
-    core.findRoute fakeHistory
+    router.findRoute fakeHistory
   expect(func).toThrow Error
 
 test 'Get an error when listen with a failed event name.', ->
   func = ->
-    core.listen 'not-exist', ->
+    router.listen 'not-exist', ->
   expect(func).toThrow()
 
 test 'Listen change start events.', ->
   onChangeStart = ->
-  unsubscribe = core.listen 'ChangeStart', onChangeStart
-  expect(core.eventHandlers.changeStart[0].func).toBe onChangeStart
+  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  expect(router.eventHandlers.changeStart[0].func).toBe onChangeStart
   unsubscribe()
-  expect(core.eventHandlers.changeStart).toEqual []
+  expect(router.eventHandlers.changeStart).toEqual []
 
 test 'Listen change success events.', ->
   onChangeSuccess = ->
-  unsubscribe = core.listen 'ChangeSuccess', onChangeSuccess
-  expect(core.eventHandlers.changeSuccess[0].func).toBe onChangeSuccess
+  unsubscribe = router.listen 'ChangeSuccess', onChangeSuccess
+  expect(router.eventHandlers.changeSuccess[0].func).toBe onChangeSuccess
   unsubscribe()
-  expect(core.eventHandlers.changeSuccess).toEqual []
+  expect(router.eventHandlers.changeSuccess).toEqual []
 
 test 'Listen change error events.', ->
   onChangeError = ->
-  unsubscribe = core.listen 'ChangeError', onChangeError
-  expect(core.eventHandlers.changeError[0].func).toBe onChangeError
+  unsubscribe = router.listen 'ChangeError', onChangeError
+  expect(router.eventHandlers.changeError[0].func).toBe onChangeError
   unsubscribe()
-  expect(core.eventHandlers.changeError).toEqual []
+  expect(router.eventHandlers.changeError).toEqual []
 
 test 'Broadcast a start event.', ->
   route = new Route
@@ -119,8 +109,8 @@ test 'Broadcast a start event.', ->
     expect(toState).toMatchSnapshot()
     expect(fromState).toMatchSnapshot()
     expect(typeof(cancel)).toBe 'function'
-  unsubscribe = core.listen 'ChangeStart', onChangeStart
-  core.broadcastStartEvent
+  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  router.broadcastStartEvent
     action: 'PUSH'
     cancel: ->
     previousRoute: route
@@ -140,8 +130,8 @@ test 'Broadcast a success event.', ->
     expect(action).toBe 'PUSH'
     expect(toState).toMatchSnapshot()
     expect(fromState).toMatchSnapshot()
-  unsubscribe = core.listen 'ChangeSuccess', onChangeSuccess
-  core.broadcastSuccessEvent
+  unsubscribe = router.listen 'ChangeSuccess', onChangeSuccess
+  router.broadcastSuccessEvent
     action: 'PUSH'
     previousRoute: route
     previousParams:
@@ -155,38 +145,34 @@ test 'Broadcast a success event.', ->
 test 'Broadcast an error event.', ->
   onChangeError = jest.fn (error) ->
     expect(error.constructor).toBe Error
-  unsubscribe = core.listen 'ChangeError', onChangeError
-  core.broadcastErrorEvent(new Error('error'))
+  unsubscribe = router.listen 'ChangeError', onChangeError
+  router.broadcastErrorEvent(new Error('error'))
   unsubscribe()
   expect(onChangeError).toBeCalled()
 
 test 'Reload the page and cancel it.', ->
+  router.start()
   onChangeStart = jest.fn (action, toState, fromState, cancel) ->
     expect(action).toBe historyActions.RELOAD
     cancel()
-  unsubscribe = core.listen 'ChangeStart', onChangeStart
-  core.reload()
+  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  router.reload()
   unsubscribe()
   expect(onChangeStart).toBeCalled()
 
 test 'Reload the page.', ->
-  _flattenResolveData = core.flattenResolveData
-  core.flattenResolveData = jest.fn (resolveData) ->
-    result = _flattenResolveData resolveData
-    result.key = 'random'
-    result
-  core.reload().then (result) ->
-    core.flattenResolveData = _flattenResolveData
+  router.start()
+  router.reload().then (result) ->
+    expect(typeof(result[6].key)).toBe 'string'
+    delete result[6].key
     expect(result).toMatchSnapshot()
 
 test 'Get an error when reload the page.', ->
-  _flattenResolveData = core.flattenResolveData
-  fakeFlattenResolveData = jest.fn -> throw new Error()
+  router.start()
   onChangeError = jest.fn ->
-  unsubscribe = core.listen 'ChangeError', onChangeError
-  core.flattenResolveData = fakeFlattenResolveData
-  core.reload().catch ->
+  unsubscribe = router.listen 'ChangeError', onChangeError
+  router.flattenResolveData = jest.fn -> throw new Error()
+  router.reload().catch ->
     unsubscribe()
-    core.flattenResolveData = _flattenResolveData
-    expect(fakeFlattenResolveData).toBeCalled()
+    expect(router.flattenResolveData).toBeCalled()
     expect(onChangeError).toBeCalled()

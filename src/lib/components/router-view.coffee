@@ -1,5 +1,6 @@
 React = require 'react'
-core = require '../core'
+singleInstance = require '../single-instance'
+
 
 module.exports = class RouterView extends React.Component
   constructor: (props) ->
@@ -7,7 +8,7 @@ module.exports = class RouterView extends React.Component
     @state =
       component: null
       props: null
-    core.registerRouterView @
+    singleInstance.getRouter().registerRouterView @
   dispatch: (args = {}) ->
     @setState
       component: args.route.component

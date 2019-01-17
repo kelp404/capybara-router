@@ -70,6 +70,7 @@ Route {
 
 exports[`Reload the page. 1`] = `
 Array [
+  "router-promise",
   "RELOAD",
   Route {
     "component": undefined,
@@ -100,7 +101,6 @@ Array [
   },
   Object {},
   Object {
-    "key": "random",
     "params": Object {},
   },
 ]

@@ -78,3 +78,69 @@ module.exports = utils =
         # In uri path.
         result[paramKey] = match[++uriParamsIndex]
     result
+
+  fetchResolveData: (route, params, reloadFrom = '', lastResolveData, history) ->
+    ###
+    Fetch data of the route.
+    Note: When the user go to the other route before the promise was done, the old one will throw null.
+    @param route {Route}
+    @param params {Object} Params of the uri.
+    @param reloadFrom {string} Reload data from this route name.
+    @param lastResolveData {Object}
+      "route-name":
+        "resolve-key": response
+    @param history {history}
+    @returns {Promise<Object>}
+      "route-name":
+        "resolve-key": response
+    ###
+    uri = "#{history.location.pathname}#{history.location.search}"
+    routeChaining = route.parents.slice()
+    routeChaining.push route
+    taskInformation = []
+    tasks = []
+    for route in routeChaining
+      if not reloadFrom or route.name.indexOf(reloadFrom) is 0
+        # fetch from the server
+        for key, value of route.resolve
+          taskInformation.push
+            routeName: route.name
+            key: key
+          tasks.push value(params)
+      else
+        # use cache data
+        for key, value of route.resolve
+          taskInformation.push
+            routeName: route.name
+            key: key
+          if route.name of lastResolveData and key of lastResolveData[route.name]
+            tasks.push lastResolveData[route.name][key]
+          else
+            tasks.push value(params)
+    Promise.all(tasks).then (responses) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
+      result = {}
+      for information, index in taskInformation
+        result[information.routeName] ?= {}
+        result[information.routeName][information.key] = responses[index]
+      result
+    .catch (error) ->
+      if uri isnt "#{history.location.pathname}#{history.location.search}"
+        # The URL is changed.
+        throw null
+      throw error
+
+  flattenResolveData: (resolveData) ->
+    ###
+    Flatten resolve data.
+    @params resolveData {Object}
+    @returns {Object}
+      "resolveResourceName": {Object}
+    ###
+    result = {}
+    for routeName of resolveData
+      for key, value of resolveData[routeName]
+        result[key] = value
+    result

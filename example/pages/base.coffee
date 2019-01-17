@@ -1,15 +1,16 @@
 classNames = require 'classnames'
 React = require 'react'
-{RouterView, Link, listen} = require '../../'
+{RouterView, Link} = require '../../'
 
 
 module.exports = class Base extends React.Component
   constructor: (props) ->
     super props
+    router = require '../router'
     @state =
       currentRouteName: ''
     @listens = [
-      listen 'ChangeSuccess', (action, toState, fromState) =>
+      router.listen 'ChangeSuccess', (action, toState, fromState) =>
         @setState
           currentRouteName: toState.name
     ]
