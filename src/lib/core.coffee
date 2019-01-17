@@ -1,4 +1,5 @@
 utils = require './utils'
+historyActions = require './constants/history-actions'
 
 
 core =
@@ -116,7 +117,8 @@ core =
   onHistoryChange: (location, action) ->
     ###
     @param location {history.location}
-    @param action {string|null} PUSH, REPLACE, POP, RELOAD, INITIAL
+    @param action {constants.historyActions} PUSH, REPLACE, POP
+      https://github.com/ReactTraining/history#listening
     ###
     isReloadNextHistoryChange = core.isReloadNextHistoryChange
     if isReloadNextHistoryChange
@@ -243,7 +245,7 @@ core =
     isCancel = no
     core.broadcastStartEvent
       cancel: -> isCancel = yes
-      action: 'RELOAD'
+      action: historyActions.RELOAD
       previousRoute: route
       previousParams: params
       nextRoute: route
@@ -263,7 +265,7 @@ core =
           route: routeChaining[index]
           props: props
       Promise.all [
-        'RELOAD'
+        historyActions.RELOAD
         route
         params
         route
@@ -318,15 +320,15 @@ core =
   broadcastStartEvent: (args = {}) ->
     ###
     @params args {Object}
-      action {string}  PUSH, REPLACE, POP, RELOAD, INITIAL
+      action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
       cancel {function}  Eval this function to rollback history.
       previousRoute {Route}
       previousParams {Object|null}
       nextRoute {Route}
       nextParams {Object|null}
     ###
-    args.action ?= 'INITIAL'
-    if args.action is 'INITIAL'
+    args.action ?= historyActions.INITIAL
+    if args.action is historyActions.INITIAL
       fromState = null
     else
       fromState =
@@ -340,14 +342,14 @@ core =
   broadcastSuccessEvent: (args = {}) ->
     ###
     @params args {Object}
-      action {string}  PUSH, REPLACE, POP, RELOAD, INITIAL
+      action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
       previousRoute {Route}
       previousParams {Object|null}
       nextRoute {Route}
       nextParams {Object|null}
     ###
-    args.action ?= 'INITIAL'
-    if args.action is 'INITIAL'
+    args.action ?= historyActions.INITIAL
+    if args.action is historyActions.INITIAL
       fromState = null
     else
       fromState =
