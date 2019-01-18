@@ -68,6 +68,50 @@ Route {
 }
 `;
 
+exports[`Go to a page. 1`] = `
+Array [
+  "router-promise",
+  "PUSH",
+  Route {
+    "component": undefined,
+    "isAbstract": false,
+    "matchPattern": "/",
+    "matchReg": /\\^\\\\/\\$/,
+    "name": "home",
+    "onEnter": undefined,
+    "parents": Array [],
+    "resolve": Object {},
+    "uri": "/",
+    "uriParamKeys": Array [],
+    "uriTemplate": "/",
+  },
+  Object {},
+  Route {
+    "component": [Function],
+    "isAbstract": false,
+    "matchPattern": "/login",
+    "matchReg": /\\^\\\\/login\\$/,
+    "name": "login",
+    "onEnter": undefined,
+    "parents": Array [],
+    "resolve": Object {},
+    "uri": "/login",
+    "uriParamKeys": Array [],
+    "uriTemplate": "/login",
+  },
+  Object {},
+  Object {
+    "params": Object {},
+  },
+]
+`;
+
+exports[`Go to a page. 2`] = `
+<div>
+  Login
+</div>
+`;
+
 exports[`Reload the page. 1`] = `
 Array [
   "router-promise",

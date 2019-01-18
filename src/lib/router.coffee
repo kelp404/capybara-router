@@ -127,6 +127,7 @@ module.exports = class Router
     nextRouteChaining.push nextRoute
     changeViewIndex = 0
     if @promise and not isReloadNextHistoryChange
+      # If the first change start event was be canceled, the promise is null.
       for route, index in nextRouteChaining when route.name isnt @views[index].name
         changeViewIndex = index
         break
