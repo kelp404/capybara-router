@@ -46,7 +46,7 @@ const router = new Router({
       },
       resolve: {
         data: (params) => {
-          axios({
+          return axios({
             method: 'get',
             url: `/data/${params.id}.json`
           }).then((response) => {
