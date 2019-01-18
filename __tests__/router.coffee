@@ -1,6 +1,9 @@
+React = require 'react'
+renderer = require 'react-test-renderer'
 history = require 'history'
 Router = require '../lib/router'
 Route = require '../lib/route'
+RouterView = require '../lib/components/router-view'
 historyActions = require '../lib/constants/history-actions'
 
 
@@ -17,6 +20,7 @@ beforeEach ->
       {
         name: 'login'
         uri: '/login'
+        component: -> <div>Login</div>
       }
       {
         name: 'projects'
@@ -24,7 +28,7 @@ beforeEach ->
       }
     ]
 
-test 'Go to a page with the URI.', ->
+test 'Going to a page with the URI will push the history state.', ->
   router.history.push = jest.fn ->
   router.go '/login'
   expect(router.history.push).toBeCalledWith '/login'
@@ -39,7 +43,7 @@ test 'Reload a page with the URI.', ->
   router.go '/'
   expect(router.reload).toBeCalled()
 
-test 'Go to a page with a route name.', ->
+test 'Going to a page with a route name will push the history state.', ->
   router.history.push = jest.fn ->
   router.go
     name: 'projects'
@@ -149,6 +153,64 @@ test 'Broadcast an error event.', ->
   router.broadcastErrorEvent(new Error('error'))
   unsubscribe()
   expect(onChangeError).toBeCalled()
+
+test 'Start dispatch routes and cancel it.', ->
+  onChangeStart = jest.fn (action, toState, fromState, cancel) ->
+    expect(action).toBe historyActions.INITIAL
+    cancel()
+  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  router.start()
+  unsubscribe()
+  expect(onChangeStart).toBeCalled()
+
+test 'Start dispatch routes.', ->
+  onChangeStart = jest.fn ->
+  onChangeSuccess = jest.fn ->
+  unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+  unsubscribeChangeSuccess = router.listen 'ChangeSuccess', onChangeSuccess
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then (result) ->
+    unsubscribeChangeStart()
+    unsubscribeChangeSuccess()
+    expect(typeof(result[6].key)).toBe 'string'
+    delete result[6].key
+    expect(onChangeStart).toBeCalled()
+    expect(onChangeSuccess).toBeCalled()
+    expect(result).toMatchSnapshot()
+    expect(component.toJSON()).toMatchSnapshot()
+
+test 'Go to a page and cancel it.', ->
+  router.start()
+  onChangeStart = jest.fn (action, toState, fromState, cancel) ->
+    expect(action).toBe historyActions.PUSH
+    cancel()
+  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.go '/login'
+  unsubscribe()
+  expect(onChangeStart).toBeCalled()
+
+test 'Go to a page.', ->
+  router.start()
+  onChangeStart = jest.fn ->
+  onChangeSuccess = jest.fn ->
+  unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+  unsubscribeChangeSuccess = router.listen 'ChangeSuccess', onChangeSuccess
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.go '/login'
+  router.promise.then (result) ->
+    unsubscribeChangeStart()
+    unsubscribeChangeSuccess()
+    expect(typeof(result[6].key)).toBe 'string'
+    delete result[6].key
+    expect(onChangeStart).toBeCalled()
+    expect(onChangeSuccess).toBeCalled()
+    expect(result).toMatchSnapshot()
+    expect(component.toJSON()).toMatchSnapshot()
 
 test 'Reload the page and cancel it.', ->
   router.start()
