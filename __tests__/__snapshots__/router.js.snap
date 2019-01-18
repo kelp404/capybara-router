@@ -149,3 +149,35 @@ Array [
   },
 ]
 `;
+
+exports[`Start dispatch routes. 1`] = `
+Array [
+  "router-promise",
+  null,
+  null,
+  null,
+  Route {
+    "component": undefined,
+    "isAbstract": false,
+    "matchPattern": "/",
+    "matchReg": /\\^\\\\/\\$/,
+    "name": "home",
+    "onEnter": undefined,
+    "parents": Array [],
+    "resolve": Object {},
+    "uri": "/",
+    "uriParamKeys": Array [],
+    "uriTemplate": "/",
+  },
+  Object {},
+  Object {
+    "params": Object {},
+  },
+]
+`;
+
+exports[`Start dispatch routes. 2`] = `
+<div>
+  Loading
+</div>
+`;

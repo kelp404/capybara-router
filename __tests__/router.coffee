@@ -163,6 +163,24 @@ test 'Start dispatch routes and cancel it.', ->
   unsubscribe()
   expect(onChangeStart).toBeCalled()
 
+test 'Start dispatch routes.', ->
+  onChangeStart = jest.fn ->
+  onChangeSuccess = jest.fn ->
+  unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+  unsubscribeChangeSuccess = router.listen 'ChangeSuccess', onChangeSuccess
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then (result) ->
+    unsubscribeChangeStart()
+    unsubscribeChangeSuccess()
+    expect(typeof(result[6].key)).toBe 'string'
+    delete result[6].key
+    expect(onChangeStart).toBeCalled()
+    expect(onChangeSuccess).toBeCalled()
+    expect(result).toMatchSnapshot()
+    expect(component.toJSON()).toMatchSnapshot()
+
 test 'Go to a page and cancel it.', ->
   router.start()
   onChangeStart = jest.fn (action, toState, fromState, cancel) ->
