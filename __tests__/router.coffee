@@ -27,6 +27,7 @@ beforeEach ->
         uri: '/users/{userId:[\\w-]{20}}/projects?index'
       }
     ]
+    errorComponent: -> <div>Error</div>
 
 test 'Going to a page with the URI will push the history state.', ->
   router.history.push = jest.fn ->
@@ -226,19 +227,24 @@ test 'Go to a page.', ->
 
 test 'Reload the page and cancel it.', ->
   router.start()
-  onChangeStart = jest.fn (action, toState, fromState, cancel) ->
-    expect(action).toBe historyActions.RELOAD
-    cancel()
-  onChangeError = jest.fn ->
-  unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
-  unsubscribeChangeError = router.listen 'ChangeError', onChangeError
-  router.reload()
-  unsubscribeChangeStart()
-  unsubscribeChangeError()
-  expect(onChangeStart).toBeCalled()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    onChangeStart = jest.fn (action, toState, fromState, cancel) ->
+      expect(action).toBe historyActions.RELOAD
+      cancel()
+    onChangeError = jest.fn ->
+    unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+    unsubscribeChangeError = router.listen 'ChangeError', onChangeError
+    router.reload()
+    unsubscribeChangeStart()
+    unsubscribeChangeError()
+    expect(onChangeStart).toBeCalled()
 
 test 'Reload the page.', ->
   router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
   router.reload().then (result) ->
     expect(typeof(result[6].key)).toBe 'string'
     delete result[6].key
@@ -248,6 +254,8 @@ test 'Get an error when reload the page.', ->
   onChangeError = jest.fn ->
   unsubscribe = router.listen 'ChangeError', onChangeError
   router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
   router.flattenResolveData = jest.fn -> throw new Error()
   router.reload().catch ->
     unsubscribe()
