@@ -29,7 +29,7 @@ const axios = require('axios');
 
 
 const ErrorPage = props => {
-  return <h2 className="text-center">{`${this.props.error}`}</h2>;
+  return <h2 className="text-center">{`${props.error}`}</h2>;
 };
 const Home = props => {
   return <h2>Home</h2>;
@@ -41,11 +41,11 @@ const router = new Router({
     {
       name: 'web',
       uri: '/',
-      onEnter: (props) => {
+      onEnter: props => {
         document.title = 'Home';
       },
       resolve: {
-        data: (params) => {
+        data: params => {
           return axios({
             method: 'get',
             url: `/data/${params.id}.json`
@@ -194,5 +194,5 @@ render: ->
 ```
 ```coffee
 render: ->
-  <Link to={name: 'route-name', params: {paramKey: 'value'}}></Link>
+  <Link to={name: 'route-name', params: {paramKey: 'value'}}>link</Link>
 ```
