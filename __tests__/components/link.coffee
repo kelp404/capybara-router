@@ -8,8 +8,6 @@ utils = require '../../lib/utils'
 
 router = null
 beforeEach ->
-  utils.findRouteByNameInRoutes.mockClear?()
-  utils.generateUri.mockClear?()
   router = new Router
     history: history.createMemoryHistory
       initialEntries: ['/']
@@ -17,6 +15,8 @@ beforeEach ->
       name: 'home'
       uri: '/'
     ]
+afterEach ->
+  jest.restoreAllMocks()
 
 test 'Link component render.', ->
   component = renderer.create do ->
@@ -28,10 +28,10 @@ test 'Link component render with object props.', ->
   route = new Route
     name: 'web'
     uri: '/web?index'
-  utils.findRouteByNameInRoutes = jest.fn (name, routes) ->
+  jest.spyOn(utils, 'findRouteByNameInRoutes').mockImplementation (name, routes) ->
     expect(name).toBe 'web'
     route
-  utils.generateUri = jest.fn -> '/web?index=0'
+  jest.spyOn(utils, 'generateUri').mockImplementation -> '/web?index=0'
   component = renderer.create do ->
     <Link to={name: 'web', params: {index: 0}}>Web</Link>
   tree = component.toJSON()
