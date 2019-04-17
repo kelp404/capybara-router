@@ -27,6 +27,7 @@ beforeEach ->
         uri: '/users/{userId:[\\w-]{20}}/projects?index'
       }
     ]
+    errorComponent: -> <div>Error</div>
 
 test 'Going to a page with the URI will push the history state.', ->
   router.history.push = jest.fn ->
@@ -166,18 +167,22 @@ test 'Start dispatch routes and cancel it.', ->
 test 'Start dispatch routes.', ->
   onChangeStart = jest.fn ->
   onChangeSuccess = jest.fn ->
+  onChangeError = jest.fn ->
   unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
   unsubscribeChangeSuccess = router.listen 'ChangeSuccess', onChangeSuccess
+  unsubscribeChangeError = router.listen 'ChangeError', onChangeError
   router.start()
   component = renderer.create do ->
     <RouterView>Loading</RouterView>
   router.promise.then (result) ->
     unsubscribeChangeStart()
     unsubscribeChangeSuccess()
+    unsubscribeChangeError()
     expect(typeof(result[6].key)).toBe 'string'
     delete result[6].key
     expect(onChangeStart).toBeCalled()
     expect(onChangeSuccess).toBeCalled()
+    expect(onChangeError).not.toBeCalled()
     expect(result).toMatchSnapshot()
     expect(component.toJSON()).toMatchSnapshot()
 
@@ -186,53 +191,71 @@ test 'Go to a page and cancel it.', ->
   onChangeStart = jest.fn (action, toState, fromState, cancel) ->
     expect(action).toBe historyActions.PUSH
     cancel()
-  unsubscribe = router.listen 'ChangeStart', onChangeStart
+  onChangeError = jest.fn ->
+  unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+  unsubscribeChangeError = router.listen 'ChangeError', onChangeError
   renderer.create do ->
     <RouterView>Loading</RouterView>
   router.go '/login'
-  unsubscribe()
+  unsubscribeChangeStart()
+  unsubscribeChangeError()
   expect(onChangeStart).toBeCalled()
 
 test 'Go to a page.', ->
-  router.start()
   onChangeStart = jest.fn ->
   onChangeSuccess = jest.fn ->
+  onChangeError = jest.fn ->
   unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
   unsubscribeChangeSuccess = router.listen 'ChangeSuccess', onChangeSuccess
+  unsubscribeChangeError = router.listen 'ChangeError', onChangeError
+  router.start()
   component = renderer.create do ->
     <RouterView>Loading</RouterView>
-  router.go '/login'
-  router.promise.then (result) ->
-    unsubscribeChangeStart()
-    unsubscribeChangeSuccess()
-    expect(typeof(result[6].key)).toBe 'string'
-    delete result[6].key
-    expect(onChangeStart).toBeCalled()
-    expect(onChangeSuccess).toBeCalled()
-    expect(result).toMatchSnapshot()
-    expect(component.toJSON()).toMatchSnapshot()
+  router.promise.then ->
+    router.go '/login'
+    router.promise.then (result) ->
+      unsubscribeChangeStart()
+      unsubscribeChangeSuccess()
+      unsubscribeChangeError()
+      expect(typeof(result[6].key)).toBe 'string'
+      delete result[6].key
+      expect(onChangeStart).toBeCalled()
+      expect(onChangeSuccess).toBeCalled()
+      expect(onChangeError).not.toBeCalled()
+      expect(result).toMatchSnapshot()
+      expect(component.toJSON()).toMatchSnapshot()
 
 test 'Reload the page and cancel it.', ->
   router.start()
-  onChangeStart = jest.fn (action, toState, fromState, cancel) ->
-    expect(action).toBe historyActions.RELOAD
-    cancel()
-  unsubscribe = router.listen 'ChangeStart', onChangeStart
-  router.reload()
-  unsubscribe()
-  expect(onChangeStart).toBeCalled()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    onChangeStart = jest.fn (action, toState, fromState, cancel) ->
+      expect(action).toBe historyActions.RELOAD
+      cancel()
+    onChangeError = jest.fn ->
+    unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+    unsubscribeChangeError = router.listen 'ChangeError', onChangeError
+    router.reload()
+    unsubscribeChangeStart()
+    unsubscribeChangeError()
+    expect(onChangeStart).toBeCalled()
 
 test 'Reload the page.', ->
   router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
   router.reload().then (result) ->
     expect(typeof(result[6].key)).toBe 'string'
     delete result[6].key
     expect(result).toMatchSnapshot()
 
 test 'Get an error when reload the page.', ->
-  router.start()
   onChangeError = jest.fn ->
   unsubscribe = router.listen 'ChangeError', onChangeError
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
   router.flattenResolveData = jest.fn -> throw new Error()
   router.reload().catch ->
     unsubscribe()

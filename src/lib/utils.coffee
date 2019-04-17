@@ -135,7 +135,7 @@ module.exports = utils =
   flattenResolveData: (resolveData) ->
     ###
     Flatten resolve data.
-    @params resolveData {Object}
+    @param resolveData {Object}
     @returns {Object}
       "resolveResourceName": {Object}
     ###

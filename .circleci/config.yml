@@ -3,14 +3,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - node8
       - node10
       - node11
 jobs:
-  node8:
+  node10:
     working_directory: ~/capybara-router
     docker:
-      - image: node:8.12.0
+      - image: node:10.15.3
     steps:
       - checkout
       - run: npm install -g grunt-cli
@@ -19,21 +18,10 @@ jobs:
       - run: npm test
       - run: npm run coveralls
 
-  node10:
-    working_directory: ~/capybara-router
-    docker:
-      - image: node:10.13.0
-    steps:
-      - checkout
-      - run: npm install -g grunt-cli
-      - run: npm install
-      - run: npm run build
-      - run: npm test
-
   node11:
     working_directory: ~/capybara-router
     docker:
-      - image: node:11.1.0
+      - image: node:11.14.0
     steps:
       - checkout
       - run: npm install -g grunt-cli

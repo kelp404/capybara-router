@@ -318,7 +318,7 @@ module.exports = class Router
 
   broadcastStartEvent: (args = {}) =>
     ###
-    @params args {Object}
+    @param args {Object}
       action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
       cancel {function}  Eval this function to rollback history.
       previousRoute {Route}
@@ -340,7 +340,7 @@ module.exports = class Router
       handler.func args.action, toState, fromState, args.cancel
   broadcastSuccessEvent: (args = {}) =>
     ###
-    @params args {Object}
+    @param args {Object}
       action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
       previousRoute {Route}
       previousParams {Object|null}
@@ -361,7 +361,7 @@ module.exports = class Router
       handler.func args.action, toState, fromState
   broadcastErrorEvent: (error) =>
     ###
-    @params error {Error}
+    @param error {Error}
     ###
     for handler in @eventHandlers.changeError
       handler.func error

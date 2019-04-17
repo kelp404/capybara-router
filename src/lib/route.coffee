@@ -1,7 +1,7 @@
 module.exports = class Route
   constructor: (args , parent) ->
     ###
-    @params args {Object}
+    @param args {Object}
       name {string}
       uri {string}
       isAbstract {bool}
