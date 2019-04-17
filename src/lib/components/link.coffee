@@ -4,7 +4,7 @@ singleInstance = require '../single-instance'
 utils = require '../utils'
 
 
-module.exports = class Link extends React.Component
+module.exports = class Link extends React.PureComponent
   @propTypes =
     to: PropTypes.any.isRequired
 
