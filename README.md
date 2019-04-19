@@ -27,7 +27,6 @@ const {Router, RouterView} = require('capybara-router');
 const history = require('history');
 const axios = require('axios');
 
-
 const ErrorPage = props => {
   return <h2 className="text-center">{`${props.error}`}</h2>;
 };
@@ -63,15 +62,12 @@ router.start();
 
 const element = (
   <RouterView>
-    <p className="text-center text-muted h3" style={padding: '20px 0'}>
+    <p className="text-center text-muted h3" style={{padding: '20px 0'}}>
       <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
     </p>
   </RouterView>
 );
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
+ReactDOM.render(element, document.getElementById('root'));
 ```
 
 
@@ -86,113 +82,170 @@ ReactDOM.render(
 
 ## Router
 ### constructor
-```coffee
-constructor: (args = {}) ->
-  ###
-  Setup the router.
-  Note: Don't use 'key', 'params' as the key of the resolve.
-  @param args {Object}
-    history {history}
-    routes {Array<routeConfig>}
-      [
-        name {string}
-        uri {string}
-        isAbstract {bool}
-        onEnter {function}
-        resolve {Object}
-          "resourceName": {Promise<response.data>}
-        component {React.Component}
-      ]
-    errorComponent {React.Component}
-  @properties
-    history {history}
-    historyUnsubscription {function}
-    routes {Array<Route>}
-    errorComponent: {React.Component|null}
-    views {Array<Object>}
-      name: {string}
-      routerView: {RouterView}
-    eventHandlers {Object}
-      changeStart: {Array<{id: {string}, func: function(action, toState, fromState, cancel)}>}
-      changeSuccess: {Array<{id: {string}, func: function(action, toState, fromState)}>}
-      changeError: {Array<{id: {string}, func: function(error)}>}
-    currentRoute {Route}
-    currentParams {Object}
-    currentResolveData {Object}
+Generate a instance of Router with your options.
+```js
+const {Router} = require('capybara-router');
+const axios = require('axios');
+const history = require('history');
 
-    isSkipNextHistoryChange {bool}
-    isReloadNextHistoryChange {bool}
-    promise {Promise<['router-promise', history.action, previousRoute, previousParams, nextRoute, nextParams, props]>}
-  ###
+const router = new Router({
+  history: history.createBrowserHistory(),
+  routes: [
+    {
+      name: 'web',
+      uri: '/',
+      isAbstract: false,
+      onEnter: props => {
+        document.title = 'Web';
+      },
+      resolve: {
+        data: axios({
+          method: 'get',
+          url: '/data.json'
+        }).then(response => response.data)
+      },
+      component: props => (<p>{JSON.stringify(props.data)}</p>)
+    }
+  ],
+  errorComponent: props => (<h2>Error</h2>)
+});
 ```
+#### Parameter `options.history`
+Type: `Object`  
+Required: `required`  
+Please provide [history](https://github.com/ReactTraining/history) object.
+
+#### Parameter `options.errorComponent`
+Type: `Object`  
+Required: `required`  
+The React component for the error page.
+
+#### Parameter `options.routes`
+Type: `Array<Object>`  
+Required: `required`
+
+##### Parameter `options.routes[].name`
+Type: `String`  
+Required: `required`  
+The name of this route.  
+Use `.` to make the child route.  
+Such as `web`, `web.project`, `web.project.members`.
+
+##### Parameter `options.routes[].uri`
+Type: `String`  
+Required: `required`  
+The URI of this route.  
+It support the regular expression.  
+`/users/{userId:[\\w-]{20}}` will parse the user id from URL.  
+`.*` will match all URL. Use it to define the 404 page.  
+
+##### Parameter `options.routes[].isAbstract`
+Type: `Boolean`  
+Default: `false`  
+The URI of this route.  
+An abstract state can have child states but cannot get activated itself.
+An 'abstract' state is simply a state that can't be transitioned to.  
+
+##### Parameter `options.routes[].onEnter`
+Type: `Function` `(props) => {}`  
+Required: `optional`  
+capybara-route will call this function before the component.  
+
+##### Parameter `options.routes[].resolve`
+Type: `Object`  
+Required: `optional`  
+Define how to fetch data.
+
+##### Parameter `options.routes[].component`
+Type: `Object`  
+Required: `required`  
+The React component.
+
+---
 
 ### start()
-```coffee
-router.start = ->
-  ###
-  Start dispatch routes.
-  ###
-```
+Start dispatch routes.
+
+---
 
 ### reload()
-```coffee
-router.reload = ->
-  ###
-  Reload root router view.
-  ###
-```
+Reload the root router view.
 
-### go()
-```coffee
-router.go = (target, options = {}) ->
-  ###
-  Push/Replace a state to the history.
-  If the new URI and the old one are same, it will reload the current page.
-  @param target {string|Object}
-    1. {string}:
-      The target is the URI.
-    2. {Object}:
-      name {string}
-      params {Object}
-  @param options {Object}
-    replace {bool}
-    reload {bool}
-  ###
-```
+---
 
-### listen()
-```coffee
-router.listen = (event, func) ->
-  ###
-  @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
-  @param func {function}
-    ChangeStart: (action, toState, fromState, cancel) ->
-    ChangeSuccess: (action, toState, fromState) ->
-    ChangeError: (error) ->
-  @returns {function}  Eval this function to stop listen.
-  ###
+### go(target, options = {})
+Push a state to the history or Replace a state of the history.  
+If the new URI and the old one are same, it will reload the current page.
+
+#### Parameter `target`
+Type: `String|Object`  
+Required: `required`  
+The destination.  
+`String`: The target is the URI.  
+`Object`:
 ```
+{
+  name: {String},  // The route name.
+  params: {Object} // The parameter of the route.
+}
+``` 
+
+#### Parameter `options`
+Type: `Object`  
+Required: `optional`  
+
+#### Parameter `options.replace`
+Type: `Boolean`  
+Default: `false`    
+Replace the current state with the new one.
+
+#### Parameter `options.reload`
+Type: `Boolean`  
+Default: `false`    
+Reload the root router view.
+
+---
+
+### listen(event, callback)
+Listen the change event.
+
+#### Parameter `event`
+Type: `String`  
+The event type.  
+`ChangeStart`, `ChangeSuccess`, `ChangeError`
+
+#### Parameter `callback`
+Type: `Function`  
+The callback function.  
+`ChangeStart`: (action, toState, fromState, cancel) => {}  
+`ChangeSuccess`: (action, toState, fromState) => {}  
+`ChangeError`: (error) => {}
+
+#### Return
+Type: `Function`  
+Call this function to stop the listen.
 
 
 ## Components
 ### RouterView
 The router will replace the loading view with the page component.
-```coffee
-render: ->
-  <RouterView>
-    <p className="text-center text-muted h3" style={padding: '20px 0'}>
-      <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
-    </p>
-  </RouterView>
+```js
+const {RouterView} = require('capybara-router');
+```
+```js
+<RouterView>
+  <p className="text-center text-muted h3" style={{padding: '20px 0'}}>
+    <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
+  </p>
+</RouterView>
 ```
 
 ### Link
 Render a SPA link element.
-```coffee
-render: ->
-  <Link to={"/users/#{user.id}"}>{user.id}</Link>
+```js
+const {Link} = require('capybara-router');
 ```
-```coffee
-render: ->
-  <Link to={name: 'route-name', params: {paramKey: 'value'}}>link</Link>
+```js
+<Link to={`/users/${user.id}`}>{user.id}</Link>
+<Link to={{name: 'route-name', params: {paramKey: 'value'}}}>link</Link>
 ```
