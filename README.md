@@ -31,6 +31,7 @@ const ErrorPage = props => {
   return <h2 className="text-center">{`${props.error}`}</h2>;
 };
 const Home = props => {
+  console.log(props.data);
   return <h2>Home</h2>;
 };
 
