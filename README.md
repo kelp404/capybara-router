@@ -31,6 +31,7 @@ const ErrorPage = props => {
   return <h2 className="text-center">{`${props.error}`}</h2>;
 };
 const Home = props => {
+  console.log(props.data);
   return <h2>Home</h2>;
 };
 
@@ -73,7 +74,7 @@ ReactDOM.render(element, document.getElementById('root'));
 
 ## Commands
 + `npm start`  
-  Run the debug server on localhost.
+  Run the debug server on localhost:8000/capybara-router.
 + `npm run build`  
   Build the source code, test scripts and the example app.
 + `npm test`  
@@ -82,7 +83,8 @@ ReactDOM.render(element, document.getElementById('root'));
 
 ## Router
 ### constructor
-Generate a instance of Router with your options.
+Generate a instance of Router with your config.  
+Just allow single instance in your application.
 ```js
 const {Router} = require('capybara-router');
 const axios = require('axios');
@@ -224,6 +226,16 @@ The callback function.
 #### Return
 Type: `Function`  
 Call this function to stop the listen.
+
+
+## getRouter()
+When the instance of Router was created.  
+This function returns the instance.
+```js
+const {getRouter} = require('capybara-router');
+// new Router({ ... });
+const router = getRouter();
+```
 
 
 ## Components
