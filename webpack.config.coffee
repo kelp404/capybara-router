@@ -7,7 +7,7 @@ module.exports = ->
   entry:
     'app': path.join __dirname, 'example', 'app.coffee'
   devServer:
-    host: '0.0.0.0'
+    host: 'localhost'
     port: 8001
     headers:
       'Access-Control-Allow-Origin': '*'
