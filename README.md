@@ -227,6 +227,16 @@ Type: `Function`
 Call this function to stop the listen.
 
 
+## getRouter()
+When the instance of Router was created.  
+This function returns the instance.
+```js
+const {getRouter} = require('capybara-router');
+// new Router({ ... });
+const router = getRouter();
+```
+
+
 ## Components
 ### RouterView
 The router will replace the loading view with the page component.
