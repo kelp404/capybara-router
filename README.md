@@ -73,7 +73,7 @@ ReactDOM.render(element, document.getElementById('root'));
 
 ## Commands
 + `npm start`  
-  Run the debug server on localhost.
+  Run the debug server on localhost:8000/capybara-router.
 + `npm run build`  
   Build the source code, test scripts and the example app.
 + `npm test`  
@@ -82,7 +82,8 @@ ReactDOM.render(element, document.getElementById('root'));
 
 ## Router
 ### constructor
-Generate a instance of Router with your options.
+Generate a instance of Router with your config.  
+Just allow single instance in your application.
 ```js
 const {Router} = require('capybara-router');
 const axios = require('axios');
