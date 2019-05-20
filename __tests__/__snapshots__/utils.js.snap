@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Fetch resolve data with reusable resolve data. 1`] = `
+Object {
+  "web": Object {
+    "projects": Array [
+      Object {
+        "id": "AWgrmJp1SjjuUM2bzZXM",
+        "title": "Project",
+      },
+    ],
+    "user": "old user",
+  },
+}
+`;
+
 exports[`Fetch resolve data. 1`] = `
 Object {
   "web": Object {

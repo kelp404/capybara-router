@@ -98,6 +98,39 @@ test 'Fetch resolve data.', ->
   utils.fetchResolveData(fakeRoute, params, {}, fakeHistory).then (result) ->
     expect(result).toMatchSnapshot()
 
+test 'Fetch resolve data with reusable resolve data.', ->
+  fakeRoute = generateFakeRoute()
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  utils.fetchResolveData(fakeRoute, params, {web: user: 'old user'}, fakeHistory).then (result) ->
+    expect(result).toMatchSnapshot()
+
+test 'Fetch resolve data with error.', ->
+  fakeRoute = new Route
+    name: 'web'
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
+    resolve:
+      user: (params) -> new Promise (resolve, reject) ->
+        reject new Error()
+      projects: -> new Promise (resolve) ->
+        resolve [
+          id: 'AWgrmJp1SjjuUM2bzZXM'
+          title: 'Project'
+        ]
+    component: -> <div></div>
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  resolve = jest.fn ->
+  reject = jest.fn ->
+  utils.fetchResolveData fakeRoute, params, {}, fakeHistory
+    .then resolve
+    .catch reject
+    .finally ->
+      expect(resolve).not.toBeCalled()
+      expect(reject).toBeCalled()
+
 test 'Flatten resolve data.', ->
   result = utils.flattenResolveData
     web:
