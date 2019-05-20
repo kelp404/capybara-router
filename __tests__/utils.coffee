@@ -95,7 +95,7 @@ test 'Fetch resolve data.', ->
   fakeHistory = history.createMemoryHistory
     initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
   params = utils.parseRouteParams fakeHistory.location, fakeRoute
-  utils.fetchResolveData(fakeRoute, params, '', {}, fakeHistory).then (result) ->
+  utils.fetchResolveData(fakeRoute, params, {}, fakeHistory).then (result) ->
     expect(result).toMatchSnapshot()
 
 test 'Flatten resolve data.', ->

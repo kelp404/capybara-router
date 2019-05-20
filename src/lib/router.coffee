@@ -69,7 +69,7 @@ module.exports = class Router
     if isCancel
       return
 
-    @promise = utils.fetchResolveData(currentRoute, currentParams, '', @currentResolveData, @history).then (resolveData) =>
+    @promise = utils.fetchResolveData(currentRoute, currentParams, {}, @history).then (resolveData) =>
       @currentResolveData = resolveData
       props = utils.flattenResolveData resolveData
       props.key = Math.random().toString(36).substr(2)
@@ -125,12 +125,15 @@ module.exports = class Router
     params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
+    reusableResolveData = {}
     changeViewIndex = 0
     if @promise and not isReloadNextHistoryChange
       # If the first change start event was be canceled, the promise is null.
-      for route, index in nextRouteChaining when route.name isnt @views[index].name
-        changeViewIndex = index
-        break
+      for route, index in nextRouteChaining
+        if route.name isnt @views[index].name
+          changeViewIndex = index
+          break
+        reusableResolveData[route.name] = @currentResolveData[route.name]
     isCancel = no
     @broadcastStartEvent
       cancel: -> isCancel = yes
@@ -143,7 +146,7 @@ module.exports = class Router
       @isSkipNextHistoryChange = yes
       return
 
-    @promise = utils.fetchResolveData(nextRoute, params, @views[changeViewIndex]?.name, @currentResolveData, @history).then (resolveData) =>
+    @promise = utils.fetchResolveData(nextRoute, params, reusableResolveData, @history).then (resolveData) =>
       @currentRoute = nextRoute
       @currentResolveData = resolveData
       props = utils.flattenResolveData resolveData
@@ -250,7 +253,7 @@ module.exports = class Router
       nextParams: params
     return if isCancel
 
-    @promise = utils.fetchResolveData(route, params, '', {}, @history).then (resolveData) =>
+    @promise = utils.fetchResolveData(route, params, {}, @history).then (resolveData) =>
       @currentResolveData = resolveData
       props = utils.flattenResolveData resolveData
       props.key = Math.random().toString(36).substr(2)
