@@ -150,6 +150,12 @@ Array [
 ]
 `;
 
+exports[`Render the error component when the router was started with error. 1`] = `
+<div>
+  Error
+</div>
+`;
+
 exports[`Start dispatch routes. 1`] = `
 Array [
   "router-promise",

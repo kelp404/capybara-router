@@ -28,6 +28,8 @@ beforeEach ->
       }
     ]
     errorComponent: -> <div>Error</div>
+afterEach ->
+  jest.restoreAllMocks()
 
 test 'Going to a page with the URI will push the history state.', ->
   router.history.push = jest.fn ->
@@ -186,6 +188,27 @@ test 'Start dispatch routes.', ->
     expect(result).toMatchSnapshot()
     expect(component.toJSON()).toMatchSnapshot()
 
+test 'Call onEnter() of the route when the router was started.', ->
+  jest.spyOn(Math, 'random').mockImplementation () -> 0.1
+  router.routes[0].onEnter = jest.fn ->
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    expect(router.routes[0].onEnter).toBeCalledWith
+      key: 0.1.toString(36).substr(2)
+      params: {}
+
+test 'Render the error component when the router was started with error.', ->
+  router.routes[0].resolve =
+    error: -> Promise.reject new Error()
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    expect(router.views[0].name).toBeNull()
+    expect(component.toJSON()).toMatchSnapshot()
+
 test 'Go to a page and cancel it.', ->
   router.start()
   onChangeStart = jest.fn (action, toState, fromState, cancel) ->
@@ -224,6 +247,34 @@ test 'Go to a page.', ->
       expect(onChangeError).not.toBeCalled()
       expect(result).toMatchSnapshot()
       expect(component.toJSON()).toMatchSnapshot()
+
+test 'Go to a page with reload.', ->
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    router.go '/login',
+      reload: yes
+    expect(router.isReloadNextHistoryChange).toBe no
+  .then ->
+    router.historyUnsubscription()
+    router.go '/login',
+      reload: yes
+    expect(router.isReloadNextHistoryChange).toBe yes
+
+test 'Call onEnter() of the route when the history was changed.', ->
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    jest.spyOn(Math, 'random').mockImplementation () -> 0.1
+    router.routes[1].onEnter = jest.fn ->
+    router.go '/login'
+    router.promise
+  .then ->
+    expect(router.routes[1].onEnter).toBeCalledWith
+      key: 0.1.toString(36).substr(2)
+      params: {}
 
 test 'Reload the page and cancel it.', ->
   router.start()
