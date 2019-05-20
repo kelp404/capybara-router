@@ -20,15 +20,24 @@ generateFakeRoute = ->
         ]
     component: -> <div></div>
 
-test 'Generate a route without the parent.', ->
-  route = utils.generateRoute
+test 'Generate a route with the parent.', ->
+  parent = utils.generateRoute
     name: 'web'
     uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
     resolve:
       id: -> 'id'
     onEnter: ->
     component: ->
-  expect(route).toMatchSnapshot()
+  child = utils.generateRoute
+    name: 'web.project'
+    uri: '/users/{userId:[\\w-]{20}}/projects/{projectId:[\\w-]{20}}'
+    resolve:
+      id: -> 'id'
+    onEnter: ->
+    component: ->
+  , [parent]
+  expect(parent).toMatchSnapshot()
+  expect(child).toMatchSnapshot()
 
 test 'Get an error on generating a route with a resolve key called "key".', ->
   func = ->
@@ -86,8 +95,41 @@ test 'Fetch resolve data.', ->
   fakeHistory = history.createMemoryHistory
     initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
   params = utils.parseRouteParams fakeHistory.location, fakeRoute
-  utils.fetchResolveData(fakeRoute, params, '', {}, fakeHistory).then (result) ->
+  utils.fetchResolveData(fakeRoute, params, {}, fakeHistory).then (result) ->
     expect(result).toMatchSnapshot()
+
+test 'Fetch resolve data with reusable resolve data.', ->
+  fakeRoute = generateFakeRoute()
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  utils.fetchResolveData(fakeRoute, params, {web: user: 'old user'}, fakeHistory).then (result) ->
+    expect(result).toMatchSnapshot()
+
+test 'Fetch resolve data with error.', ->
+  fakeRoute = new Route
+    name: 'web'
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
+    resolve:
+      user: (params) -> new Promise (resolve, reject) ->
+        reject new Error()
+      projects: -> new Promise (resolve) ->
+        resolve [
+          id: 'AWgrmJp1SjjuUM2bzZXM'
+          title: 'Project'
+        ]
+    component: -> <div></div>
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  resolve = jest.fn ->
+  reject = jest.fn ->
+  utils.fetchResolveData fakeRoute, params, {}, fakeHistory
+    .then resolve
+    .catch reject
+    .finally ->
+      expect(resolve).not.toBeCalled()
+      expect(reject).toBeCalled()
 
 test 'Flatten resolve data.', ->
   result = utils.flattenResolveData

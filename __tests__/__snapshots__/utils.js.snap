@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Fetch resolve data with reusable resolve data. 1`] = `
+Object {
+  "web": Object {
+    "projects": Array [
+      Object {
+        "id": "AWgrmJp1SjjuUM2bzZXM",
+        "title": "Project",
+      },
+    ],
+    "user": "old user",
+  },
+}
+`;
+
 exports[`Fetch resolve data. 1`] = `
 Object {
   "web": Object {
@@ -42,7 +56,7 @@ Object {
 }
 `;
 
-exports[`Generate a route without the parent. 1`] = `
+exports[`Generate a route with the parent. 1`] = `
 Route {
   "component": [Function],
   "isAbstract": false,
@@ -61,6 +75,50 @@ Route {
     "?sort",
   ],
   "uriTemplate": "/users/{userId}/projects",
+}
+`;
+
+exports[`Generate a route with the parent. 2`] = `
+Route {
+  "component": [Function],
+  "isAbstract": false,
+  "matchPattern": "/users/([\\\\w-]{20})/projects/users/([\\\\w-]{20})/projects/([\\\\w-]{20})",
+  "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\$/,
+  "name": "web.project",
+  "onEnter": [Function],
+  "parents": Array [
+    Route {
+      "component": [Function],
+      "isAbstract": false,
+      "matchPattern": "/users/([\\\\w-]{20})/projects",
+      "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
+      "name": "web",
+      "onEnter": [Function],
+      "parents": Array [],
+      "resolve": Object {
+        "id": [Function],
+      },
+      "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
+      "uriParamKeys": Array [
+        "userId",
+        "?index",
+        "?sort",
+      ],
+      "uriTemplate": "/users/{userId}/projects",
+    },
+  ],
+  "resolve": Object {
+    "id": [Function],
+  },
+  "uri": "/users/{userId:[\\\\w-]{20}}/projects/{projectId:[\\\\w-]{20}}",
+  "uriParamKeys": Array [
+    "userId",
+    "?index",
+    "?sort",
+    "userId",
+    "projectId",
+  ],
+  "uriTemplate": "/users/{userId}/projects/users/{userId}/projects/{projectId}",
 }
 `;
 

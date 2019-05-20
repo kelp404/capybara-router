@@ -79,14 +79,13 @@ module.exports = utils =
         result[paramKey] = match[++uriParamsIndex]
     result
 
-  fetchResolveData: (route, params, reloadFrom = '', lastResolveData, history) ->
+  fetchResolveData: (route, params, reusableResolveData, history) ->
     ###
     Fetch data of the route.
     Note: When the user go to the other route before the promise was done, the old one will throw null.
     @param route {Route}
     @param params {Object} Params of the uri.
-    @param reloadFrom {string} Reload data from this route name.
-    @param lastResolveData {Object}
+    @param reusableResolveData {Object}
       "route-name":
         "resolve-key": response
     @param history {history}
@@ -100,23 +99,16 @@ module.exports = utils =
     taskInformation = []
     tasks = []
     for route in routeChaining
-      if not reloadFrom or route.name.indexOf(reloadFrom) is 0
-        # fetch from the server
-        for key, value of route.resolve
-          taskInformation.push
-            routeName: route.name
-            key: key
+      for key, value of route.resolve
+        taskInformation.push
+          routeName: route.name
+          key: key
+        if route.name of reusableResolveData and key of reusableResolveData[route.name]
+          # use parent's data
+          tasks.push reusableResolveData[route.name][key]
+        else
+          # fetch from the server
           tasks.push value(params)
-      else
-        # use cache data
-        for key, value of route.resolve
-          taskInformation.push
-            routeName: route.name
-            key: key
-          if route.name of lastResolveData and key of lastResolveData[route.name]
-            tasks.push lastResolveData[route.name][key]
-          else
-            tasks.push value(params)
     Promise.all(tasks).then (responses) ->
       if uri isnt "#{history.location.pathname}#{history.location.search}"
         # The URL is changed.
