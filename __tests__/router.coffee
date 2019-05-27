@@ -276,6 +276,21 @@ test 'Call onEnter() of the route when the history was changed.', ->
       key: 0.1.toString(36).substr(2)
       params: {}
 
+test 'Render the error component when the history was changed with error.', ->
+  router.routes[1].resolve =
+    error: -> Promise.reject new Error()
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    jest.spyOn(Math, 'random').mockImplementation () -> 0.1
+    router.routes[1].onEnter = jest.fn ->
+    router.go '/login'
+    router.promise
+  .then ->
+    expect(router.views[0].name).toBeNull()
+    expect(component.toJSON()).toMatchSnapshot()
+
 test 'Reload the page and cancel it.', ->
   router.start()
   renderer.create do ->
