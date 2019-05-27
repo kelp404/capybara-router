@@ -279,7 +279,7 @@ module.exports = class Router
       return if not error
       if @errorComponent
         @views.splice 1
-        @iews[0].name = null
+        @views[0].name = null
         @views[0].routerView.dispatch
           route:
             component: @errorComponent
