@@ -316,6 +316,21 @@ test 'Reload the page.', ->
     delete result[6].key
     expect(result).toMatchSnapshot()
 
+test 'Render the error component when reload with error.', ->
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    jest.spyOn(Math, 'random').mockImplementation () -> 0.1
+    router.routes[0].resolve =
+      error: -> Promise.reject new Error()
+    router.routes[0].onEnter = jest.fn ->
+    router.reload()
+    router.promise
+  .then ->
+    expect(router.views[0].name).toBeNull()
+    expect(component.toJSON()).toMatchSnapshot()
+
 test 'Get an error when reload the page.', ->
   onChangeError = jest.fn ->
   unsubscribe = router.listen 'ChangeError', onChangeError
