@@ -148,6 +148,7 @@ module.exports = class Router
 
     @promise = utils.fetchResolveData(nextRoute, params, reusableResolveData, @history).then (resolveData) =>
       @currentRoute = nextRoute
+      @currentParams = params
       @currentResolveData = resolveData
       props = utils.flattenResolveData resolveData
       props.key = Math.random().toString(36).substr(2)
