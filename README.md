@@ -233,7 +233,7 @@ Call this function to stop the listen.
 Render the error component.
 
 #### Parameter `error`
-Type: `Object`
+Type: `Object`  
 The Error object.
 
 
