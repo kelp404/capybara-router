@@ -227,6 +227,15 @@ The callback function.
 Type: `Function`  
 Call this function to stop the listen.
 
+---
+
+### renderError(error)
+Render the error component.
+
+#### Parameter `error`
+Type: `Object`  
+The Error object.
+
 
 ## getRouter()
 When the instance of Router was created.  

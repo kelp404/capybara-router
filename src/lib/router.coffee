@@ -133,6 +133,12 @@ module.exports = class Router
         if route.name isnt @views[index].name
           changeViewIndex = index
           break
+        else
+          previousPartialUri = utils.generateUri utils.findRouteByNameInRoutes(@views[index].name, @routes), previousParams
+          nextPartialUri = utils.generateUri route, params
+          if previousPartialUri isnt nextPartialUri
+            changeViewIndex = index
+            break
         reusableResolveData[route.name] = @currentResolveData[route.name]
     isCancel = no
     @broadcastStartEvent
@@ -148,6 +154,7 @@ module.exports = class Router
 
     @promise = utils.fetchResolveData(nextRoute, params, reusableResolveData, @history).then (resolveData) =>
       @currentRoute = nextRoute
+      @currentParams = params
       @currentResolveData = resolveData
       props = utils.flattenResolveData resolveData
       props.key = Math.random().toString(36).substr(2)
@@ -318,6 +325,20 @@ module.exports = class Router
         @history.replace uri
       else
         @history.push uri
+
+  renderError: (error) =>
+    ###
+    Render the error component.
+    @param error {Error}
+    ###
+    return if not @errorComponent
+    @views.splice 1
+    @views[0].name = null
+    @views[0].routerView.dispatch
+      route:
+        component: @errorComponent
+      props:
+        error: error
 
   broadcastStartEvent: (args = {}) =>
     ###
