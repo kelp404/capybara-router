@@ -342,3 +342,22 @@ test 'Get an error when reload the page.', ->
     unsubscribe()
     expect(router.flattenResolveData).toBeCalled()
     expect(onChangeError).toBeCalled()
+
+test 'Render the error page.', ->
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    router.renderError new Error('error')
+    expect(router.views[0].name).toBeNull()
+    expect(component.toJSON()).toMatchSnapshot()
+
+test 'Render the error page without the error component.', ->
+  delete router.errorComponent
+  router.start()
+  component = renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.promise.then ->
+    router.renderError new Error('error')
+    expect(router.views[0].name).toEqual('home')
+    expect(component.toJSON()).toMatchSnapshot()

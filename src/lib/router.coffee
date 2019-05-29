@@ -319,6 +319,20 @@ module.exports = class Router
       else
         @history.push uri
 
+  renderError: (error) =>
+    ###
+    Render the error component.
+    @param error {Error}
+    ###
+    return if not @errorComponent
+    @views.splice 1
+    @views[0].name = null
+    @views[0].routerView.dispatch
+      route:
+        component: @errorComponent
+      props:
+        error: error
+
   broadcastStartEvent: (args = {}) =>
     ###
     @param args {Object}
