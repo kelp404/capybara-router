@@ -133,6 +133,12 @@ module.exports = class Router
         if route.name isnt @views[index].name
           changeViewIndex = index
           break
+        else
+          previousPartialUri = utils.generateUri utils.findRouteByNameInRoutes(@views[index].name, @routes), previousParams
+          nextPartialUri = utils.generateUri route, params
+          if previousPartialUri isnt nextPartialUri
+            changeViewIndex = index
+            break
         reusableResolveData[route.name] = @currentResolveData[route.name]
     isCancel = no
     @broadcastStartEvent
