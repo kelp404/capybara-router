@@ -202,7 +202,9 @@ module.exports = class Router
     routeChaining.push @currentRoute
     viewsIndex = @views.length
     if viewsIndex >= routeChaining.length
-      # The template use <RouterView> but not register in the routes.
+      @views.push
+        name: null
+        routerView: routerView
       return
     @views.push
       name: routeChaining[viewsIndex].name
