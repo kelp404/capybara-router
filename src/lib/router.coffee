@@ -125,6 +125,7 @@ module.exports = class Router
     params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
+    isBackToParent = previousRoute.name.indexOf("#{nextRoute.name}.") is 0
     reusableResolveData = {}
     changeViewIndex = 0
     if @promise and not isReloadNextHistoryChange
@@ -140,6 +141,10 @@ module.exports = class Router
             changeViewIndex = index
             break
         reusableResolveData[route.name] = @currentResolveData[route.name]
+    if isBackToParent and not changeViewIndex
+      changeViewIndex = nextRouteChaining.length
+    else
+      isBackToParent = no
     isCancel = no
     @broadcastStartEvent
       cancel: -> isCancel = yes
@@ -159,13 +164,20 @@ module.exports = class Router
       props = utils.flattenResolveData resolveData
       props.key = Math.random().toString(36).substr(2)
       props.params = params
-      nextRouteChaining[changeViewIndex].onEnter? props
       @views.splice changeViewIndex + 1
-      @views[changeViewIndex].name = nextRouteChaining[changeViewIndex].name
-      @views[changeViewIndex].routerView.dispatch
-        route: nextRouteChaining[changeViewIndex]
-        props: props
-      if nextRouteChaining.length is changeViewIndex + 1
+      if isBackToParent
+        # The changeViewIndex is the destroy target.
+        nextRouteChaining[changeViewIndex - 1].onEnter? props
+        @views[changeViewIndex].name = null
+        @views[changeViewIndex].routerView.dispatch
+          route: component: null
+      else
+        nextRouteChaining[changeViewIndex].onEnter? props
+        @views[changeViewIndex].name = nextRouteChaining[changeViewIndex].name
+        @views[changeViewIndex].routerView.dispatch
+          route: nextRouteChaining[changeViewIndex]
+          props: props
+      if (nextRouteChaining.length is changeViewIndex + 1) or isBackToParent
         @broadcastSuccessEvent
           action: action
           previousRoute: previousRoute
