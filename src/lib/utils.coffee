@@ -50,7 +50,7 @@ module.exports = utils =
     for key, value of params
       if uri.indexOf("{#{key}}") >= 0
         uri = uri.replace "{#{key}}", value
-      else
+      else if "?#{key}" in route.uriParamKeys
         query[key] = value
     if Object.keys(query).length
       "#{uri}?#{queryString.stringify(query)}"
