@@ -1,6 +1,6 @@
 {
   "name": "capybara-router",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "react": "16.8.6"
   },
   "devDependencies": {
-    "axios": "0.18.0",
+    "axios": "0.19.0",
     "babel-polyfill": "6.26.0",
     "cjsx-loader": "3.0.0",
     "classnames": "2.2.6",
@@ -40,20 +40,20 @@
     "coffeescript": "1.12.7",
     "config": "3.1.0",
     "coveralls": "3.0.3",
-    "express": "4.17.0",
+    "express": "4.17.1",
     "grunt": "1.0.4",
     "grunt-coffee-react": "5.0.2",
     "grunt-contrib-watch": "1.1.0",
     "grunt-parallel": "0.5.1",
     "jest": "24.8.0",
-    "load-grunt-tasks": "4.0.0",
+    "load-grunt-tasks": "5.0.0",
     "npm-check-updates": "3.1.9",
     "nprogress": "0.2.0",
     "react-dom": "16.8.6",
     "react-test-renderer": "16.8.6",
     "time-grunt": "2.0.0",
-    "webpack": "4.31.0",
+    "webpack": "4.32.2",
     "webpack-cli": "3.3.2",
-    "webpack-dev-server": "3.4.1"
+    "webpack-dev-server": "3.5.0"
   }
 }

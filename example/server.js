@@ -13,6 +13,10 @@
 
   server = http.createServer(app);
 
+  app.get('/', function(req, res) {
+    return res.redirect('/capybara-router');
+  });
+
   app.use('/capybara-router/example/data', express["static"](path.join(__dirname, '..', 'example', 'data')));
 
   app.use(function(req, res) {
