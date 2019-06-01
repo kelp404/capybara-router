@@ -7,6 +7,7 @@ express = require 'express'
 app = express()
 server = http.createServer app
 
+app.get '/', (req, res) -> res.redirect '/capybara-router'
 app.use '/capybara-router/example/data', express.static(path.join(__dirname, '..', 'example', 'data'))
 app.use (req, res) ->
   res.sendFile path.join(__dirname, '..', 'index.html')
