@@ -12,10 +12,10 @@ module.exports = class Router
       history {history}
       routes {Array<routeConfig>}
         [
-          name {string}
-          uri {string}
-          isAbstract {bool}
-          onEnter {function}
+          name {String}
+          uri {String}
+          isAbstract {Boolean}
+          onEnter {Function}
           resolve {Object}
             "resourceName": {Promise<response.data>}
           component {React.Component}
@@ -23,22 +23,22 @@ module.exports = class Router
       errorComponent {React.Component}
     @properties
       history {history}
-      historyUnsubscription {function}
+      historyUnsubscription {Function}
       routes {Array<Route>}
       errorComponent: {React.Component|null}
       views {Array<Object>}
-        name: {string}
+        name: {String}
         routerView: {RouterView}
       eventHandlers {Object}
-        changeStart: {Array<{id: {string}, func: function(action, toState, fromState, cancel)}>}
-        changeSuccess: {Array<{id: {string}, func: function(action, toState, fromState)}>}
-        changeError: {Array<{id: {string}, func: function(error)}>}
+        changeStart: {Array<{id: {String}, func: function(action, toState, fromState, cancel)}>}
+        changeSuccess: {Array<{id: {String}, func: function(action, toState, fromState)}>}
+        changeError: {Array<{id: {String}, func: function(error)}>}
       currentRoute {Route}
       currentParams {Object}
       currentResolveData {Object}
 
-      isSkipNextHistoryChange {bool}
-      isReloadNextHistoryChange {bool}
+      isSkipNextHistoryChange {Boolean}
+      isReloadNextHistoryChange {Boolean}
       promise {Promise<['router-promise', history.action, previousRoute, previousParams, nextRoute, nextParams, props]>}
     ###
     singleInstance.setRouter @
@@ -313,14 +313,14 @@ module.exports = class Router
     Push/Replace a state to the history.
     If the new URI and the old one are same, it will reload the current page.
     @param target {string|Object}
-      1. {string}:
+      1. {String}:
         The target is the URI.
       2. {Object}:
-        name {string}
+        name {String}
         params {Object}
     @param options {Object}
-      replace {bool}
-      reload {bool}
+      replace {Boolean}
+      reload {Boolean}
     ###
     @isReloadNextHistoryChange = yes if options.reload
     if typeof(target) is 'string'
@@ -358,7 +358,7 @@ module.exports = class Router
     ###
     @param args {Object}
       action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
-      cancel {function}  Eval this function to rollback history.
+      cancel {Function}  Eval this function to rollback history.
       previousRoute {Route}
       previousParams {Object|null}
       nextRoute {Route}
@@ -407,12 +407,12 @@ module.exports = class Router
   listen: (event, func) =>
     ###
     Listen the change event.
-    @param event {string}  "ChangeStart|ChangeSuccess|ChangeError"
-    @param func {function}
+    @param event {String}  "ChangeStart|ChangeSuccess|ChangeError"
+    @param func {Function}
       ChangeStart: (action, toState, fromState, cancel) ->
       ChangeSuccess: (action, toState, fromState) ->
       ChangeError: (error) ->
-    @returns {function}  Eval this function to stop listen.
+    @returns {Function}  Eval this function to stop listen.
     ###
     table =
       ChangeStart: @eventHandlers.changeStart

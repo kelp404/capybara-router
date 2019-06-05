@@ -40,6 +40,7 @@ exports[`Find the route by the location. 1`] = `
 Route {
   "component": undefined,
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/",
   "matchReg": /\\^\\\\/\\$/,
   "name": "home",
@@ -56,6 +57,7 @@ exports[`Get the current route. 1`] = `
 Route {
   "component": undefined,
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/",
   "matchReg": /\\^\\\\/\\$/,
   "name": "home",
@@ -75,6 +77,7 @@ Array [
   Route {
     "component": undefined,
     "isAbstract": false,
+    "loadComponent": undefined,
     "matchPattern": "/",
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
@@ -89,6 +92,7 @@ Array [
   Route {
     "component": [Function],
     "isAbstract": false,
+    "loadComponent": undefined,
     "matchPattern": "/login",
     "matchReg": /\\^\\\\/login\\$/,
     "name": "login",
@@ -119,6 +123,7 @@ Array [
   Route {
     "component": undefined,
     "isAbstract": false,
+    "loadComponent": undefined,
     "matchPattern": "/",
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
@@ -133,6 +138,7 @@ Array [
   Route {
     "component": undefined,
     "isAbstract": false,
+    "loadComponent": undefined,
     "matchPattern": "/",
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
@@ -189,6 +195,7 @@ Array [
   Route {
     "component": undefined,
     "isAbstract": false,
+    "loadComponent": undefined,
     "matchPattern": "/",
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
