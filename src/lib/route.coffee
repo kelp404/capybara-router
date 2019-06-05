@@ -2,26 +2,26 @@ module.exports = class Route
   constructor: (args , parent) ->
     ###
     @param args {Object}
-      name {string}
-      uri {string}
-      isAbstract {bool}
-      onEnter {function}
+      name {String}
+      uri {String}
+      isAbstract {Boolean}
+      onEnter {Function}
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
     @param parent {Route}
     @returns {Object}
-      name {string}
-      uri {string}
-      isAbstract {bool}
-      onEnter {function}
+      name {String}
+      uri {String}
+      isAbstract {Boolean}
+      onEnter {Function}
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
       -----------------------------------------------------
       uriParamKeys {Array<string>}  ex: ['projectId', '?index']  (with parents)
-      matchPattern {string}  ex: '/projects/([\w-]{20})'  (with parents)
-      uriTemplate {string} The template for generating the uri.  ex: '/projects/{projectId}'  (with parents)
+      matchPattern {String}  ex: '/projects/([\w-]{20})'  (with parents)
+      uriTemplate {String} The template for generating the uri.  ex: '/projects/{projectId}'  (with parents)
       matchReg {RegExp} The regexp for .match()  ex: /^\/projects\/([\w-]{20})$/  (with parents)
       parents {Array<Route>}
     ###

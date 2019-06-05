@@ -7,10 +7,10 @@ module.exports = utils =
     ###
     Generate a route with exist routes.
     @param args {Object}
-      isAbstract {bool}
-      name {string}
-      uri {string}
-      onEnter {function}
+      isAbstract {Boolean}
+      name {String}
+      uri {String}
+      onEnter {Function}
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
@@ -30,7 +30,7 @@ module.exports = utils =
   findRouteByNameInRoutes: (name, routes) ->
     ###
     Find the route by the route name in routes.
-    @param name {string}
+    @param name {String}
     @param routes {Array<Route>}
     @returns {Route}
     ###
@@ -43,7 +43,7 @@ module.exports = utils =
     Generate the URI of the route with params.
     @param route {Route}
     @param params {Object}
-    @returns {string}
+    @returns {String}
     ###
     uri = route.uriTemplate
     query = {}
@@ -63,7 +63,7 @@ module.exports = utils =
     @param location {history.location}
     @param route {Route}
     @returns {Object}
-      "paramKey": {string}
+      "paramKey": {String}
     ###
     result = {}
     match = location.pathname.match route.matchReg
