@@ -14,6 +14,7 @@ module.exports = utils =
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
+      loadComponent {Function}
     @param routes {Array<Route>}
     @returns {Route}
     ###
@@ -97,7 +98,9 @@ module.exports = utils =
     routeChaining = route.parents.slice()
     routeChaining.push route
     taskInformation = []
-    tasks = []
+    tasks = [
+      if not route.component then route.loadComponent?() else null
+    ]
     for route in routeChaining
       for key, value of route.resolve
         taskInformation.push
@@ -109,7 +112,8 @@ module.exports = utils =
         else
           # fetch from the server
           tasks.push value(params)
-    Promise.all(tasks).then (responses) ->
+    Promise.all(tasks).then ([component, responses...]) ->
+      route.component = component.default or component if component
       if uri isnt "#{history.location.pathname}#{history.location.search}"
         # The URL is changed.
         throw null

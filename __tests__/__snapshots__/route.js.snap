@@ -4,6 +4,7 @@ exports[`Initial Route with a parent. 1`] = `
 Route {
   "component": undefined,
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/dashboard",
   "matchReg": /\\^\\\\/dashboard\\$/,
   "name": "web.dashboard",
@@ -12,6 +13,7 @@ Route {
     Route {
       "component": undefined,
       "isAbstract": false,
+      "loadComponent": undefined,
       "matchPattern": "/",
       "matchReg": /\\^\\\\/\\$/,
       "name": "web",
@@ -34,6 +36,7 @@ exports[`Initial Route without a parent. 1`] = `
 Route {
   "component": [Function],
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
   "name": "web",

@@ -35,6 +35,7 @@ exports[`Find the route by the name. 1`] = `
 Route {
   "component": undefined,
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/",
   "matchReg": /\\^\\\\/\\$/,
   "name": "web",
@@ -60,6 +61,7 @@ exports[`Generate a route with the parent. 1`] = `
 Route {
   "component": [Function],
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
   "name": "web",
@@ -82,6 +84,7 @@ exports[`Generate a route with the parent. 2`] = `
 Route {
   "component": [Function],
   "isAbstract": false,
+  "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects/users/([\\\\w-]{20})/projects/([\\\\w-]{20})",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\$/,
   "name": "web.project",
@@ -90,6 +93,7 @@ Route {
     Route {
       "component": [Function],
       "isAbstract": false,
+      "loadComponent": undefined,
       "matchPattern": "/users/([\\\\w-]{20})/projects",
       "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
       "name": "web",

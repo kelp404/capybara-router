@@ -9,6 +9,7 @@ module.exports = class Route
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
+      loadComponent {Function}
     @param parent {Route}
     @returns {Object}
       name {String}
@@ -18,6 +19,7 @@ module.exports = class Route
       resolve {Object}
         "resourceName": {Promise<response.data>}
       component {React.Component}
+      loadComponent {Function}
       -----------------------------------------------------
       uriParamKeys {Array<string>}  ex: ['projectId', '?index']  (with parents)
       matchPattern {String}  ex: '/projects/([\w-]{20})'  (with parents)
@@ -31,6 +33,7 @@ module.exports = class Route
     @onEnter = args.onEnter
     @resolve = args.resolve ? {}
     @component = args.component
+    @loadComponent = args.loadComponent
 
     if parent
       @uriParamKeys = parent.uriParamKeys?.slice() or []

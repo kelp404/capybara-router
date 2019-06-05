@@ -160,8 +160,24 @@ Define how to fetch data.
 
 ##### Parameter `options.routes[].component`
 Type: `Object`  
-Required: `required`  
+Required: `optional`  
 The React component.
+
+##### Parameter `options.routes[].loadComponent`
+Type: `Function`  
+Required: `optional`  
+The lazy loading function.  
+Run the lazy loading function when the `.component` is null.
+```js
+{
+  name: 'web',
+  uri: '/path',
+  loadComponent: () => import(
+    /* webpackChunkName: "chunk-name" */
+    './path/component'
+  )
+}
+```
 
 ---
 
