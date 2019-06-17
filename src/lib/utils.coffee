@@ -100,6 +100,10 @@ module.exports = utils =
     taskInformation = []
     tasks = [
       if not route.component then route.loadComponent?() else null
+      Promise.all(
+        route.parents.map (parent) ->
+          if not parent.component then parent.loadComponent?() else null
+      )
     ]
     for route in routeChaining
       for key, value of route.resolve
@@ -112,11 +116,17 @@ module.exports = utils =
         else
           # fetch from the server
           tasks.push value(params)
-    Promise.all(tasks).then ([component, responses...]) ->
-      route.component = component.default or component if component
+    Promise.all(tasks).then ([component, parentComponents, responses...]) ->
       if uri isnt "#{history.location.pathname}#{history.location.search}"
         # The URL is changed.
         throw null
+
+      # Lazy loading components.
+      route.component = component.default or component if component
+      route.parents.map (parent, index) ->
+        if parentComponents[index]
+          parent.component = parentComponents[index].default or parentComponents[index]
+
       result = {}
       for information, index in taskInformation
         result[information.routeName] ?= {}
