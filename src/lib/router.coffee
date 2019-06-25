@@ -437,6 +437,8 @@ module.exports = class Router
     ###
     @findRoute @history.location
 
+  generateUri: utils.generateUri
+
   findRoute: (location) =>
     ###
     Find the route in @routes by the location.
