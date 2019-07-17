@@ -45,14 +45,10 @@ const router = new Router({
         document.title = 'Home';
       },
       resolve: {
-        data: params => {
-          return axios({
-            method: 'get',
-            url: `/data/${params.id}.json`
-          }).then((response) => {
-            return response.data;
-          });
-        }
+        data: params => axios({
+          method: 'get',
+          url: `/data/${params.id}.json`
+        }).then(response => response.data)
       },
       component: Home
     }
