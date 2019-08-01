@@ -138,3 +138,22 @@ test 'Flatten resolve data.', ->
         id: 'id'
         name: 'name'
   expect(result).toMatchSnapshot()
+
+test 'Fetch resolve data with lazy loading.', ->
+  fakeRoute = new Route
+    name: 'web'
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort'
+    loadComponent: ->
+      default: <div></div>
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+  params = utils.parseRouteParams fakeHistory.location, fakeRoute
+  resolve = jest.fn ->
+    expect(fakeRoute.component).toMatchSnapshot()
+  reject = jest.fn ->
+  utils.fetchResolveData fakeRoute, params, {}, fakeHistory
+    .then resolve
+    .catch reject
+    .finally ->
+      expect(resolve).toBeCalled()
+      expect(reject).not.toBeCalled()

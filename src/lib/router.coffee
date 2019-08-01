@@ -4,7 +4,7 @@ utils = require './utils'
 
 
 module.exports = class Router
-  constructor: (args = {}) ->
+  constructor: (args) ->
     ###
     Setup the router.
     Note: Don't use 'key', 'params' as the key of the resolve.
