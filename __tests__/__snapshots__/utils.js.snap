@@ -1,6 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Fetch resolve data with lazy loading. 1`] = `<div />`;
+exports[`Fetch resolve data with lazy loading. 1`] = `
+<div>
+  parent
+</div>
+`;
+
+exports[`Fetch resolve data with lazy loading. 2`] = `
+<div>
+  child
+</div>
+`;
 
 exports[`Fetch resolve data with reusable resolve data. 1`] = `
 Object {
