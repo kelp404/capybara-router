@@ -332,16 +332,28 @@ test 'Render the error component when reload with error.', ->
     expect(component.toJSON()).toMatchSnapshot()
 
 test 'Get an error when reload the page.', ->
+  jest.spyOn(require('../lib/utils'), 'fetchResolveData').mockImplementation ->
+    Promise.reject new Error()
   onChangeError = jest.fn ->
   unsubscribe = router.listen 'ChangeError', onChangeError
   router.start()
   renderer.create do ->
     <RouterView>Loading</RouterView>
-  router.flattenResolveData = jest.fn -> throw new Error()
-  router.reload().catch ->
+  router.reload().finally ->
     unsubscribe()
-    expect(router.flattenResolveData).toBeCalled()
     expect(onChangeError).toBeCalled()
+
+test 'Get a null error when reload the page.', ->
+  jest.spyOn(require('../lib/utils'), 'fetchResolveData').mockImplementation ->
+    Promise.reject null
+  onChangeError = jest.fn ->
+  unsubscribe = router.listen 'ChangeError', onChangeError
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.reload().finally ->
+    unsubscribe()
+    expect(onChangeError).not.toBeCalled()
 
 test 'Render the error page.', ->
   router.start()
