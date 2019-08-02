@@ -299,13 +299,18 @@ test 'Reload the page and cancel it.', ->
     onChangeStart = jest.fn (action, toState, fromState, cancel) ->
       expect(action).toBe historyActions.RELOAD
       cancel()
+    onChangeStartB = jest.fn ->
     onChangeError = jest.fn ->
     unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+    unsubscribeChangeStartB = router.listen 'ChangeStart', onChangeStartB
     unsubscribeChangeError = router.listen 'ChangeError', onChangeError
+    unsubscribeChangeStartB()
     router.reload()
     unsubscribeChangeStart()
     unsubscribeChangeError()
     expect(onChangeStart).toBeCalled()
+    expect(onChangeStartB).not.toBeCalled()
+    expect(onChangeError).not.toBeCalled()
 
 test 'Reload the page.', ->
   router.start()
