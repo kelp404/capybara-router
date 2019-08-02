@@ -16,15 +16,18 @@ beforeEach ->
       {
         name: 'home'
         uri: '/'
+        onEnter: ->
       }
       {
         name: 'login'
         uri: '/login'
+        onEnter: ->
         component: -> <div>Login</div>
       }
       {
         name: 'projects'
         uri: '/users/{userId:[\\w-]{20}}/projects?index'
+        onEnter: ->
       }
     ]
     errorComponent: -> <div>Error</div>
