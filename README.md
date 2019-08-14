@@ -4,7 +4,8 @@
 [![CircleCI](https://circleci.com/gh/kelp404/capybara-router.svg?style=svg)](https://circleci.com/gh/kelp404/capybara-router)
   
 This is a react router without flux and redux.  
-We just want a simple way to build a Single Page Application.
+We just want a simple way to build a Single Page Application.  
+Define rules that include the component and how to fetch data of the each page in a router.
 
 <img src="_capybara.jpg" height="400px"/>
 
