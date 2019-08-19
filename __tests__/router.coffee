@@ -29,6 +29,17 @@ beforeEach ->
         uri: '/users/{userId:[\\w-]{20}}/projects?index'
         onEnter: ->
       }
+      {
+        name: 'settings'
+        uri: '/settings'
+        isAbstract: yes
+        component: -> <div>Loading</div>
+      }
+      {
+        name: 'settings.account'
+        uri: ''
+        component: -> <div>Account</div>
+      }
     ]
     errorComponent: -> <div>Error</div>
 afterEach ->
@@ -77,11 +88,17 @@ test 'Find the route by the location.', ->
   route = router.findRoute router.history.location
   expect(route).toMatchSnapshot()
 
+test 'Find the router belong a abstract router by the location.', ->
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/settings']
+  route = router.findRoute fakeHistory.location
+  expect(route).toMatchSnapshot()
+
 test 'Get an error on finding the route by the location.', ->
   func = ->
     fakeHistory = history.createMemoryHistory
       initialEntries: ['/not-found']
-    router.findRoute fakeHistory
+    router.findRoute fakeHistory.location
   expect(func).toThrow Error
 
 test 'Get an error when listen with a failed event name.', ->

@@ -53,6 +53,38 @@ Route {
 }
 `;
 
+exports[`Find the router belong a abstract router by the location. 1`] = `
+Route {
+  "component": [Function],
+  "isAbstract": false,
+  "loadComponent": undefined,
+  "matchPattern": "/settings",
+  "matchReg": /\\^\\\\/settings\\$/,
+  "name": "settings.account",
+  "onEnter": undefined,
+  "parents": Array [
+    Route {
+      "component": [Function],
+      "isAbstract": true,
+      "loadComponent": undefined,
+      "matchPattern": "/settings",
+      "matchReg": /\\^\\\\/settings\\$/,
+      "name": "settings",
+      "onEnter": undefined,
+      "parents": Array [],
+      "resolve": Object {},
+      "uri": "/settings",
+      "uriParamKeys": Array [],
+      "uriTemplate": "/settings",
+    },
+  ],
+  "resolve": Object {},
+  "uri": "",
+  "uriParamKeys": Array [],
+  "uriTemplate": "/settings",
+}
+`;
+
 exports[`Get the current route. 1`] = `
 Route {
   "component": undefined,
