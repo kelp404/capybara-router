@@ -19,10 +19,12 @@ jobs:
     - run: npm install -g grunt-cli
     - run: npm install
     - run: npm run build
+    - run: git diff --exit-code
     - run: npm test
 
   upload-coveralls:
     needs: [test]
+    runs-on: ubuntu-latest
     steps:
       - run: npm run coveralls
         env:
