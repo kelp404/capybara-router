@@ -20,7 +20,7 @@
   app.use('/capybara-router/example/data', express["static"](path.join(__dirname, '..', 'example', 'data')));
 
   app.use(function(req, res) {
-    return res.sendFile(path.join(__dirname, '..', 'index.html'));
+    return res.sendFile(path.join(__dirname, 'index.html'));
   });
 
   server.listen(config.server.port, config.server.host, function() {

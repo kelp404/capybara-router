@@ -10,7 +10,7 @@ server = http.createServer app
 app.get '/', (req, res) -> res.redirect '/capybara-router'
 app.use '/capybara-router/example/data', express.static(path.join(__dirname, '..', 'example', 'data'))
 app.use (req, res) ->
-  res.sendFile path.join(__dirname, '..', 'index.html')
+  res.sendFile path.join(__dirname, 'index.html')
 
 # launch server
 server.listen config.server.port, config.server.host, ->

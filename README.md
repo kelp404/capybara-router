@@ -1,10 +1,11 @@
 # capybara-router
 [![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)
 [![Coverage Status](https://coveralls.io/repos/github/kelp404/capybara-router/badge.svg)](https://coveralls.io/github/kelp404/capybara-router)
-[![CircleCI](https://circleci.com/gh/kelp404/capybara-router.svg?style=svg)](https://circleci.com/gh/kelp404/capybara-router)
+[![Actions Status](https://github.com/kelp404/capybara-router/workflows/build/badge.svg)](https://github.com/kelp404/capybara-router/actions)
   
 This is a react router without flux and redux.  
-We just want a simple way to build a Single Page Application.
+We just want a simple way to build a Single Page Application.  
+Define rules that include the component and how to fetch data of the each page in a router.
 
 <img src="_capybara.jpg" height="400px"/>
 
@@ -45,14 +46,10 @@ const router = new Router({
         document.title = 'Home';
       },
       resolve: {
-        data: params => {
-          return axios({
-            method: 'get',
-            url: `/data/${params.id}.json`
-          }).then((response) => {
-            return response.data;
-          });
-        }
+        data: params => axios({
+          method: 'get',
+          url: `/data/${params.id}.json`
+        }).then(response => response.data)
       },
       component: Home
     }

@@ -10,7 +10,18 @@ module.exports = class RouterView extends React.PureComponent
       props: null
     singleInstance.getRouter().registerRouterView @
 
-  dispatch: (args = {}) ->
+  dispatch: (args) ->
+    ###
+    Update the state to render.
+    @param args {Object}
+      route: {Route}
+      props: {Object}
+        {
+          key: {String}
+          params: {Object}
+          ...
+        }
+    ###
     @setState
       component: args.route.component
       props: args.props

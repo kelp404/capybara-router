@@ -4,7 +4,7 @@ utils = require './utils'
 
 
 module.exports = class Router
-  constructor: (args = {}) ->
+  constructor: (args) ->
     ###
     Setup the router.
     Note: Don't use 'key', 'params' as the key of the resolve.
@@ -354,7 +354,7 @@ module.exports = class Router
       props:
         error: error
 
-  broadcastStartEvent: (args = {}) =>
+  broadcastStartEvent: (args) =>
     ###
     @param args {Object}
       action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)
@@ -376,7 +376,7 @@ module.exports = class Router
       params: args.nextParams ? {}
     for handler in @eventHandlers.changeStart
       handler.func args.action, toState, fromState, args.cancel
-  broadcastSuccessEvent: (args = {}) =>
+  broadcastSuccessEvent: (args) =>
     ###
     @param args {Object}
       action {constants.historyActions|null}  PUSH, REPLACE, POP, RELOAD, INITIAL (The default is INITIAL.)

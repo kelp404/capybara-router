@@ -16,15 +16,29 @@ beforeEach ->
       {
         name: 'home'
         uri: '/'
+        onEnter: ->
       }
       {
         name: 'login'
         uri: '/login'
+        onEnter: ->
         component: -> <div>Login</div>
       }
       {
         name: 'projects'
         uri: '/users/{userId:[\\w-]{20}}/projects?index'
+        onEnter: ->
+      }
+      {
+        name: 'settings'
+        uri: '/settings'
+        isAbstract: yes
+        component: -> <div>Loading</div>
+      }
+      {
+        name: 'settings.account'
+        uri: ''
+        component: -> <div>Account</div>
       }
     ]
     errorComponent: -> <div>Error</div>
@@ -74,11 +88,17 @@ test 'Find the route by the location.', ->
   route = router.findRoute router.history.location
   expect(route).toMatchSnapshot()
 
+test 'Find the router belong a abstract router by the location.', ->
+  fakeHistory = history.createMemoryHistory
+    initialEntries: ['/settings']
+  route = router.findRoute fakeHistory.location
+  expect(route).toMatchSnapshot()
+
 test 'Get an error on finding the route by the location.', ->
   func = ->
     fakeHistory = history.createMemoryHistory
       initialEntries: ['/not-found']
-    router.findRoute fakeHistory
+    router.findRoute fakeHistory.location
   expect(func).toThrow Error
 
 test 'Get an error when listen with a failed event name.', ->
@@ -299,13 +319,18 @@ test 'Reload the page and cancel it.', ->
     onChangeStart = jest.fn (action, toState, fromState, cancel) ->
       expect(action).toBe historyActions.RELOAD
       cancel()
+    onChangeStartB = jest.fn ->
     onChangeError = jest.fn ->
     unsubscribeChangeStart = router.listen 'ChangeStart', onChangeStart
+    unsubscribeChangeStartB = router.listen 'ChangeStart', onChangeStartB
     unsubscribeChangeError = router.listen 'ChangeError', onChangeError
+    unsubscribeChangeStartB()
     router.reload()
     unsubscribeChangeStart()
     unsubscribeChangeError()
     expect(onChangeStart).toBeCalled()
+    expect(onChangeStartB).not.toBeCalled()
+    expect(onChangeError).not.toBeCalled()
 
 test 'Reload the page.', ->
   router.start()
@@ -332,16 +357,28 @@ test 'Render the error component when reload with error.', ->
     expect(component.toJSON()).toMatchSnapshot()
 
 test 'Get an error when reload the page.', ->
+  jest.spyOn(require('../lib/utils'), 'fetchResolveData').mockImplementation ->
+    Promise.reject new Error()
   onChangeError = jest.fn ->
   unsubscribe = router.listen 'ChangeError', onChangeError
   router.start()
   renderer.create do ->
     <RouterView>Loading</RouterView>
-  router.flattenResolveData = jest.fn -> throw new Error()
-  router.reload().catch ->
+  router.reload().finally ->
     unsubscribe()
-    expect(router.flattenResolveData).toBeCalled()
     expect(onChangeError).toBeCalled()
+
+test 'Get a null error when reload the page.', ->
+  jest.spyOn(require('../lib/utils'), 'fetchResolveData').mockImplementation ->
+    Promise.reject null
+  onChangeError = jest.fn ->
+  unsubscribe = router.listen 'ChangeError', onChangeError
+  router.start()
+  renderer.create do ->
+    <RouterView>Loading</RouterView>
+  router.reload().finally ->
+    unsubscribe()
+    expect(onChangeError).not.toBeCalled()
 
 test 'Render the error page.', ->
   router.start()

@@ -3,7 +3,7 @@ Route = require './route'
 
 
 module.exports = utils =
-  generateRoute: (args = {}, routes) ->
+  generateRoute: (args, routes) ->
     ###
     Generate a route with exist routes.
     @param args {Object}
