@@ -37,7 +37,6 @@ module.exports = class Router
       currentParams {Object}
       currentResolveData {Object}
 
-      isSkipNextHistoryChange {Boolean}
       isReloadNextHistoryChange {Boolean}
       promise {Promise<['router-promise', history.action, previousRoute, previousParams, nextRoute, nextParams, props]>}
     ###
@@ -115,8 +114,6 @@ module.exports = class Router
     isReloadNextHistoryChange = @isReloadNextHistoryChange
     if isReloadNextHistoryChange
       @isReloadNextHistoryChange = no
-    if @isSkipNextHistoryChange
-      @isSkipNextHistoryChange = no
       return
 
     previousRoute = @currentRoute
@@ -154,7 +151,6 @@ module.exports = class Router
       nextRoute: nextRoute
       nextParams: params
     if isCancel
-      @isSkipNextHistoryChange = yes
       return
 
     @promise = utils.fetchResolveData(nextRoute, params, reusableResolveData, @history).then (resolveData) =>
