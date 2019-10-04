@@ -28,7 +28,7 @@
     "history": "4.10.1",
     "prop-types": "15.7.2",
     "query-string": "6.8.3",
-    "react": "16.10.1"
+    "react": "16.10.2"
   },
   "devDependencies": {
     "axios": "0.19.0",
@@ -38,7 +38,7 @@
     "coffee-loader": "0.9.0",
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
-    "config": "3.2.2",
+    "config": "3.2.3",
     "coveralls": "3.0.6",
     "express": "4.17.1",
     "grunt": "1.0.4",
@@ -49,8 +49,8 @@
     "load-grunt-tasks": "5.1.0",
     "npm-check-updates": "3.1.23",
     "nprogress": "0.2.0",
-    "react-dom": "16.10.1",
-    "react-test-renderer": "16.10.1",
+    "react-dom": "16.10.2",
+    "react-test-renderer": "16.10.2",
     "time-grunt": "2.0.0",
     "webpack": "4.41.0",
     "webpack-cli": "3.3.9",
