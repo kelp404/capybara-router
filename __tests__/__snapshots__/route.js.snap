@@ -3,6 +3,7 @@
 exports[`Initial Route with a parent. 1`] = `
 Route {
   "component": undefined,
+  "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/dashboard",
@@ -12,6 +13,7 @@ Route {
   "parents": Array [
     Route {
       "component": undefined,
+      "dismissalDelay": undefined,
       "isAbstract": false,
       "loadComponent": undefined,
       "matchPattern": "/",
@@ -35,6 +37,7 @@ Route {
 exports[`Initial Route without a parent. 1`] = `
 Route {
   "component": [Function],
+  "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
