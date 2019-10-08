@@ -114,7 +114,6 @@ module.exports = class Router
     isReloadNextHistoryChange = @isReloadNextHistoryChange
     if isReloadNextHistoryChange
       @isReloadNextHistoryChange = no
-      return
 
     previousRoute = @currentRoute
     previousParams = @currentParams
