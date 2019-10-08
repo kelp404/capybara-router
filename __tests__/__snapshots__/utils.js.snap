@@ -46,6 +46,7 @@ Object {
 exports[`Find the route by the name. 1`] = `
 Route {
   "component": undefined,
+  "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/",
@@ -72,6 +73,7 @@ Object {
 exports[`Generate a route with the parent. 1`] = `
 Route {
   "component": [Function],
+  "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
@@ -95,6 +97,7 @@ Route {
 exports[`Generate a route with the parent. 2`] = `
 Route {
   "component": [Function],
+  "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects/users/([\\\\w-]{20})/projects/([\\\\w-]{20})",
@@ -104,6 +107,7 @@ Route {
   "parents": Array [
     Route {
       "component": [Function],
+      "dismissalDelay": undefined,
       "isAbstract": false,
       "loadComponent": undefined,
       "matchPattern": "/users/([\\\\w-]{20})/projects",

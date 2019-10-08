@@ -10,6 +10,7 @@ module.exports = class Route
         "resourceName": {Promise<response.data>}
       component {React.Component}
       loadComponent {Function}
+      dismissalDelay {Number}
     @param parent {Route}
     @returns {Object}
       name {String}
@@ -34,6 +35,7 @@ module.exports = class Route
     @resolve = args.resolve ? {}
     @component = args.component
     @loadComponent = args.loadComponent
+    @dismissalDelay = args.dismissalDelay
 
     if parent
       @uriParamKeys = parent.uriParamKeys?.slice() or []

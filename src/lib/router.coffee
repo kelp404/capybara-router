@@ -164,9 +164,14 @@ module.exports = class Router
       if isBackToParent
         # The changeViewIndex is the destroy target.
         nextRouteChaining[changeViewIndex - 1].onEnter? props
-        @views[changeViewIndex].name = null
-        @views[changeViewIndex].routerView.dispatch
-          route: component: null
+        dismiss = =>
+          @views[changeViewIndex].name = null
+          @views[changeViewIndex].routerView.dispatch
+            route: component: null
+        if previousRoute.dismissalDelay?
+          setTimeout dismiss, previousRoute.dismissalDelay
+        else
+          dismiss()
       else
         nextRouteChaining[changeViewIndex].onEnter? props
         @views[changeViewIndex].name = nextRouteChaining[changeViewIndex].name
