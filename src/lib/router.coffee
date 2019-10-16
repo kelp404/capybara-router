@@ -121,7 +121,7 @@ module.exports = class Router
     params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
-    isBackToParent = previousRoute.name.indexOf("#{nextRoute.name}.") is 0
+    isBackToParent = previousRoute.name.indexOf("#{nextRoute.name}.") is 0 and not isReloadNextHistoryChange
     reusableResolveData = {}
     changeViewIndex = 0
     if @promise and not isReloadNextHistoryChange
