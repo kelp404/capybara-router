@@ -117,8 +117,12 @@ module.exports = class Router
 
     previousRoute = @currentRoute
     previousParams = @currentParams
-    nextRoute = @findRoute location
-    params = utils.parseRouteParams location, nextRoute
+    if location.state
+      nextRoute = utils.findRouteByNameInRoutes location.state.name, @routes
+      params = location.state.params
+    else
+      nextRoute = @findRoute location
+      params = utils.parseRouteParams location, nextRoute
     nextRouteChaining = nextRoute.parents.slice()
     nextRouteChaining.push nextRoute
     isBackToParent = previousRoute.name.indexOf("#{nextRoute.name}.") is 0 and not isReloadNextHistoryChange
@@ -336,9 +340,13 @@ module.exports = class Router
       if "#{@history.location.pathname}#{@history.location.search}" is uri
         @reload()
       else if options.replace
-        @history.replace uri
+        @history.replace uri,
+          name: target.name
+          params: target.params
       else
-        @history.push uri
+        @history.push uri,
+          name: target.name
+          params: target.params
 
   renderError: (error) =>
     ###
