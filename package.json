@@ -39,7 +39,7 @@
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
     "config": "3.2.3",
-    "coveralls": "3.0.6",
+    "coveralls": "3.0.7",
     "express": "4.17.1",
     "grunt": "1.0.4",
     "grunt-coffee-react": "5.0.2",
@@ -47,12 +47,12 @@
     "grunt-parallel": "0.5.1",
     "jest": "24.9.0",
     "load-grunt-tasks": "5.1.0",
-    "npm-check-updates": "3.1.23",
+    "npm-check-updates": "3.1.24",
     "nprogress": "0.2.0",
     "react-dom": "16.10.2",
     "react-test-renderer": "16.10.2",
     "time-grunt": "2.0.0",
-    "webpack": "4.41.0",
+    "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
     "webpack-dev-server": "3.8.2"
   }
