@@ -67,13 +67,21 @@ test 'Going to a page with a route name will push the history state.', ->
     params:
       userId: 'AWgrmJp1SjjuUM2bzZXM'
       index: 0
-  expect(router.history.push).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
+  expect(router.history.push).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0',
+    name: 'projects'
+    params:
+      index: 0
+      userId: 'AWgrmJp1SjjuUM2bzZXM'
 
 test 'Replace a page with a route name.', ->
   router.history.replace = jest.fn ->
   router.go name: 'projects', params: userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0,
     replace: yes
-  expect(router.history.replace).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0'
+  expect(router.history.replace).toBeCalledWith '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0',
+    name: 'projects'
+    params:
+      index: 0
+      userId: 'AWgrmJp1SjjuUM2bzZXM'
 
 test 'Reload a page with a route name.', ->
   router.reload = jest.fn ->
