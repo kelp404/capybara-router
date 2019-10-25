@@ -28,7 +28,7 @@
     "history": "4.10.1",
     "prop-types": "15.7.2",
     "query-string": "6.8.3",
-    "react": "16.10.2"
+    "react": "16.11.0"
   },
   "devDependencies": {
     "axios": "0.19.0",
@@ -47,13 +47,13 @@
     "grunt-parallel": "0.5.1",
     "jest": "24.9.0",
     "load-grunt-tasks": "5.1.0",
-    "npm-check-updates": "3.1.24",
+    "npm-check-updates": "3.1.25",
     "nprogress": "0.2.0",
-    "react-dom": "16.10.2",
-    "react-test-renderer": "16.10.2",
+    "react-dom": "16.11.0",
+    "react-test-renderer": "16.11.0",
     "time-grunt": "2.0.0",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
-    "webpack-dev-server": "3.8.2"
+    "webpack-dev-server": "3.9.0"
   }
 }
