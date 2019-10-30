@@ -327,8 +327,9 @@ module.exports = class Router
       reload {Boolean}
     ###
     @isReloadNextHistoryChange = yes if options.reload
+    currentUri = utils.generateUri @currentRoute, @currentParams
     if typeof(target) is 'string'
-      if "#{@history.location.pathname}#{@history.location.search}" is target
+      if currentUri is target
         @reload()
       else if options.replace
         @history.replace target
@@ -337,7 +338,7 @@ module.exports = class Router
     else
       route = utils.findRouteByNameInRoutes target.name, @routes
       uri = utils.generateUri route, target.params
-      if "#{@history.location.pathname}#{@history.location.search}" is uri
+      if currentUri is uri
         @reload()
       else if options.replace
         @history.replace uri,
