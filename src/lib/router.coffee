@@ -451,6 +451,8 @@ module.exports = class Router
 
   generateUri: utils.generateUri
 
+  findRouteByName: (name) => utils.findRouteByNameInRoutes name, @routes
+
   findRoute: (location) =>
     ###
     Find the route in @routes by the location.

@@ -249,6 +249,18 @@ Render the error component.
 Type: `Object`  
 The Error object.
 
+---
+
+### findRouteByName(name)
+Find the route by the route name.
+
+#### Parameter `name`
+Type: `String`  
+The route name.
+
+#### Return
+Type: `Route`
+
 
 ## getRouter()
 When the instance of Router was created.  
