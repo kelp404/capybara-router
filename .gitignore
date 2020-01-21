@@ -11,3 +11,6 @@ package-lock.json
 
 # WebStorm
 .idea
+
+# build
+CHANGELOG.md
