@@ -1,4 +1,4 @@
-name: build
+name: test and upload coveralls
 
 on: [push]
 
