@@ -6,6 +6,7 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build && ./node_modules/webpack/bin/webpack.js --mode=production",
+    "changelog": "node_modules/conventional-changelog-cli/cli.js -p angular -i CHANGELOG.md -s",
     "ncu": "./node_modules/npm-check-updates/bin/ncu",
     "test": "grunt buildTest && ./node_modules/jest/bin/jest.js --coverage",
     "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
@@ -39,6 +40,7 @@
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
     "config": "3.2.4",
+    "conventional-changelog-cli": "2.0.31",
     "coveralls": "3.0.7",
     "express": "4.17.1",
     "grunt": "1.0.4",
