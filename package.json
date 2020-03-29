@@ -11,6 +11,10 @@
     "test": "grunt buildTest && ./node_modules/jest/bin/jest.js --coverage",
     "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kelp404/capybara-router.git"
