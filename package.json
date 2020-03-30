@@ -32,35 +32,35 @@
   "dependencies": {
     "history": "4.10.1",
     "prop-types": "15.7.2",
-    "query-string": "6.10.1",
-    "react": "16.12.0"
+    "query-string": "6.11.1",
+    "react": "16.13.1"
   },
   "devDependencies": {
-    "axios": "0.19.1",
+    "axios": "0.19.2",
     "babel-polyfill": "6.26.0",
     "cjsx-loader": "3.0.0",
     "classnames": "2.2.6",
     "coffee-loader": "0.9.0",
     "coffee-script": "1.12.7",
     "coffeescript": "1.12.7",
-    "config": "3.2.5",
+    "config": "3.3.1",
     "conventional-changelog-cli": "2.0.31",
-    "coveralls": "3.0.9",
+    "coveralls": "3.0.11",
     "express": "4.17.1",
-    "grunt": "1.0.4",
+    "grunt": "1.1.0",
     "grunt-coffee-react": "5.0.2",
     "grunt-contrib-watch": "1.1.0",
     "grunt-parallel": "0.5.1",
-    "jest": "24.9.0",
+    "jest": "25.2.4",
     "load-grunt-tasks": "5.1.0",
     "nodemon": "2.0.2",
-    "npm-check-updates": "4.0.1",
+    "npm-check-updates": "4.1.0",
     "nprogress": "0.2.0",
-    "react-dom": "16.12.0",
-    "react-test-renderer": "16.12.0",
+    "react-dom": "16.13.1",
+    "react-test-renderer": "16.13.1",
     "time-grunt": "2.0.0",
-    "webpack": "4.41.5",
-    "webpack-cli": "3.3.10",
-    "webpack-dev-server": "3.10.1"
+    "webpack": "4.42.1",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.10.3"
   }
 }
