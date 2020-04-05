@@ -40,6 +40,7 @@ exports[`Find the route by the location. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/",
@@ -58,6 +59,7 @@ exports[`Find the router belong a abstract router by the location. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/settings",
@@ -68,6 +70,7 @@ Route {
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
+      "generateUri": [Function],
       "isAbstract": true,
       "loadComponent": undefined,
       "matchPattern": "/settings",
@@ -92,6 +95,7 @@ exports[`Get the current route. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/",
@@ -112,6 +116,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
     "matchPattern": "/",
@@ -128,6 +133,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
     "matchPattern": "/login",
@@ -159,6 +165,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
     "matchPattern": "/",
@@ -175,6 +182,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
     "matchPattern": "/",
@@ -232,6 +240,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
     "matchPattern": "/",

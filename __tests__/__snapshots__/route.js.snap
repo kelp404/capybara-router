@@ -4,6 +4,7 @@ exports[`Generate a route with the parent. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
@@ -28,6 +29,7 @@ exports[`Generate a route with the parent. 2`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects/users/([\\\\w-]{20})/projects/([\\\\w-]{20})",
@@ -38,6 +40,7 @@ Route {
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
+      "generateUri": [Function],
       "isAbstract": false,
       "loadComponent": undefined,
       "matchPattern": "/users/([\\\\w-]{20})/projects",
@@ -78,6 +81,7 @@ exports[`Initial Route with a parent. 1`] = `
 Route {
   "component": undefined,
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/dashboard",
@@ -88,6 +92,7 @@ Route {
     Route {
       "component": undefined,
       "dismissalDelay": undefined,
+      "generateUri": [Function],
       "isAbstract": false,
       "loadComponent": undefined,
       "matchPattern": "/",
@@ -112,6 +117,7 @@ exports[`Initial Route without a parent. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
   "matchPattern": "/users/([\\\\w-]{20})/projects",
