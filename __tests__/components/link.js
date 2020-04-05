@@ -5,7 +5,7 @@ const Route = require('../../lib/route');
 const utils = require('../../lib/utils');
 const {Router, Link} = require('../../');
 
-let router = null;
+let router;
 beforeEach(() => {
   router = new Router({
     history: history.createMemoryHistory({initialEntries: ['/']}),
