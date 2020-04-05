@@ -2,7 +2,6 @@
 .DS_Store
 
 # tests
-__tests__/**/*.js
 coverage/
 
 # node modules
