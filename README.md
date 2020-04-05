@@ -179,11 +179,6 @@ Run the lazy loading function when the `.component` is null.
 
 ---
 
-### start()
-Start dispatch routes.
-
----
-
 ### reload()
 Reload the root router view.
 
@@ -249,6 +244,14 @@ Render the error component.
 #### Parameter `error`
 Type: `Object`  
 The Error object.
+
+---
+
+### getCurrentRoute()
+Get the current route via router.history and router.routes.
+
+#### Return
+Type: `Route`
 
 ---
 
