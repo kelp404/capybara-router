@@ -5,7 +5,7 @@ module.exports = (env = {}) => {
     target: 'web',
     mode: env.mode || 'development',
     entry: {
-      app: path.join(__dirname, 'example', 'app.js')
+      web: path.join(__dirname, 'example', 'app.js')
     },
     devServer: {
       host: 'localhost',

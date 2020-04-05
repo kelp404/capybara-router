@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently --kill-others \"node_modules/nodemon/bin/nodemon.js example/server.js --watch example/server.js\" \"node_modules/webpack-dev-server/bin/webpack-dev-server.js\"",
-    "build": "grunt build && ./node_modules/webpack/bin/webpack.js --mode=production",
+    "eslint": "./node_modules/eslint/bin/eslint.js index.js lib config example/pages example/app.js example/router.js example/server.js",
+    "build": "./node_modules/webpack/bin/webpack.js --mode=production",
     "changelog": "node_modules/conventional-changelog-cli/cli.js -p angular",
     "ncu": "./node_modules/npm-check-updates/bin/ncu",
-    "test": "grunt buildTest && ./node_modules/jest/bin/jest.js --coverage",
+    "test": "./node_modules/jest/bin/jest.js --coverage",
     "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "files": [
@@ -43,6 +44,7 @@
     "@babel/preset-react": "7.9.4",
     "axios": "0.19.2",
     "babel-eslint": "10.1.0",
+    "babel-loader": "8.1.0",
     "babel-polyfill": "6.26.0",
     "classnames": "2.2.6",
     "concurrently": "5.1.0",
