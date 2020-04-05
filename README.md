@@ -56,13 +56,14 @@ const router = new Router({
   ],
   errorComponent: ErrorPage
 });
-router.start();
 
 const element = (
   <RouterView>
-    <p className="text-center text-muted h3" style={{padding: '20px 0'}}>
-      <i className="fa fa-spinner fa-pulse fa-fw"></i> Loading...
-    </p>
+    <div className="text-center text-muted py-5">
+      <div className="spinner-border">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div>
   </RouterView>
 );
 ReactDOM.render(element, document.getElementById('root'));
@@ -73,7 +74,7 @@ ReactDOM.render(element, document.getElementById('root'));
 + `npm start`  
   Run the debug server on localhost:8000/capybara-router.
 + `npm run build`  
-  Build the source code, test scripts and the example app.
+  Build the example app.
 + `npm test`  
   Build test scripts and run tests.
 
@@ -232,7 +233,7 @@ The event type.
 #### Parameter `callback`
 Type: `Function`  
 The callback function.  
-`ChangeStart`: (action, toState, fromState, cancel) => {}  
+`ChangeStart`: (action, toState, fromState, next) => {}  
 `ChangeSuccess`: (action, toState, fromState) => {}  
 `ChangeError`: (error) => {}
 
