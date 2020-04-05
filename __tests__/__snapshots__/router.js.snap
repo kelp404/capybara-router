@@ -38,7 +38,7 @@ Object {
 
 exports[`Find the route by the location. 1`] = `
 Route {
-  "component": undefined,
+  "component": [Function],
   "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
@@ -90,7 +90,7 @@ Route {
 
 exports[`Get the current route. 1`] = `
 Route {
-  "component": undefined,
+  "component": [Function],
   "dismissalDelay": undefined,
   "isAbstract": false,
   "loadComponent": undefined,
@@ -108,10 +108,9 @@ Route {
 
 exports[`Go to a page. 1`] = `
 Array [
-  "router-promise",
   "PUSH",
   Route {
-    "component": undefined,
+    "component": [Function],
     "dismissalDelay": undefined,
     "isAbstract": false,
     "loadComponent": undefined,
@@ -156,10 +155,9 @@ exports[`Go to a page. 2`] = `
 
 exports[`Reload the page. 1`] = `
 Array [
-  "router-promise",
   "RELOAD",
   Route {
-    "component": undefined,
+    "component": [Function],
     "dismissalDelay": undefined,
     "isAbstract": false,
     "loadComponent": undefined,
@@ -175,7 +173,7 @@ Array [
   },
   Object {},
   Route {
-    "component": undefined,
+    "component": [Function],
     "dismissalDelay": undefined,
     "isAbstract": false,
     "loadComponent": undefined,
@@ -216,7 +214,7 @@ exports[`Render the error component when the router was started with error. 1`] 
 
 exports[`Render the error page without the error component. 1`] = `
 <div>
-  Loading
+  Home
 </div>
 `;
 
@@ -228,12 +226,11 @@ exports[`Render the error page. 1`] = `
 
 exports[`Start dispatch routes. 1`] = `
 Array [
-  "router-promise",
-  null,
+  "INITIAL",
   null,
   null,
   Route {
-    "component": undefined,
+    "component": [Function],
     "dismissalDelay": undefined,
     "isAbstract": false,
     "loadComponent": undefined,
@@ -256,6 +253,6 @@ Array [
 
 exports[`Start dispatch routes. 2`] = `
 <div>
-  Loading
+  Home
 </div>
 `;

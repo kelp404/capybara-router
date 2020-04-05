@@ -1,32 +1,19 @@
-(function() {
-  var app, config, express, http, path, server;
+const http = require('http');
+const path = require('path');
+const config = require('config');
+const express = require('express');
 
-  http = require('http');
+const app = express();
 
-  path = require('path');
+app.get('/', (req, res) => res.redirect('/capybara-router'));
+app.use('/capybara-router/example/data', express.static(path.join(__dirname, '..', 'example', 'data')));
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-  config = require('config');
-
-  express = require('express');
-
-  app = express();
-
-  server = http.createServer(app);
-
-  app.get('/', function(req, res) {
-    return res.redirect('/capybara-router');
-  });
-
-  app.use('/capybara-router/example/data', express["static"](path.join(__dirname, '..', 'example', 'data')));
-
-  app.use(function(req, res) {
-    return res.sendFile(path.join(__dirname, 'index.html'));
-  });
-
-  server.listen(config.server.port, config.server.host, function() {
-    var address;
-    address = server.address();
-    return console.log("Server listening at http://" + address.address + ":" + address.port + "/capybara-router");
-  });
-
-}).call(this);
+// Launch server.
+const server = http.createServer(app);
+server.listen(config.server.port, config.server.host, () => {
+  const address = server.address();
+  console.log(`Server listening at http://${address.address}:${address.port}/capybara-router`);
+});

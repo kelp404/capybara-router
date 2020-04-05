@@ -2,14 +2,10 @@
 
 exports[`RouterView component render with a child component. 1`] = `
 <div
-  class="head"
+  className="head"
 >
   child
 </div>
 `;
 
-exports[`RouterView component render. 1`] = `
-<div>
-  Loading
-</div>
-`;
+exports[`RouterView component render. 1`] = `"Loading"`;
