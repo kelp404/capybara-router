@@ -13,7 +13,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g grunt-cli
     - run: npm install
-    - run: npm run build
+    - run: npm run eslint
     - run: npm test
+    - run: npm run build
