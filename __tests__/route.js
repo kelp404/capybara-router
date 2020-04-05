@@ -25,3 +25,64 @@ test('Initial Route with a parent.', () => {
   });
   expect(route).toMatchSnapshot();
 });
+
+test('Generate a route with the parent.', () => {
+  const parent = new Route({
+    name: 'web',
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
+    resolve: {id: () => 'id'},
+    onEnter: () => {},
+    component: () => {}
+  });
+  const child = new Route({
+    name: 'web.project',
+    uri: '/users/{userId:[\\w-]{20}}/projects/{projectId:[\\w-]{20}}',
+    resolve: {id: () => 'id'},
+    onEnter: () => {},
+    component: () => {},
+    parent
+  });
+  expect(parent).toMatchSnapshot();
+  expect(child).toMatchSnapshot();
+});
+
+test('Get an error on generating a route with a resolve key called "key".', () => {
+  const func = () => {
+    return new Route({
+      name: 'web',
+      uri: '/',
+      resolve: {key: () => null}
+    });
+  };
+
+  expect(func).toThrow(Error);
+});
+test('Get an error on generating a route with a resolve key called "params".', () => {
+  const func = () => {
+    return new Route({
+      name: 'web',
+      uri: '/',
+      resolve: {params: () => null}
+    });
+  };
+
+  expect(func).toThrow(Error);
+});
+
+test('Generate the URI of the route with params', () => {
+  const fakeRoute = new Route({
+    name: 'web',
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
+    resolve: {
+      user: ({userId}) => Promise.resolve({id: userId, name: 'User'}),
+      projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}])
+    },
+    component: () => <div/>
+  });
+  const uri = fakeRoute.generateUri({
+    userId: 'AWgrmJp1SjjuUM2bzZXM',
+    index: 0,
+    sort: 'asc'
+  });
+  expect(uri).toMatchSnapshot();
+});
