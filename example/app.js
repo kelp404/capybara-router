@@ -9,12 +9,11 @@ progress.configure({showSpinner: false});
 
 router.listen('ChangeStart', (action, toState, fromState, next) => {
   progress.start();
+  next();
   if (toState.name === 'web') {
     setTimeout(() => {
       router.go({name: 'web.home'}, {replace: true});
     });
-  } else {
-    next();
   }
 });
 router.listen('ChangeSuccess', progress.done);
