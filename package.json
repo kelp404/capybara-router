@@ -8,7 +8,7 @@
     "eslint": "node_modules/eslint/bin/eslint.js ./ --ignore-path .gitignore --ignore-pattern 'example/web.js'",
     "build": "node_modules/webpack/bin/webpack.js --mode=production",
     "changelog": "node_modules/conventional-changelog-cli/cli.js -p angular",
-    "ncu": "node_modules/npm-check-updates/bin/npm-check-updates.js",
+    "ncu": "node_modules/npm-check-updates/bin/cli.js",
     "test": "node_modules/jest/bin/jest.js --coverage",
     "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
@@ -60,7 +60,7 @@
     "express": "4.17.1",
     "jest": "26.4.2",
     "nodemon": "2.0.4",
-    "npm-check-updates": "7.1.1",
+    "npm-check-updates": "8.0.3",
     "nprogress": "0.2.0",
     "react-dom": "16.13.1",
     "react-test-renderer": "16.13.1",
