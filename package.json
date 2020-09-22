@@ -60,7 +60,7 @@
     "express": "4.17.1",
     "jest": "26.4.2",
     "nodemon": "2.0.4",
-    "npm-check-updates": "8.0.3",
+    "npm-check-updates": "9.0.1",
     "nprogress": "0.2.0",
     "react-dom": "16.13.1",
     "react-test-renderer": "16.13.1",
