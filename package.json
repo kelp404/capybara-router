@@ -59,7 +59,7 @@
     "eslint-plugin-react-hooks": "4.1.2",
     "express": "4.17.1",
     "jest": "26.5.3",
-    "nodemon": "2.0.4",
+    "nodemon": "2.0.6",
     "npm-check-updates": "9.1.2",
     "nprogress": "0.2.0",
     "react-dom": "16.13.1",
