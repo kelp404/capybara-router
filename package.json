@@ -37,7 +37,7 @@
     "react": "16.13.1"
   },
   "devDependencies": {
-    "@babel/core": "7.12.10",
+    "@babel/core": "7.13.15",
     "@babel/plugin-proposal-class-properties": "7.12.1",
     "@babel/polyfill": "7.12.1",
     "@babel/preset-env": "7.12.1",
@@ -52,7 +52,7 @@
     "conventional-changelog-cli": "2.1.0",
     "coveralls": "3.1.0",
     "eslint": "7.24.0",
-    "eslint-config-xo": "0.34.0",
+    "eslint-config-xo": "0.36.0",
     "eslint-config-xo-react": "0.25.0",
     "eslint-config-xo-space": "0.26.0",
     "eslint-plugin-react": "7.22.0",
