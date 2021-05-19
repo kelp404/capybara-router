@@ -63,7 +63,7 @@
     "npm-check-updates": "11.5.13",
     "nprogress": "0.2.0",
     "react-dom": "16.13.1",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "16.14.0",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.2"
