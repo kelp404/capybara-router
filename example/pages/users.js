@@ -3,17 +3,15 @@ const React = require('react');
 const {Link} = require('../../');
 
 module.exports = class Users extends React.Component {
-  static get propTypes() {
-    return {
-      users: PropTypes.shape({
-        total: PropTypes.number.isRequired,
-        items: PropTypes.arrayOf(PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          name: PropTypes.string.isRequired,
-          email: PropTypes.string.isRequired
-        }).isRequired).isRequired
-      }).isRequired
-    };
+  static propTypes = {
+    users: PropTypes.shape({
+      total: PropTypes.number.isRequired,
+      items: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired
+      }).isRequired).isRequired
+    }).isRequired
   }
 
   render() {

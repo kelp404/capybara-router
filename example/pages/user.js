@@ -2,14 +2,12 @@ const PropTypes = require('prop-types');
 const React = require('react');
 
 module.exports = class Users extends React.PureComponent {
-  static get propTypes() {
-    return {
-      user: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired
-      }).isRequired
-    };
+  static propTypes = {
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired
+    }).isRequired
   }
 
   render() {
