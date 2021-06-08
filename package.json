@@ -65,7 +65,7 @@
     "react-dom": "16.14.0",
     "react-test-renderer": "16.14.0",
     "webpack": "4.44.2",
-    "webpack-cli": "3.3.12",
+    "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2"
   }
 }
