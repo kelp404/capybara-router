@@ -4,6 +4,7 @@ exports[`Generate a route with the parent. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -29,6 +30,7 @@ exports[`Generate a route with the parent. 2`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -40,6 +42,7 @@ Route {
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
+      "generateLocation": [Function],
       "generateUri": [Function],
       "isAbstract": false,
       "loadComponent": undefined,
@@ -81,6 +84,7 @@ exports[`Initial Route with a parent. 1`] = `
 Route {
   "component": undefined,
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -92,6 +96,7 @@ Route {
     Route {
       "component": undefined,
       "dismissalDelay": undefined,
+      "generateLocation": [Function],
       "generateUri": [Function],
       "isAbstract": false,
       "loadComponent": undefined,
@@ -117,6 +122,7 @@ exports[`Initial Route without a parent. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,

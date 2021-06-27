@@ -47,6 +47,7 @@ exports[`Find the route by the name. 1`] = `
 Route {
   "component": undefined,
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
