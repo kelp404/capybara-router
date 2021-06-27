@@ -40,6 +40,7 @@ exports[`Find the route by the location. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -59,6 +60,7 @@ exports[`Find the router belong a abstract router by the location. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -70,6 +72,7 @@ Route {
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
+      "generateLocation": [Function],
       "generateUri": [Function],
       "isAbstract": true,
       "loadComponent": undefined,
@@ -95,6 +98,7 @@ exports[`Get the current route. 1`] = `
 Route {
   "component": [Function],
   "dismissalDelay": undefined,
+  "generateLocation": [Function],
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
@@ -116,6 +120,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateLocation": [Function],
     "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
@@ -133,6 +138,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateLocation": [Function],
     "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
@@ -165,6 +171,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateLocation": [Function],
     "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
@@ -182,6 +189,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateLocation": [Function],
     "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,
@@ -240,6 +248,7 @@ Array [
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
+    "generateLocation": [Function],
     "generateUri": [Function],
     "isAbstract": false,
     "loadComponent": undefined,

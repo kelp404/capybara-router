@@ -9,6 +9,17 @@ const historyActions = require('../lib/constants/history-actions');
 
 let router;
 beforeEach(() => {
+  global.location = {
+    hash: '',
+    host: 'localhost:8000',
+    hostname: 'localhost',
+    href: 'http://localhost:8000',
+    origin: 'http://localhost:8000',
+    pathname: '/',
+    port: '8000',
+    protocol: 'http:',
+    search: ''
+  };
   router = new Router({
     history: history.createMemoryHistory({initialEntries: ['/']}),
     routes: [
@@ -50,13 +61,13 @@ afterEach(() => jest.restoreAllMocks());
 test('Going to a page with the URI will push the history state.', () => {
   router.history.push = jest.fn(() => {});
   router.go('/login');
-  expect(router.history.push).toBeCalledWith('/login');
+  expect(router.history.push).toBeCalledWith({pathname: '/login', search: ''}, undefined);
 });
 
 test('Replace a page with the URI.', () => {
   router.history.replace = jest.fn(() => {});
   router.go('/login', {replace: true});
-  expect(router.history.replace).toBeCalledWith('/login');
+  expect(router.history.replace).toBeCalledWith({pathname: '/login', search: ''}, undefined);
 });
 
 test('Reload a page with the URI.', () => {
@@ -72,7 +83,7 @@ test('Going to a page with a route name will push the history state.', () => {
     params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0}
   });
   expect(router.history.push).toBeCalledWith(
-    '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0',
+    {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
       params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'}
@@ -87,7 +98,7 @@ test('Replace a page with a route name.', () => {
     {replace: true}
   );
   expect(router.history.replace).toBeCalledWith(
-    '/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0',
+    {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
       params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'}
