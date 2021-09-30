@@ -1,8 +1,10 @@
 const path = require('path');
 
-module.exports = (env = {}) => ({
+const {NODE_ENV} = process.env;
+
+module.exports = () => ({
   target: 'web',
-  mode: env.mode || 'development',
+  mode: NODE_ENV || 'development',
   entry: {
     web: path.join(__dirname, 'example', 'app.js')
   },
