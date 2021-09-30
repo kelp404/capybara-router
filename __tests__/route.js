@@ -47,24 +47,20 @@ test('Generate a route with the parent.', () => {
 });
 
 test('Get an error on generating a route with a resolve key called "key".', () => {
-  const func = () => {
-    return new Route({
-      name: 'web',
-      uri: '/',
-      resolve: {key: () => null}
-    });
-  };
+  const func = () => new Route({
+    name: 'web',
+    uri: '/',
+    resolve: {key: () => null}
+  });
 
   expect(func).toThrow(Error);
 });
 test('Get an error on generating a route with a resolve key called "params".', () => {
-  const func = () => {
-    return new Route({
-      name: 'web',
-      uri: '/',
-      resolve: {params: () => null}
-    });
-  };
+  const func = () => new Route({
+    name: 'web',
+    uri: '/',
+    resolve: {params: () => null}
+  });
 
   expect(func).toThrow(Error);
 });
