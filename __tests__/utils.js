@@ -3,17 +3,15 @@ const React = require('react');
 const Route = require('../lib/route');
 const utils = require('../lib/utils');
 
-const generateFakeRoute = () => {
-  return new Route({
-    name: 'web',
-    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
-    resolve: {
-      user: ({userId}) => Promise.resolve({id: userId, name: 'User'}),
-      projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}])
-    },
-    component: () => <div/>
-  });
-};
+const generateFakeRoute = () => new Route({
+  name: 'web',
+  uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
+  resolve: {
+    user: ({userId}) => Promise.resolve({id: userId, name: 'User'}),
+    projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}])
+  },
+  component: () => <div/>
+});
 
 test('Find the route by the name.', () => {
   const routes = [
