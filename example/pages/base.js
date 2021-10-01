@@ -11,7 +11,7 @@ module.exports = class Base extends React.Component {
     this.listens = [
       router.listen('ChangeSuccess', (action, toState) => {
         this.setState({currentRouteName: toState.name});
-      })
+      }),
     ];
   }
 

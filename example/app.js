@@ -30,5 +30,5 @@ ReactDOM.render(
       </div>
     </div>
   </RouterView>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

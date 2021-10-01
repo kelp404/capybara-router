@@ -6,7 +6,7 @@ module.exports = () => ({
   target: 'web',
   mode: NODE_ENV || 'development',
   entry: {
-    web: path.join(__dirname, 'example', 'app.js')
+    web: path.join(__dirname, 'example', 'app.js'),
   },
   devServer: {
     host: 'localhost',
@@ -15,16 +15,16 @@ module.exports = () => ({
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Max-Age': '3000',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Access-Control-Allow-Methods': 'GET'
-    }
+      'Access-Control-Allow-Methods': 'GET',
+    },
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
   },
   output: {
     path: path.join(__dirname, 'example'),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -37,15 +37,15 @@ module.exports = () => ({
             options: {
               presets: [
                 '@babel/preset-env',
-                '@babel/react'
+                '@babel/react',
               ],
               plugins: [
-                '@babel/plugin-proposal-class-properties'
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  }
+                '@babel/plugin-proposal-class-properties',
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
 });

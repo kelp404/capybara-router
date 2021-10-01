@@ -6,8 +6,8 @@ module.exports = class Users extends React.PureComponent {
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired
-    }).isRequired
+      email: PropTypes.string.isRequired,
+    }).isRequired,
   }
 
   render() {

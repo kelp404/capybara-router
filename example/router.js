@@ -8,7 +8,7 @@ module.exports = new Router({
     {
       name: 'web',
       uri: '/capybara-router',
-      component: require('./pages/base')
+      component: require('./pages/base'),
     },
     {
       name: 'web.home',
@@ -16,7 +16,7 @@ module.exports = new Router({
       onEnter: () => {
         document.title = 'Home - capybara-router';
       },
-      component: require('./pages/home')
+      component: require('./pages/home'),
     },
     {
       name: 'web.users',
@@ -27,10 +27,10 @@ module.exports = new Router({
       resolve: {
         users: () => axios({
           method: 'get',
-          url: '/capybara-router/example/data/users.json'
-        }).then(response => response.data)
+          url: '/capybara-router/example/data/users.json',
+        }).then(response => response.data),
       },
-      component: require('./pages/users')
+      component: require('./pages/users'),
     },
     {
       name: 'web.user',
@@ -41,10 +41,10 @@ module.exports = new Router({
       resolve: {
         user: params => axios({
           method: 'get',
-          url: `/capybara-router/example/data/users/${params.userId}.json`
-        }).then(response => response.data)
+          url: `/capybara-router/example/data/users/${params.userId}.json`,
+        }).then(response => response.data),
       },
-      component: require('./pages/user')
+      component: require('./pages/user'),
     },
     {
       name: 'web.test-error',
@@ -52,16 +52,16 @@ module.exports = new Router({
       resolve: {
         error: () => axios({
           method: 'get',
-          url: 'https://github.com/404'
-        })
+          url: 'https://github.com/404',
+        }),
       },
-      component: require('./pages/home')
+      component: require('./pages/home'),
     },
     {
       name: 'not-found',
       uri: '.*',
-      component: require('./pages/not-found')
-    }
+      component: require('./pages/not-found'),
+    },
   ],
-  errorComponent: require('./pages/error-page')
+  errorComponent: require('./pages/error-page'),
 });
