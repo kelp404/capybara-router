@@ -18,7 +18,7 @@ beforeEach(() => {
     pathname: '/',
     port: '8000',
     protocol: 'http:',
-    search: ''
+    search: '',
   };
   router = new Router({
     history: history.createMemoryHistory({initialEntries: ['/']}),
@@ -27,33 +27,33 @@ beforeEach(() => {
         name: 'home',
         uri: '/',
         onEnter: () => {},
-        component: () => <div>Home</div>
+        component: () => <div>Home</div>,
       },
       {
         name: 'login',
         uri: '/login',
         onEnter: () => {},
-        component: () => <div>Login</div>
+        component: () => <div>Login</div>,
       },
       {
         name: 'projects',
         uri: '/users/{userId:[\\w-]{20}}/projects?index',
         onEnter: () => {},
-        component: () => <div>Projects</div>
+        component: () => <div>Projects</div>,
       },
       {
         isAbstract: true,
         name: 'settings',
         uri: '/settings',
-        component: () => <div>Loading</div>
+        component: () => <div>Loading</div>,
       },
       {
         name: 'settings.account',
         uri: '',
-        component: () => <div>Account</div>
-      }
+        component: () => <div>Account</div>,
+      },
     ],
-    errorComponent: () => <div>Error</div>
+    errorComponent: () => <div>Error</div>,
   });
 });
 afterEach(() => jest.restoreAllMocks());
@@ -80,14 +80,14 @@ test('Going to a page with a route name will push the history state.', () => {
   router.history.push = jest.fn(() => {});
   router.go({
     name: 'projects',
-    params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0}
+    params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0},
   });
   expect(router.history.push).toBeCalledWith(
     {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
-      params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'}
-    }
+      params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'},
+    },
   );
 });
 
@@ -95,14 +95,14 @@ test('Replace a page with a route name.', () => {
   router.history.replace = jest.fn(() => {});
   router.go(
     {name: 'projects', params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0}},
-    {replace: true}
+    {replace: true},
   );
   expect(router.history.replace).toBeCalledWith(
     {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
-      params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'}
-    }
+      params: {index: 0, userId: 'AWgrmJp1SjjuUM2bzZXM'},
+    },
   );
 });
 
@@ -181,7 +181,7 @@ test('Broadcast a start event.', () => {
     previousRoute: route,
     previousParams: {id: 'old'},
     nextRoute: route,
-    nextParams: {id: 'new'}
+    nextParams: {id: 'new'},
   })
     .then(() => {
       unsubscribe();
@@ -202,7 +202,7 @@ test('Broadcast a success event.', () => {
     previousRoute: route,
     previousParams: {id: 'old'},
     nextRoute: route,
-    nextParams: {id: 'new'}
+    nextParams: {id: 'new'},
   });
   unsubscribe();
   expect(onChangeSuccess).toBeCalled();
@@ -257,14 +257,14 @@ test('Call onEnter() of the route when the router was started.', () => {
   return router.promise.then(() => {
     expect(router.routes[0].onEnter).toBeCalledWith({
       key: 0.1.toString(36).substr(2),
-      params: {}
+      params: {},
     });
   });
 });
 
 test('Render the error component when the router was started with error.', () => {
   router.routes[0].resolve = {
-    error: () => Promise.reject(new Error())
+    error: () => Promise.reject(new Error()),
   };
   router.start();
   const component = renderer.create(<RouterView>Loading</RouterView>);
@@ -335,7 +335,7 @@ test('Call onEnter() of the route when the history was changed.', () => {
     .then(() => {
       expect(router.routes[1].onEnter).toBeCalledWith({
         key: 0.1.toString(36).substr(2),
-        params: {}
+        params: {},
       });
     });
 });
@@ -395,7 +395,7 @@ test('Render the error component when reload with error.', () => {
   return router.promise.then(() => {
     jest.spyOn(Math, 'random').mockImplementation(() => 0.1);
     router.routes[0].resolve = {
-      error: () => Promise.reject(new Error())
+      error: () => Promise.reject(new Error()),
     };
     router.routes[0].onEnter = jest.fn(() => {});
     router.reload();

@@ -8,14 +8,14 @@ const generateFakeRoute = () => new Route({
   uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
   resolve: {
     user: ({userId}) => Promise.resolve({id: userId, name: 'User'}),
-    projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}])
+    projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}]),
   },
-  component: () => <div/>
+  component: () => <div/>,
 });
 
 test('Find the route by the name.', () => {
   const routes = [
-    new Route({name: 'web', uri: '/'})
+    new Route({name: 'web', uri: '/'}),
   ];
   const route = utils.findRouteByNameInRoutes('web', routes);
   expect(route).toMatchSnapshot();
@@ -23,7 +23,7 @@ test('Find the route by the name.', () => {
 
 test('Get an error on finding the route by the name.', () => {
   const routes = [
-    new Route({name: 'web', uri: '/'})
+    new Route({name: 'web', uri: '/'}),
   ];
   const func = () => utils.findRouteByNameInRoutes('not-found', routes);
   expect(func).toThrow(Error);
@@ -32,7 +32,7 @@ test('Get an error on finding the route by the name.', () => {
 test('Parse params from the location.', () => {
   const fakeRoute = generateFakeRoute();
   const fakeHistory = history.createMemoryHistory({
-    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc'],
   });
   const params = utils.parseRouteParams(fakeHistory.location, fakeRoute);
   expect(params).toMatchSnapshot();
@@ -41,7 +41,7 @@ test('Parse params from the location.', () => {
 test('Fetch resolve data.', () => {
   const fakeRoute = generateFakeRoute();
   const fakeHistory = history.createMemoryHistory({
-    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc'],
   });
   const params = utils.parseRouteParams(fakeHistory.location, fakeRoute);
   utils.fetchResolveData(fakeRoute, params, {}, fakeHistory)
@@ -51,7 +51,7 @@ test('Fetch resolve data.', () => {
 test('Fetch resolve data with reusable resolve data.', () => {
   const fakeRoute = generateFakeRoute();
   const fakeHistory = history.createMemoryHistory({
-    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc'],
   });
   const params = utils.parseRouteParams(fakeHistory.location, fakeRoute);
   utils.fetchResolveData(fakeRoute, params, {web: {user: 'old user'}}, fakeHistory)
@@ -65,13 +65,13 @@ test('Fetch resolve data with error.', () => {
     resolve: {
       user: () => Promise.reject(new Error()),
       projects: () => Promise.resolve([
-        {id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}
-      ])
+        {id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'},
+      ]),
     },
-    component: () => <div/>
+    component: () => <div/>,
   });
   const fakeHistory = history.createMemoryHistory({
-    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc'],
   });
   const params = utils.parseRouteParams(fakeHistory.location, fakeRoute);
   const resolve = jest.fn(() => {});
@@ -87,7 +87,7 @@ test('Fetch resolve data with error.', () => {
 
 test('Flatten resolve data.', () => {
   const result = utils.flattenResolveData({
-    web: {user: {id: 'id', name: 'name'}}
+    web: {user: {id: 'id', name: 'name'}},
   });
   expect(result).toMatchSnapshot();
 });
@@ -96,16 +96,16 @@ test('Fetch resolve data with lazy loading.', () => {
   const parentRoute = new Route({
     name: 'web',
     uri: '/',
-    loadComponent: () => Promise.resolve({default: <div>parent</div>})
+    loadComponent: () => Promise.resolve({default: <div>parent</div>}),
   });
   const fakeRoute = new Route({
     name: 'web.user',
     uri: 'users/{userId:[\\w-]{20}}/projects?index?sort',
     loadComponent: () => Promise.resolve({default: <div>child</div>}),
-    parent: parentRoute
+    parent: parentRoute,
   });
   const fakeHistory = history.createMemoryHistory({
-    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc']
+    initialEntries: ['/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc'],
   });
 
   const params = utils.parseRouteParams(fakeHistory.location, fakeRoute);

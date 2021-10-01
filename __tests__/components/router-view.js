@@ -8,8 +8,8 @@ beforeEach(() => {
   router = new Router({
     history: history.createMemoryHistory({initialEntries: ['/']}),
     routes: [
-      {name: 'home', uri: '/'}
-    ]
+      {name: 'home', uri: '/'},
+    ],
   });
   router.start();
 });
@@ -35,7 +35,7 @@ test('RouterView component render with a child component.', () => {
   const component = renderer.create(<RouterView>Loading</RouterView>);
   routerView.dispatch({
     route: {component: Child},
-    props: {className: 'head'}
+    props: {className: 'head'},
   });
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
