@@ -9,9 +9,9 @@ module.exports = class Users extends React.Component {
       items: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired
-      }).isRequired).isRequired
-    }).isRequired
+        email: PropTypes.string.isRequired,
+      }).isRequired).isRequired,
+    }).isRequired,
   }
 
   render() {

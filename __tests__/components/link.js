@@ -10,8 +10,8 @@ beforeEach(() => {
   router = new Router({
     history: history.createMemoryHistory({initialEntries: ['/']}),
     routes: [
-      {name: 'home', uri: '/'}
-    ]
+      {name: 'home', uri: '/'},
+    ],
   });
 });
 afterEach(() => {
@@ -27,7 +27,7 @@ test('Link component render.', () => {
 test('Link component render with object props.', () => {
   const route = new Route({
     name: 'web',
-    uri: '/web?index'
+    uri: '/web?index',
   });
   jest.spyOn(utils, 'findRouteByNameInRoutes').mockImplementation(name => {
     expect(name).toBe('web');
@@ -35,7 +35,7 @@ test('Link component render with object props.', () => {
   });
   jest.spyOn(route, 'generateUri').mockImplementation(() => '/web?index=0');
   const component = renderer.create(
-    <Link to={{name: 'web', params: {index: 0}}}>Web</Link>
+    <Link to={{name: 'web', params: {index: 0}}}>Web</Link>,
   );
   const tree = component.toJSON();
   expect(utils.findRouteByNameInRoutes).toBeCalled();
