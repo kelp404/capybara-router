@@ -34,7 +34,7 @@
     "history": "5.0.1",
     "prop-types": "15.7.2",
     "query-string": "7.0.1",
-    "react": "16.14.0"
+    "react": "17.0.2"
   },
   "devDependencies": {
     "@babel/core": "7.15.8",
@@ -62,8 +62,8 @@
     "nodemon": "2.0.13",
     "npm-check-updates": "11.8.5",
     "nprogress": "0.2.0",
-    "react-dom": "16.14.0",
-    "react-test-renderer": "16.14.0",
+    "react-dom": "17.0.2",
+    "react-test-renderer": "17.0.2",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.2"
