@@ -24,10 +24,9 @@ router.listen('ChangeError', error => {
 
 ReactDOM.render(
   <RouterView>
-    <div className="text-center text-muted py-5">
-      <div className="spinner-border">
-        <span className="sr-only">Loading...</span>
-      </div>
+    <div className="text-center text-muted h3" style="padding: 20px 0">
+      <i className="fa fa-spinner fa-pulse fa-fw"></i>
+      <span className="sr-only">Loading...</span>
     </div>
   </RouterView>,
   document.getElementById('root'),
