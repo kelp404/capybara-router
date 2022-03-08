@@ -4,7 +4,7 @@ const React = require('react');
 module.exports = class ErrorPage extends React.Component {
   static propTypes = {
     error: PropTypes.any.isRequired,
-  }
+  };
 
   shouldComponentUpdate() {
     return false;

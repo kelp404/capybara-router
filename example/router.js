@@ -13,7 +13,7 @@ module.exports = new Router({
     {
       name: 'web.home',
       uri: '/',
-      onEnter: () => {
+      onEnter() {
         document.title = 'Home - capybara-router';
       },
       component: require('./pages/home'),
@@ -21,7 +21,7 @@ module.exports = new Router({
     {
       name: 'web.users',
       uri: '/users',
-      onEnter: () => {
+      onEnter() {
         document.title = 'Users - capybara-router';
       },
       resolve: {
@@ -35,7 +35,7 @@ module.exports = new Router({
     {
       name: 'web.user',
       uri: '/users/{userId:[\\w-]{20}}',
-      onEnter: ({user}) => {
+      onEnter({user}) {
         document.title = `${user.name} - Users - capybara-router`;
       },
       resolve: {

@@ -47,7 +47,7 @@ test('Link component calls router.go() when it was clicked.', () => {
   router.go = jest.fn(() => {});
   const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
   const tree = component.toJSON();
-  tree.props.onClick({preventDefault: () => {}});
+  tree.props.onClick({preventDefault() {}});
   expect(router.go).toBeCalledWith('https://github.com');
 });
 
@@ -55,6 +55,6 @@ test('Link component does not call router.go() when it was clicked with the meta
   router.go = jest.fn(() => {});
   const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
   const tree = component.toJSON();
-  tree.props.onClick({metaKey: true, preventDefault: () => {}});
+  tree.props.onClick({metaKey: true, preventDefault() {}});
   expect(router.go).not.toBeCalled();
 });

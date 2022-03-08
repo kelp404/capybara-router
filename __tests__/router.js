@@ -26,19 +26,19 @@ beforeEach(() => {
       {
         name: 'home',
         uri: '/',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Home</div>,
       },
       {
         name: 'login',
         uri: '/login',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Login</div>,
       },
       {
         name: 'projects',
         uri: '/users/{userId:[\\w-]{20}}/projects?index',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Projects</div>,
       },
       {
@@ -256,7 +256,7 @@ test('Call onEnter() of the route when the router was started.', () => {
   renderer.create(<RouterView>Loading</RouterView>);
   return router.promise.then(() => {
     expect(router.routes[0].onEnter).toBeCalledWith({
-      key: 0.1.toString(36).substr(2),
+      key: 0.1.toString(36),
       params: {},
     });
   });
@@ -334,7 +334,7 @@ test('Call onEnter() of the route when the history was changed.', () => {
   })
     .then(() => {
       expect(router.routes[1].onEnter).toBeCalledWith({
-        key: 0.1.toString(36).substr(2),
+        key: 0.1.toString(36),
         params: {},
       });
     });

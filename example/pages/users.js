@@ -12,7 +12,7 @@ module.exports = class Users extends React.Component {
         email: PropTypes.string.isRequired,
       }).isRequired).isRequired,
     }).isRequired,
-  }
+  };
 
   render() {
     const {users} = this.props;
