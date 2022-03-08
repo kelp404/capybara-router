@@ -26,19 +26,19 @@ beforeEach(() => {
       {
         name: 'home',
         uri: '/',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Home</div>,
       },
       {
         name: 'login',
         uri: '/login',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Login</div>,
       },
       {
         name: 'projects',
         uri: '/users/{userId:[\\w-]{20}}/projects?index',
-        onEnter: () => {},
+        onEnter() {},
         component: () => <div>Projects</div>,
       },
       {

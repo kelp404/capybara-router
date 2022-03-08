@@ -31,15 +31,15 @@ test('Generate a route with the parent.', () => {
     name: 'web',
     uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
     resolve: {id: () => 'id'},
-    onEnter: () => {},
-    component: () => {},
+    onEnter() {},
+    component() {},
   });
   const child = new Route({
     name: 'web.project',
     uri: '/users/{userId:[\\w-]{20}}/projects/{projectId:[\\w-]{20}}',
     resolve: {id: () => 'id'},
-    onEnter: () => {},
-    component: () => {},
+    onEnter() {},
+    component() {},
     parent,
   });
   expect(parent).toMatchSnapshot();

@@ -8,7 +8,7 @@ module.exports = class Users extends React.PureComponent {
       name: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
     }).isRequired,
-  }
+  };
 
   render() {
     const {user} = this.props;
