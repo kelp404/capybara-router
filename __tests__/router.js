@@ -256,7 +256,7 @@ test('Call onEnter() of the route when the router was started.', () => {
   renderer.create(<RouterView>Loading</RouterView>);
   return router.promise.then(() => {
     expect(router.routes[0].onEnter).toBeCalledWith({
-      key: 0.1.toString(36).substr(2),
+      key: 0.1.toString(36),
       params: {},
     });
   });
@@ -334,7 +334,7 @@ test('Call onEnter() of the route when the history was changed.', () => {
   })
     .then(() => {
       expect(router.routes[1].onEnter).toBeCalledWith({
-        key: 0.1.toString(36).substr(2),
+        key: 0.1.toString(36),
         params: {},
       });
     });
