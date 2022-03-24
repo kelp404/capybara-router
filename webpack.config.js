@@ -1,10 +1,11 @@
 const path = require('path');
 
-const {NODE_ENV} = process.env;
+const MODE = process.env.NODE_ENV || 'development';
+const IS_PRODUCTION = MODE === 'production';
 
 module.exports = () => ({
   target: 'web',
-  mode: NODE_ENV || 'development',
+  mode: MODE,
   entry: {
     web: path.join(__dirname, 'example', 'app.js'),
   },
@@ -23,7 +24,7 @@ module.exports = () => ({
   },
   output: {
     path: path.join(__dirname, 'example'),
-    publicPath: '/',
+    publicPath: IS_PRODUCTION ? '/' : '//localhost:8001/',
     filename: '[name].js',
   },
   module: {
