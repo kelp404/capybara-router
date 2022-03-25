@@ -1,7 +1,7 @@
 # capybara-router
 [![npm version](https://badge.fury.io/js/capybara-router.svg)](https://www.npmjs.com/package/capybara-router)
 [![Coverage Status](https://coveralls.io/repos/github/kelp404/capybara-router/badge.svg)](https://coveralls.io/github/kelp404/capybara-router)
-[![Actions Status](https://github.com/kelp404/capybara-router/workflows/test%20and%20upload%20coveralls/badge.svg)](https://github.com/kelp404/capybara-router/actions)
+[![Actions Status](https://github.com/kelp404/capybara-router/workflows/test/badge.svg)](https://github.com/kelp404/capybara-router/actions)
   
 This is a react router without flux and redux.  
 We just want a simple way to build a Single Page Application.  
