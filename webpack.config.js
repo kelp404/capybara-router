@@ -4,7 +4,7 @@ const MODE = process.env.NODE_ENV || 'development';
 const IS_PRODUCTION = MODE === 'production';
 
 module.exports = () => ({
-  target: 'web',
+  target: ['web', 'es5'],
   mode: MODE,
   entry: {
     web: path.join(__dirname, 'example', 'app.js'),
@@ -38,10 +38,6 @@ module.exports = () => ({
             options: {
               presets: [
                 '@babel/preset-env',
-                '@babel/react',
-              ],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
               ],
             },
           },

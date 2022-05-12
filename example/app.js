@@ -1,4 +1,4 @@
-require('babel-polyfill');
+require('@babel/polyfill');
 const progress = require('nprogress');
 const React = require('react');
 const ReactDOM = require('react-dom');

@@ -7,12 +7,17 @@ module.exports = class Base extends React.Component {
 
   constructor(props) {
     super(props);
+    this.listens = [];
+  }
+
+  componentDidMount() {
     const router = getRouter();
-    this.listens = [
+
+    this.listens.push(
       router.listen('ChangeSuccess', (action, toState) => {
         this.setState({currentRouteName: toState.name});
       }),
-    ];
+    );
   }
 
   componentWillUnmount() {
