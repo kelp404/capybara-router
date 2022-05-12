@@ -4,13 +4,13 @@
   "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently --kill-others \"node_modules/nodemon/bin/nodemon.js example/server.js --watch example/server.js\" \"node_modules/webpack/bin/webpack.js serve\"",
-    "eslint": "node_modules/eslint/bin/eslint.js ./ --ignore-path .gitignore --ignore-pattern 'example/web.js'",
-    "build": "NODE_ENV=production node_modules/webpack/bin/webpack.js",
+    "start": "concurrently --kill-others \"nodemon example/server.js --watch example/server.js\" \"webpack serve\"",
+    "eslint": "eslint ./ --ignore-path .gitignore --ignore-pattern 'example/web.js'",
+    "build": "NODE_ENV=production webpack",
     "changelog": "node_modules/conventional-changelog-cli/cli.js -n node_modules/@kelp404/changelog.config",
-    "ncu": "node_modules/.bin/npm-check-updates",
-    "test": "node_modules/jest/bin/jest.js --coverage",
-    "coveralls": "./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
+    "ncu": "npm-check-updates",
+    "test": "jest --coverage",
+    "coveralls": "coveralls < ./coverage/lcov.info"
   },
   "files": [
     "index.js",
