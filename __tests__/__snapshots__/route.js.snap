@@ -78,7 +78,7 @@ Route {
 }
 `;
 
-exports[`Generate the URI of the route with params 1`] = `"/users/AWgrmJp1SjjuUM2bzZXM/projects?index=0&sort=asc"`;
+exports[`Generate the URI of the route with params 1`] = `"/users/AWgrmJp1SjjuUM2bzZXM/projects?array=a&array=b&empty=&index=0&nullValue&sort=asc"`;
 
 exports[`Initial Route with a parent. 1`] = `
 Route {

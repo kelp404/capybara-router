@@ -68,7 +68,7 @@ test('Get an error on generating a route with a resolve key called "params".', (
 test('Generate the URI of the route with params', () => {
   const fakeRoute = new Route({
     name: 'web',
-    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort',
+    uri: '/users/{userId:[\\w-]{20}}/projects?index?sort?nullValue?empty?array?undefinedValue',
     resolve: {
       user: ({userId}) => Promise.resolve({id: userId, name: 'User'}),
       projects: () => Promise.resolve([{id: 'AWgrmJp1SjjuUM2bzZXM', title: 'Project'}]),
@@ -79,6 +79,10 @@ test('Generate the URI of the route with params', () => {
     userId: 'AWgrmJp1SjjuUM2bzZXM',
     index: 0,
     sort: 'asc',
+    nullValue: null,
+    empty: '',
+    undefinedValue: undefined,
+    array: ['a', 'b'],
   });
   expect(uri).toMatchSnapshot();
 });
