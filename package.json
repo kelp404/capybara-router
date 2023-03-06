@@ -1,6 +1,6 @@
 {
   "name": "capybara-router",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
   "scripts": {
