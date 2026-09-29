@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Register the router view after the route was dispatched. 1`] = `
+<div>
+  Child
+</div>
+`;
