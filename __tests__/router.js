@@ -61,19 +61,19 @@ afterEach(() => jest.restoreAllMocks());
 test('Going to a page with the URI will push the history state.', () => {
   router.history.push = jest.fn(() => {});
   router.go('/login');
-  expect(router.history.push).toBeCalledWith({pathname: '/login', search: ''}, undefined);
+  expect(router.history.push).toHaveBeenCalledWith({pathname: '/login', search: ''}, undefined);
 });
 
 test('Replace a page with the URI.', () => {
   router.history.replace = jest.fn(() => {});
   router.go('/login', {replace: true});
-  expect(router.history.replace).toBeCalledWith({pathname: '/login', search: ''}, undefined);
+  expect(router.history.replace).toHaveBeenCalledWith({pathname: '/login', search: ''}, undefined);
 });
 
 test('Reload a page with the URI.', () => {
   router.reload = jest.fn(() => {});
   router.go('/');
-  expect(router.reload).toBeCalled();
+  expect(router.reload).toHaveBeenCalled();
 });
 
 test('Going to a page with a route name will push the history state.', () => {
@@ -82,7 +82,7 @@ test('Going to a page with a route name will push the history state.', () => {
     name: 'projects',
     params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0},
   });
-  expect(router.history.push).toBeCalledWith(
+  expect(router.history.push).toHaveBeenCalledWith(
     {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
@@ -97,7 +97,7 @@ test('Replace a page with a route name.', () => {
     {name: 'projects', params: {userId: 'AWgrmJp1SjjuUM2bzZXM', index: 0}},
     {replace: true},
   );
-  expect(router.history.replace).toBeCalledWith(
+  expect(router.history.replace).toHaveBeenCalledWith(
     {pathname: '/users/AWgrmJp1SjjuUM2bzZXM/projects', search: '?index=0'},
     {
       name: 'projects',
@@ -109,7 +109,7 @@ test('Replace a page with a route name.', () => {
 test('Reload a page with a route name.', () => {
   router.reload = jest.fn(() => {});
   router.go({name: 'home'});
-  expect(router.reload).toBeCalled();
+  expect(router.reload).toHaveBeenCalled();
 });
 
 test('Get the current route.', () => {
@@ -185,7 +185,7 @@ test('Broadcast a start event.', () => {
   })
     .then(() => {
       unsubscribe();
-      expect(onChangeStart).toBeCalled();
+      expect(onChangeStart).toHaveBeenCalled();
     });
 });
 
@@ -205,7 +205,7 @@ test('Broadcast a success event.', () => {
     nextParams: {id: 'new'},
   });
   unsubscribe();
-  expect(onChangeSuccess).toBeCalled();
+  expect(onChangeSuccess).toHaveBeenCalled();
 });
 
 test('Broadcast an error event.', () => {
@@ -215,7 +215,7 @@ test('Broadcast an error event.', () => {
   const unsubscribe = router.listen('ChangeError', onChangeError);
   router.broadcastErrorEvent(new Error('error'));
   unsubscribe();
-  expect(onChangeError).toBeCalled();
+  expect(onChangeError).toHaveBeenCalled();
 });
 
 test('Start dispatch routes and cancel it.', () => {
@@ -225,7 +225,7 @@ test('Start dispatch routes and cancel it.', () => {
   const unsubscribe = router.listen('ChangeStart', onChangeStart);
   router.start();
   unsubscribe();
-  expect(onChangeStart).toBeCalled();
+  expect(onChangeStart).toHaveBeenCalled();
 });
 
 test('Start dispatch routes.', () => {
@@ -242,9 +242,9 @@ test('Start dispatch routes.', () => {
     unsubscribeChangeError();
     expect(typeof result[5].key).toBe('string');
     delete result[5].key;
-    expect(onChangeStart).toBeCalled();
-    expect(onChangeSuccess).toBeCalled();
-    expect(onChangeError).not.toBeCalled();
+    expect(onChangeStart).toHaveBeenCalled();
+    expect(onChangeSuccess).toHaveBeenCalled();
+    expect(onChangeError).not.toHaveBeenCalled();
     expect(result).toMatchSnapshot();
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -255,7 +255,7 @@ test('Call onEnter() of the route when the router was started.', () => {
   router.routes[0].onEnter = jest.fn(() => {});
   renderer.create(<RouterView>Loading</RouterView>);
   return router.promise.then(() => {
-    expect(router.routes[0].onEnter).toBeCalledWith({
+    expect(router.routes[0].onEnter).toHaveBeenCalledWith({
       key: 0.1.toString(36),
       params: {},
     });
@@ -286,7 +286,7 @@ test('Go to a page and cancel it.', () => {
   router.go('/login');
   unsubscribeChangeStart();
   unsubscribeChangeError();
-  expect(onChangeStart).toBeCalled();
+  expect(onChangeStart).toHaveBeenCalled();
 });
 
 test('Go to a page.', () => {
@@ -305,9 +305,9 @@ test('Go to a page.', () => {
       unsubscribeChangeError();
       expect(typeof result[5].key).toBe('string');
       delete result[5].key;
-      expect(onChangeStart).toBeCalled();
-      expect(onChangeSuccess).toBeCalled();
-      expect(onChangeError).not.toBeCalled();
+      expect(onChangeStart).toHaveBeenCalled();
+      expect(onChangeSuccess).toHaveBeenCalled();
+      expect(onChangeError).not.toHaveBeenCalled();
       expect(result).toMatchSnapshot();
       expect(component.toJSON()).toMatchSnapshot();
     });
@@ -333,7 +333,7 @@ test('Call onEnter() of the route when the history was changed.', () => {
     return router.promise;
   })
     .then(() => {
-      expect(router.routes[1].onEnter).toBeCalledWith({
+      expect(router.routes[1].onEnter).toHaveBeenCalledWith({
         key: 0.1.toString(36),
         params: {},
       });
@@ -372,9 +372,9 @@ test('Reload the page and cancel it.', () => {
     router.reload();
     unsubscribeChangeStart();
     unsubscribeChangeError();
-    expect(onChangeStart).toBeCalled();
-    expect(onChangeStartB).not.toBeCalled();
-    expect(onChangeError).not.toBeCalled();
+    expect(onChangeStart).toHaveBeenCalled();
+    expect(onChangeStartB).not.toHaveBeenCalled();
+    expect(onChangeError).not.toHaveBeenCalled();
   });
 });
 
@@ -417,7 +417,7 @@ test('Get an error when reload the page.', () => {
   router.reload();
   return router.promise.finally(() => {
     unsubscribe();
-    expect(onChangeError).toBeCalled();
+    expect(onChangeError).toHaveBeenCalled();
   });
 });
 
@@ -431,7 +431,7 @@ test('Get a null error when reload the page.', () => {
   router.reload();
   return router.promise.finally(() => {
     unsubscribe();
-    expect(onChangeError).not.toBeCalled();
+    expect(onChangeError).not.toHaveBeenCalled();
   });
 });
 

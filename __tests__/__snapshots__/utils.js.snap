@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Fetch resolve data with lazy loading. 1`] = `
 <div>
@@ -13,10 +13,10 @@ exports[`Fetch resolve data with lazy loading. 2`] = `
 `;
 
 exports[`Fetch resolve data with reusable resolve data. 1`] = `
-Object {
-  "web": Object {
-    "projects": Array [
-      Object {
+{
+  "web": {
+    "projects": [
+      {
         "id": "AWgrmJp1SjjuUM2bzZXM",
         "title": "Project",
       },
@@ -27,15 +27,15 @@ Object {
 `;
 
 exports[`Fetch resolve data. 1`] = `
-Object {
-  "web": Object {
-    "projects": Array [
-      Object {
+{
+  "web": {
+    "projects": [
+      {
         "id": "AWgrmJp1SjjuUM2bzZXM",
         "title": "Project",
       },
     ],
-    "user": Object {
+    "user": {
       "id": "AWgrmJp1SjjuUM2bzZXM",
       "name": "User",
     },
@@ -55,17 +55,17 @@ Route {
   "matchReg": /\\^\\\\/\\$/,
   "name": "web",
   "onEnter": undefined,
-  "parents": Array [],
-  "resolve": Object {},
+  "parents": [],
+  "resolve": {},
   "uri": "/",
-  "uriParamKeys": Array [],
+  "uriParamKeys": [],
   "uriTemplate": "/",
 }
 `;
 
 exports[`Flatten resolve data. 1`] = `
-Object {
-  "user": Object {
+{
+  "user": {
     "id": "id",
     "name": "name",
   },
@@ -73,7 +73,7 @@ Object {
 `;
 
 exports[`Parse params from the location. 1`] = `
-Object {
+{
   "index": "0",
   "sort": "asc",
   "userId": "AWgrmJp1SjjuUM2bzZXM",

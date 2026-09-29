@@ -23,7 +23,7 @@ npm install capybara-router --save
 [/example](/example)
 ```js
 const React = require('react');
-const ReactDOM = require('react-dom');
+const {createRoot} = require('react-dom/client');
 const {Router, RouterView} = require('capybara-router');
 const history = require('history');
 const axios = require('axios');
@@ -66,7 +66,7 @@ const element = (
     </div>
   </RouterView>
 );
-ReactDOM.render(element, document.getElementById('root'));
+createRoot(document.getElementById('root')).render(element);
 ```
 
 
@@ -300,7 +300,3 @@ const {Link} = require('capybara-router');
 <Link to={{name: 'route-name', params: {paramKey: 'value'}}}>link</Link>
 ```
 
-
-
-## Which sites are using capybara-router?
-- **Meetpet** [https://meetpet.org/](https://meetpet.org/)

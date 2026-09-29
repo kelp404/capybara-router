@@ -38,8 +38,8 @@ test('Link component render with object props.', () => {
     <Link to={{name: 'web', params: {index: 0}}}>Web</Link>,
   );
   const tree = component.toJSON();
-  expect(utils.findRouteByNameInRoutes).toBeCalled();
-  expect(route.generateUri).toBeCalledWith({index: 0});
+  expect(utils.findRouteByNameInRoutes).toHaveBeenCalled();
+  expect(route.generateUri).toHaveBeenCalledWith({index: 0});
   expect(tree).toMatchSnapshot();
 });
 
@@ -48,7 +48,7 @@ test('Link component calls router.go() when it was clicked.', () => {
   const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
   const tree = component.toJSON();
   tree.props.onClick({preventDefault() {}});
-  expect(router.go).toBeCalledWith('https://github.com');
+  expect(router.go).toHaveBeenCalledWith('https://github.com');
 });
 
 test('Link component does not call router.go() when it was clicked with the meta key.', () => {
@@ -56,5 +56,5 @@ test('Link component does not call router.go() when it was clicked with the meta
   const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
   const tree = component.toJSON();
   tree.props.onClick({metaKey: true, preventDefault() {}});
-  expect(router.go).not.toBeCalled();
+  expect(router.go).not.toHaveBeenCalled();
 });

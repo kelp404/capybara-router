@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Generate a route with the parent. 1`] = `
 Route {
@@ -8,16 +8,16 @@ Route {
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
-  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchPattern": "/users/([\\w-]{20})/projects",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
   "name": "web",
   "onEnter": [Function],
-  "parents": Array [],
-  "resolve": Object {
+  "parents": [],
+  "resolve": {
     "id": [Function],
   },
-  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
-  "uriParamKeys": Array [
+  "uri": "/users/{userId:[\\w-]{20}}/projects?index?sort",
+  "uriParamKeys": [
     "userId",
     "?index",
     "?sort",
@@ -34,11 +34,11 @@ Route {
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
-  "matchPattern": "/users/([\\\\w-]{20})/projects/users/([\\\\w-]{20})/projects/([\\\\w-]{20})",
+  "matchPattern": "/users/([\\w-]{20})/projects/users/([\\w-]{20})/projects/([\\w-]{20})",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\$/,
   "name": "web.project",
   "onEnter": [Function],
-  "parents": Array [
+  "parents": [
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
@@ -46,16 +46,16 @@ Route {
       "generateUri": [Function],
       "isAbstract": false,
       "loadComponent": undefined,
-      "matchPattern": "/users/([\\\\w-]{20})/projects",
+      "matchPattern": "/users/([\\w-]{20})/projects",
       "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
       "name": "web",
       "onEnter": [Function],
-      "parents": Array [],
-      "resolve": Object {
+      "parents": [],
+      "resolve": {
         "id": [Function],
       },
-      "uri": "/users/{userId:[\\\\w-]{20}}/projects?index?sort",
-      "uriParamKeys": Array [
+      "uri": "/users/{userId:[\\w-]{20}}/projects?index?sort",
+      "uriParamKeys": [
         "userId",
         "?index",
         "?sort",
@@ -63,11 +63,11 @@ Route {
       "uriTemplate": "/users/{userId}/projects",
     },
   ],
-  "resolve": Object {
+  "resolve": {
     "id": [Function],
   },
-  "uri": "/users/{userId:[\\\\w-]{20}}/projects/{projectId:[\\\\w-]{20}}",
-  "uriParamKeys": Array [
+  "uri": "/users/{userId:[\\w-]{20}}/projects/{projectId:[\\w-]{20}}",
+  "uriParamKeys": [
     "userId",
     "?index",
     "?sort",
@@ -92,7 +92,7 @@ Route {
   "matchReg": /\\^\\\\/dashboard\\$/,
   "name": "web.dashboard",
   "onEnter": undefined,
-  "parents": Array [
+  "parents": [
     Route {
       "component": undefined,
       "dismissalDelay": undefined,
@@ -104,16 +104,16 @@ Route {
       "matchReg": /\\^\\\\/\\$/,
       "name": "web",
       "onEnter": undefined,
-      "parents": Array [],
-      "resolve": Object {},
+      "parents": [],
+      "resolve": {},
       "uri": "/",
-      "uriParamKeys": Array [],
+      "uriParamKeys": [],
       "uriTemplate": "/",
     },
   ],
-  "resolve": Object {},
+  "resolve": {},
   "uri": "dashboard",
-  "uriParamKeys": Array [],
+  "uriParamKeys": [],
   "uriTemplate": "/dashboard",
 }
 `;
@@ -126,17 +126,17 @@ Route {
   "generateUri": [Function],
   "isAbstract": false,
   "loadComponent": undefined,
-  "matchPattern": "/users/([\\\\w-]{20})/projects",
+  "matchPattern": "/users/([\\w-]{20})/projects",
   "matchReg": /\\^\\\\/users\\\\/\\(\\[\\\\w-\\]\\{20\\}\\)\\\\/projects\\$/,
   "name": "web",
   "onEnter": undefined,
-  "parents": Array [],
-  "resolve": Object {
+  "parents": [],
+  "resolve": {
     "projects": [Function],
     "user": [Function],
   },
-  "uri": "/users/{userId:[\\\\w-]{20}}/projects?index",
-  "uriParamKeys": Array [
+  "uri": "/users/{userId:[\\w-]{20}}/projects?index",
+  "uriParamKeys": [
     "userId",
     "?index",
   ],
