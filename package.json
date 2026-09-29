@@ -3,6 +3,9 @@
   "version": "2.12.0",
   "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "start": "concurrently --kill-others \"nodemon example/server.js --watch example/server.js\" \"webpack serve\"",
     "eslint": "eslint ./ --ignore-path .gitignore --ignore-pattern 'example/web.js'",
