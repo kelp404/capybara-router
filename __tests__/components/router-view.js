@@ -44,5 +44,5 @@ test('RouterView component render with a child component.', () => {
 test('RouterView component will call router.registerRouterView() on the mount event.', () => {
   router.registerRouterView = jest.fn(() => {});
   renderer.create(<RouterView>Loading</RouterView>);
-  expect(router.registerRouterView).toBeCalled();
+  expect(router.registerRouterView).toHaveBeenCalled();
 });

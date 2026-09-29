@@ -1,36 +1,36 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Broadcast a start event. 1`] = `
-Object {
+{
   "name": "web",
-  "params": Object {
+  "params": {
     "id": "new",
   },
 }
 `;
 
 exports[`Broadcast a start event. 2`] = `
-Object {
+{
   "name": "web",
-  "params": Object {
+  "params": {
     "id": "old",
   },
 }
 `;
 
 exports[`Broadcast a success event. 1`] = `
-Object {
+{
   "name": "web",
-  "params": Object {
+  "params": {
     "id": "new",
   },
 }
 `;
 
 exports[`Broadcast a success event. 2`] = `
-Object {
+{
   "name": "web",
-  "params": Object {
+  "params": {
     "id": "old",
   },
 }
@@ -48,10 +48,10 @@ Route {
   "matchReg": /\\^\\\\/\\$/,
   "name": "home",
   "onEnter": [Function],
-  "parents": Array [],
-  "resolve": Object {},
+  "parents": [],
+  "resolve": {},
   "uri": "/",
-  "uriParamKeys": Array [],
+  "uriParamKeys": [],
   "uriTemplate": "/",
 }
 `;
@@ -68,7 +68,7 @@ Route {
   "matchReg": /\\^\\\\/settings\\$/,
   "name": "settings.account",
   "onEnter": undefined,
-  "parents": Array [
+  "parents": [
     Route {
       "component": [Function],
       "dismissalDelay": undefined,
@@ -80,16 +80,16 @@ Route {
       "matchReg": /\\^\\\\/settings\\$/,
       "name": "settings",
       "onEnter": undefined,
-      "parents": Array [],
-      "resolve": Object {},
+      "parents": [],
+      "resolve": {},
       "uri": "/settings",
-      "uriParamKeys": Array [],
+      "uriParamKeys": [],
       "uriTemplate": "/settings",
     },
   ],
-  "resolve": Object {},
+  "resolve": {},
   "uri": "",
-  "uriParamKeys": Array [],
+  "uriParamKeys": [],
   "uriTemplate": "/settings",
 }
 `;
@@ -106,16 +106,16 @@ Route {
   "matchReg": /\\^\\\\/\\$/,
   "name": "home",
   "onEnter": [Function],
-  "parents": Array [],
-  "resolve": Object {},
+  "parents": [],
+  "resolve": {},
   "uri": "/",
-  "uriParamKeys": Array [],
+  "uriParamKeys": [],
   "uriTemplate": "/",
 }
 `;
 
 exports[`Go to a page. 1`] = `
-Array [
+[
   "PUSH",
   Route {
     "component": [Function],
@@ -128,13 +128,13 @@ Array [
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
     "onEnter": [Function],
-    "parents": Array [],
-    "resolve": Object {},
+    "parents": [],
+    "resolve": {},
     "uri": "/",
-    "uriParamKeys": Array [],
+    "uriParamKeys": [],
     "uriTemplate": "/",
   },
-  Object {},
+  {},
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
@@ -146,15 +146,15 @@ Array [
     "matchReg": /\\^\\\\/login\\$/,
     "name": "login",
     "onEnter": [Function],
-    "parents": Array [],
-    "resolve": Object {},
+    "parents": [],
+    "resolve": {},
     "uri": "/login",
-    "uriParamKeys": Array [],
+    "uriParamKeys": [],
     "uriTemplate": "/login",
   },
-  Object {},
-  Object {
-    "params": Object {},
+  {},
+  {
+    "params": {},
   },
 ]
 `;
@@ -166,7 +166,7 @@ exports[`Go to a page. 2`] = `
 `;
 
 exports[`Reload the page. 1`] = `
-Array [
+[
   "RELOAD",
   Route {
     "component": [Function],
@@ -179,13 +179,13 @@ Array [
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
     "onEnter": [Function],
-    "parents": Array [],
-    "resolve": Object {},
+    "parents": [],
+    "resolve": {},
     "uri": "/",
-    "uriParamKeys": Array [],
+    "uriParamKeys": [],
     "uriTemplate": "/",
   },
-  Object {},
+  {},
   Route {
     "component": [Function],
     "dismissalDelay": undefined,
@@ -197,15 +197,15 @@ Array [
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
     "onEnter": [Function],
-    "parents": Array [],
-    "resolve": Object {},
+    "parents": [],
+    "resolve": {},
     "uri": "/",
-    "uriParamKeys": Array [],
+    "uriParamKeys": [],
     "uriTemplate": "/",
   },
-  Object {},
-  Object {
-    "params": Object {},
+  {},
+  {
+    "params": {},
   },
 ]
 `;
@@ -241,7 +241,7 @@ exports[`Render the error page. 1`] = `
 `;
 
 exports[`Start dispatch routes. 1`] = `
-Array [
+[
   "INITIAL",
   null,
   null,
@@ -256,15 +256,15 @@ Array [
     "matchReg": /\\^\\\\/\\$/,
     "name": "home",
     "onEnter": [Function],
-    "parents": Array [],
-    "resolve": Object {},
+    "parents": [],
+    "resolve": {},
     "uri": "/",
-    "uriParamKeys": Array [],
+    "uriParamKeys": [],
     "uriTemplate": "/",
   },
-  Object {},
-  Object {
-    "params": Object {},
+  {},
+  {
+    "params": {},
   },
 ]
 `;

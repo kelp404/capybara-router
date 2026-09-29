@@ -80,8 +80,8 @@ test('Fetch resolve data with error.', () => {
     .then(resolve)
     .catch(reject)
     .finally(() => {
-      expect(resolve).not.toBeCalled();
-      expect(reject).toBeCalled();
+      expect(resolve).not.toHaveBeenCalled();
+      expect(reject).toHaveBeenCalled();
     });
 });
 
@@ -118,7 +118,7 @@ test('Fetch resolve data with lazy loading.', () => {
     .then(resolve)
     .catch(reject)
     .finally(() => {
-      expect(resolve).toBeCalled();
-      expect(reject).not.toBeCalled();
+      expect(resolve).toHaveBeenCalled();
+      expect(reject).not.toHaveBeenCalled();
     });
 });
