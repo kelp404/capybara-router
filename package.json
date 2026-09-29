@@ -10,7 +10,7 @@
     "start": "concurrently --kill-others \"nodemon example/server.js --watch example/server.js\" \"webpack serve\"",
     "eslint": "eslint ./ --ignore-path .gitignore --ignore-pattern 'example/web.js'",
     "build": "NODE_ENV=production webpack",
-    "changelog": "node_modules/conventional-changelog-cli/cli.js -n node_modules/@kelp404/changelog.config",
+    "changelog": "conventional-changelog -n node_modules/@kelp404/changelog.config/index.js",
     "ncu": "npm-check-updates",
     "test": "jest --coverage"
   },
@@ -52,7 +52,7 @@
     "classnames": "2.5.1",
     "concurrently": "9.2.4",
     "config": "3.3.12",
-    "conventional-changelog-cli": "3.0.0",
+    "conventional-changelog-cli": "4.1.0",
     "eslint": "8.57.1",
     "eslint-config-xo": "0.40.0",
     "eslint-config-xo-react": "0.27.0",
