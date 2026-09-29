@@ -12,8 +12,7 @@
     "build": "NODE_ENV=production webpack",
     "changelog": "node_modules/conventional-changelog-cli/cli.js -n node_modules/@kelp404/changelog.config",
     "ncu": "npm-check-updates",
-    "test": "jest --coverage",
-    "coveralls": "coveralls < ./coverage/lcov.info"
+    "test": "jest --coverage"
   },
   "files": [
     "index.js",
@@ -52,7 +51,6 @@
     "concurrently": "9.2.4",
     "config": "3.3.12",
     "conventional-changelog-cli": "3.0.0",
-    "coveralls": "3.1.1",
     "eslint": "8.57.1",
     "eslint-config-xo": "0.40.0",
     "eslint-config-xo-react": "0.27.0",
