@@ -1,7 +1,7 @@
 require('@babel/polyfill');
 const progress = require('nprogress');
 const React = require('react');
-const ReactDOM = require('react-dom');
+const {createRoot} = require('react-dom/client');
 const {RouterView} = require('../');
 const router = require('./router');
 
@@ -22,12 +22,11 @@ router.listen('ChangeError', error => {
   progress.done();
 });
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <RouterView>
     <div className="text-center text-muted h3" style={{padding: '20px 0'}}>
       <i className="fa fa-spinner fa-pulse fa-fw"/>
       <span className="sr-only">Loading...</span>
     </div>
   </RouterView>,
-  document.getElementById('root'),
 );
