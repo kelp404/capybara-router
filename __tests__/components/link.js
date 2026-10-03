@@ -58,3 +58,11 @@ test('Link component does not call router.go() when it was clicked with the meta
   tree.props.onClick({metaKey: true, preventDefault() {}});
   expect(router.go).not.toHaveBeenCalled();
 });
+
+test('Link component does not call router.go() when it was clicked with the ctrl key.', () => {
+  router.go = jest.fn(() => {});
+  const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
+  const tree = component.toJSON();
+  tree.props.onClick({ctrlKey: true, preventDefault() {}});
+  expect(router.go).not.toHaveBeenCalled();
+});
