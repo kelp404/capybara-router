@@ -50,7 +50,7 @@
     "babel-loader": "10.1.1",
     "classnames": "2.5.1",
     "concurrently": "9.2.4",
-    "config": "3.3.12",
+    "config": "5.0.1",
     "conventional-changelog-cli": "4.1.0",
     "eslint": "8.57.1",
     "eslint-config-xo": "0.40.0",
