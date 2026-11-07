@@ -40,11 +40,11 @@
     "react": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.29.13",
-    "@babel/eslint-parser": "7.29.13",
+    "@babel/core": "8.1.0",
+    "@babel/eslint-parser": "8.0.7",
     "@babel/polyfill": "7.12.1",
-    "@babel/preset-env": "7.29.7",
-    "@babel/preset-react": "7.29.7",
+    "@babel/preset-env": "8.0.7",
+    "@babel/preset-react": "8.0.1",
     "@eslint/compat": "2.1.1",
     "@kelp404/changelog.config": "0.1.0",
     "axios": "1.21.0",
