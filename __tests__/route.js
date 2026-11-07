@@ -86,3 +86,16 @@ test('Generate the URI of the route with params', () => {
   });
   expect(uri).toMatchSnapshot();
 });
+
+test('Generate the URI of the route with non-primitive query values.', () => {
+  const fakeRoute = new Route({
+    name: 'web',
+    uri: '/projects?object?stringObject?array',
+  });
+  const uri = fakeRoute.generateUri({
+    object: {toString: () => 'custom'},
+    stringObject: new String('s'), // eslint-disable-line no-new-wrappers
+    array: ['a', {b: 1}, ['c', 'd']],
+  });
+  expect(uri).toBe('/projects?array=a&array=%5Bobject%20Object%5D&array=c%2Cd&object=custom&stringObject=s');
+});
