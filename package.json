@@ -4,7 +4,7 @@
   "description": "Unfancy react router without flux and redux.",
   "main": "index.js",
   "engines": {
-    "node": ">=20.19.0"
+    "node": "^22.22.2 || >=24.15.0"
   },
   "scripts": {
     "start": "concurrently --kill-others \"nodemon example/server.js --watch example/server.js\" \"webpack serve\"",
