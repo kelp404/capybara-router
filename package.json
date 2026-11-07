@@ -62,7 +62,7 @@
     "globals": "17.14.0",
     "jest": "30.5.2",
     "nodemon": "3.1.14",
-    "npm-check-updates": "22.2.9",
+    "npm-check-updates": "23.1.1",
     "nprogress": "0.2.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
