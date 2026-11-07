@@ -92,10 +92,14 @@ test('Stringify non-primitive values of the query.', () => {
 });
 
 test('Encode lone surrogates of the query as U+FFFD.', () => {
-  expect(queryString.stringify({a: '\uD800', '\uDC00': 'b', c: '😀'.slice(0, 1), d: '😀'})).toBe('a=%EF%BF%BD&c=%EF%BF%BD&d=%F0%9F%98%80&%EF%BF%BD=b');
+  expect(queryString.stringify({
+    a: '\uD800', '\uDC00': 'b', c: '😀'.slice(0, 1), d: '😀',
+  })).toBe('a=%EF%BF%BD&c=%EF%BF%BD&d=%F0%9F%98%80&%EF%BF%BD=b');
 });
 
 test('Encode the query.', () => {
-  expect(queryString.stringify({'a b': 'a b', 中: '文', special: '!\'()*~-._', amp: 'a&b=c', percent: '100%', plus: '1+1'}))
+  expect(queryString.stringify({
+    'a b': 'a b', 中: '文', special: '!\'()*~-._', amp: 'a&b=c', percent: '100%', plus: '1+1',
+  }))
     .toBe('a%20b=a%20b&amp=a%26b%3Dc&percent=100%25&plus=1%2B1&special=%21%27%28%29%2A~-._&%E4%B8%AD=%E6%96%87');
 });

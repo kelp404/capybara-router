@@ -6,6 +6,6 @@ module.exports = class NotFound extends React.Component {
   }
 
   render() {
-    return <h2 className="text-center">Not Found</h2>;
+    return <h2 className='text-center'>Not Found</h2>;
   }
 };

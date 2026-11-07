@@ -18,7 +18,7 @@ module.exports = class Users extends React.Component {
     const {users} = this.props;
 
     return (
-      <table className="table">
+      <table className='table'>
         <thead>
           <tr>
             <th>ID</th>

@@ -19,7 +19,7 @@ afterEach(() => {
 });
 
 test('Link component render.', () => {
-  const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
+  const component = renderer.create(<Link to='https://github.com'>GitHub</Link>);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -34,9 +34,7 @@ test('Link component render with object props.', () => {
     return route;
   });
   jest.spyOn(route, 'generateUri').mockImplementation(() => '/web?index=0');
-  const component = renderer.create(
-    <Link to={{name: 'web', params: {index: 0}}}>Web</Link>,
-  );
+  const component = renderer.create(<Link to={{name: 'web', params: {index: 0}}}>Web</Link>);
   const tree = component.toJSON();
   expect(utils.findRouteByNameInRoutes).toHaveBeenCalled();
   expect(route.generateUri).toHaveBeenCalledWith({index: 0});
@@ -45,7 +43,7 @@ test('Link component render with object props.', () => {
 
 test('Link component calls router.go() when it was clicked.', () => {
   router.go = jest.fn(() => {});
-  const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
+  const component = renderer.create(<Link to='https://github.com'>GitHub</Link>);
   const tree = component.toJSON();
   tree.props.onClick({preventDefault() {}});
   expect(router.go).toHaveBeenCalledWith('https://github.com');
@@ -53,7 +51,7 @@ test('Link component calls router.go() when it was clicked.', () => {
 
 test('Link component does not call router.go() when it was clicked with the meta key.', () => {
   router.go = jest.fn(() => {});
-  const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
+  const component = renderer.create(<Link to='https://github.com'>GitHub</Link>);
   const tree = component.toJSON();
   tree.props.onClick({metaKey: true, preventDefault() {}});
   expect(router.go).not.toHaveBeenCalled();
@@ -61,7 +59,7 @@ test('Link component does not call router.go() when it was clicked with the meta
 
 test('Link component does not call router.go() when it was clicked with the ctrl key.', () => {
   router.go = jest.fn(() => {});
-  const component = renderer.create(<Link to="https://github.com">GitHub</Link>);
+  const component = renderer.create(<Link to='https://github.com'>GitHub</Link>);
   const tree = component.toJSON();
   tree.props.onClick({ctrlKey: true, preventDefault() {}});
   expect(router.go).not.toHaveBeenCalled();
