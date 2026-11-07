@@ -39,10 +39,10 @@ test('Decode the query string.', () => {
 
 test('Decode malformed escapes in the query string.', () => {
   expect(queryString.parse('?a=%&b=%zz&c=%2')).toEqual({a: '%', b: '%zz', c: '%2'});
-  expect(queryString.parse('?a=%FF&b=%C3&c=%E0%A4%A')).toEqual({a: '�', b: '�', c: '�%A'});
-  expect(queryString.parse('?a=%C3%A9%FF')).toEqual({a: 'é�'});
-  // Node.js URLSearchParams and querystring decode these to "�-" and "%2[]b-A".
-  expect(queryString.parse('?a=%C3中&b=%2[]b中%41')).toEqual({a: '�中', b: '%2[]b中A'});
+  expect(queryString.parse('?a=%FF&b=%C3&c=%E0%A4%A')).toEqual({a: '\uFFFD', b: '\uFFFD', c: '\uFFFD%A'});
+  expect(queryString.parse('?a=%C3%A9%FF')).toEqual({a: 'é\uFFFD'});
+  // Node.js URLSearchParams and querystring decode these to "\uFFFD-" and "%2[]b-A".
+  expect(queryString.parse('?a=%C3中&b=%2[]b中%41')).toEqual({a: '\uFFFD中', b: '%2[]b中A'});
 });
 
 test('Parse the long malformed query string in linear time.', () => {
