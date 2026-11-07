@@ -7,7 +7,7 @@
 	http://jedwatson.github.io/classnames
 */
 
-/*! Axios v1.20.0 Copyright (c) 2026 Matt Zabriskie and contributors */
+/*! Axios v1.21.0 Copyright (c) 2026 Matt Zabriskie and contributors */
 
 /**
  * @license React

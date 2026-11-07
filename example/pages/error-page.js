@@ -14,7 +14,7 @@ module.exports = class ErrorPage extends React.Component {
     const {error} = this.props;
 
     return (
-      <h2 className="text-center">{`${error}`}</h2>
+      <h2 className='text-center'>{`${error}`}</h2>
     );
   }
 };

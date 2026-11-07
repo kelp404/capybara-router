@@ -22,11 +22,13 @@ router.listen('ChangeError', error => {
   progress.done();
 });
 
-createRoot(document.getElementById('root')).render(
+const app = (
   <RouterView>
-    <div className="text-center text-muted h3" style={{padding: '20px 0'}}>
-      <i className="fa fa-spinner fa-pulse fa-fw"/>
-      <span className="sr-only">Loading...</span>
+    <div className='text-center text-muted h3' style={{padding: '20px 0'}}>
+      <i className='fa fa-spinner fa-pulse fa-fw'/>
+      <span className='sr-only'>Loading...</span>
     </div>
-  </RouterView>,
+  </RouterView>
 );
+
+createRoot(document.getElementById('root')).render(app);
